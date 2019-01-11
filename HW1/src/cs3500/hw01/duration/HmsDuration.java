@@ -45,7 +45,8 @@ public final class HmsDuration extends AbstractDuration {
 
   @Override
   public String format(String template) {
-    return null;
+    return String.format("%d hours, %d minutes, and %d seconds",
+        this.hours, this.minutes, this.seconds);
   }
 
   @Override

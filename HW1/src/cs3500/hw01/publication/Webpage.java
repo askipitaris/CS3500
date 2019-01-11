@@ -6,6 +6,14 @@ public class Webpage implements Publication {
   String url;
   String retrieved;
 
+  /**
+   * Constructs a Webpage.
+   *
+   * @param title     the title of the webpage
+   * @param url       the url of the webpage
+   * @param retrieved the date retrieved
+   */
+
   public Webpage(String title, String url, String retrieved) {
     this.title = title;
     this.url = url;
@@ -29,6 +37,6 @@ public class Webpage implements Publication {
    */
   @Override
   public String citeMla() {
-    return "\\" + title + ".\\ Web. " + retrieved + " <" + url + ">";
+    return "\"" + title + ".\" Web. " + retrieved + " <" + url + ">.";
   }
 }

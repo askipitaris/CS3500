@@ -22,7 +22,7 @@ public interface Duration extends Comparable<Duration> {
   /**
    * Formats a duration as a string by substituting for format
    * specifiers in the template.
-   *
+   * 
    * <p>The template is a string that may contain both <i>fixed
    * text</i> and some number of <i>format specifiers</i>, which are
    * special two-character codes starting with a {@code %} character.

@@ -42,7 +42,10 @@ public final class CompactDuration extends AbstractDuration {
 
   @Override
   public String format(String template) {
-    return null;
+    return String.format("%d:%02d:%02d",
+        hoursOf(inSeconds),
+        minutesOf(inSeconds),
+        secondsOf(inSeconds));
   }
 
   @Override
@@ -53,8 +56,8 @@ public final class CompactDuration extends AbstractDuration {
   @Override
   public String asHms() {
     return String.format("%d:%02d:%02d",
-                          hoursOf(inSeconds),
-                          minutesOf(inSeconds),
-                          secondsOf(inSeconds));
+        hoursOf(inSeconds),
+        minutesOf(inSeconds),
+        secondsOf(inSeconds));
   }
 }
