@@ -41,6 +41,11 @@ public final class CompactDuration extends AbstractDuration {
   }
 
   @Override
+  public String format(String template) {
+    return null;
+  }
+
+  @Override
   public long inSeconds() {
     return inSeconds;
   }

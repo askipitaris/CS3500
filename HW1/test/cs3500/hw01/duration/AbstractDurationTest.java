@@ -3,6 +3,7 @@ package cs3500.hw01.duration;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /** Tests for {@link Duration}s. */
 public abstract class AbstractDurationTest {
