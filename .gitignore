@@ -11,6 +11,8 @@
 .mtj.tmp/
 
 # Package Files #
+workspace.xml
+tasks.xml
 *.jar
 *.war
 *.nar

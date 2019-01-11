@@ -20,7 +20,7 @@ public class WebpageTest {
 
   @Test
   public void testCiteApaBogus() {
-    assertNotEquals("This is formatted incorrectly!",
+    assertNotEquals("This is not formatted correctly!",
         "Retrieved Jan 10, 2019, CS 3500: Object-Oriented Design. "
         + "https://course.ccs.neu.edu/cs3500/.", this.courseSite.citeApa());
   }
@@ -33,7 +33,7 @@ public class WebpageTest {
 
   @Test
   public void testCiteMlaBogus() {
-    assertNotEquals("This is formatted incorrectly!",
+    assertNotEquals("This is not formatted correctly!",
         "Retrieved Jan 10, 2019, https://course.ccs.neu.edu/cs3500/. "
             + "CS 3500: Object-Oriented Design.", this.courseSite.citeMla());
   }
