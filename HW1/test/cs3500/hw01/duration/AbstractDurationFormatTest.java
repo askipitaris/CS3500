@@ -45,10 +45,10 @@ public abstract class AbstractDurationFormatTest {
 
   @Test
   public void testDoubleSpecificers() {
-    assertEquals("260",
-        hms(0, 4, 20).format("%t"));
+    assertEquals("240",
+        hms(0, 4, 0).format("%t"));
     assertEquals("%t",
-        hms(0, 4, 20).format("%%t"));
+        hms(0, 4, 0).format("%%t"));
   }
 
   @Test(expected = IllegalArgumentException.class)
