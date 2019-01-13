@@ -27,10 +27,21 @@ public abstract class AbstractDurationFormatTest {
   // and must *not* directly say "new CompactDuration(...)" or
   // "new HmsDuration(...)"
 
+  @Test
+  public void formatExample3() {
+    assertEquals("04:07:22",
+        hms(4, 7, 22).format("%H:%M:%S"));
+    assertEquals("04 hours, 07 minutes and 22 seconds",
+        hms(4, 7, 22).format("%H hours, %M minutes and %S seconds"));
+  }
 
-
-
-  
+  @Test
+  public void formatExamples4() {
+    assertEquals("1 hour is 50% of the movie",
+        hms(1, 0, 0).format("%h hour is 50%% of the movie"));
+    assertEquals("3600 seconds is 50% of the movie",
+        hms(1, 0, 0).format("%t seconds is 50%% of the movie"));
+  }
 
   /*
     Leave this section alone: It contains two abstract methods to

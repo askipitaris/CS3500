@@ -68,6 +68,9 @@ public final class CompactDuration extends AbstractDuration {
         else if (template.charAt(i) == '%') {
           output += "%";
         }
+        else if (template.charAt(i) == 't') {
+          output += inSeconds;
+        }
       }
       else {
         output += template.charAt(i);
