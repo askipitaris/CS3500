@@ -45,8 +45,38 @@ public final class HmsDuration extends AbstractDuration {
 
   @Override
   public String format(String template) {
-    return String.format("%d hours, %d minutes, and %d seconds",
-        this.hours, this.minutes, this.seconds);
+    String output = "";
+
+    for (int i = 0; i < template.length(); i++) {
+      if (template.charAt(i) == '%') {
+        i++;
+        if (template.charAt(i) == 'H') {
+          output += String.format("%02d", hours);
+        }
+        else if (template.charAt(i) == 'h') {
+          output += String.format("%d", hours);
+        }
+        else if (template.charAt(i) == 'M') {
+          output += String.format("%02d", minutes);
+        }
+        else if (template.charAt(i) == 'm') {
+          output += String.format("%d", minutes);
+        }
+        else if (template.charAt(i) == 'S') {
+          output += String.format("%02d", seconds);
+        }
+        else if (template.charAt(i) == 's') {
+          output += String.format("%d", seconds);
+        }
+        else if (template.charAt(i) == '%') {
+          output += "%";
+        }
+      }
+      else {
+        output += template.charAt(i);
+      }
+    }
+    return output;
   }
 
   @Override

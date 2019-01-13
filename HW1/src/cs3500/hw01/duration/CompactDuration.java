@@ -42,10 +42,38 @@ public final class CompactDuration extends AbstractDuration {
 
   @Override
   public String format(String template) {
-    return String.format("%d:%02d:%02d",
-        hoursOf(inSeconds),
-        minutesOf(inSeconds),
-        secondsOf(inSeconds));
+    String output = "";
+
+    for (int i = 0; i < template.length(); i++) {
+      if (template.charAt(i) == '%') {
+        i++;
+        if (template.charAt(i) == 'H') {
+          output += String.format("%02d", hoursOf(inSeconds));
+        }
+        else if (template.charAt(i) == 'h') {
+          output += String.format("%d", hoursOf(inSeconds));
+        }
+        else if (template.charAt(i) == 'M') {
+          output += String.format("%02d", minutesOf(inSeconds));
+        }
+        else if (template.charAt(i) == 'm') {
+          output += String.format("%d", minutesOf(inSeconds));
+        }
+        else if (template.charAt(i) == 'S') {
+          output += String.format("%02d", secondsOf(inSeconds));
+        }
+        else if (template.charAt(i) == 's') {
+          output += String.format("%d", secondsOf(inSeconds));
+        }
+        else if (template.charAt(i) == '%') {
+          output += "%";
+        }
+      }
+      else {
+        output += template.charAt(i);
+      }
+    }
+    return output;
   }
 
   @Override
