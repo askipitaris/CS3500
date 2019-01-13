@@ -74,6 +74,9 @@ public final class HmsDuration extends AbstractDuration {
         else if (template.charAt(i) == 't') {
           output += inSeconds();
         }
+        else {
+          throw new IllegalArgumentException("Malformed template");
+        }
       }
       else {
         output += template.charAt(i);

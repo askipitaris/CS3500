@@ -43,6 +43,19 @@ public abstract class AbstractDurationFormatTest {
         hms(1, 0, 0).format("%t seconds is 50%% of the movie"));
   }
 
+  @Test
+  public void testDoubleSpecificers() {
+    assertEquals("260",
+        hms(0, 4, 20).format("%t"));
+    assertEquals("%t",
+        hms(0, 4, 20).format("%%t"));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMalformed() {
+    hms(0, 5, 1).format("%y");
+  }
+
   /*
     Leave this section alone: It contains two abstract methods to
     create Durations, and concrete implementations of this testing class
