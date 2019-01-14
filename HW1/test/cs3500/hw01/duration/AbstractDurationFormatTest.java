@@ -28,7 +28,7 @@ public abstract class AbstractDurationFormatTest {
   // "new HmsDuration(...)"
 
   @Test
-  public void formatExample3() {
+  public void testAllLeadingZeros() {
     assertEquals("04:07:22",
         hms(4, 7, 22).format("%H:%M:%S"));
     assertEquals("04 hours, 07 minutes and 22 seconds",
@@ -36,11 +36,17 @@ public abstract class AbstractDurationFormatTest {
   }
 
   @Test
-  public void formatExamples4() {
+  public void testDoublePercent() {
     assertEquals("1 hour is 50% of the movie",
         hms(1, 0, 0).format("%h hour is 50%% of the movie"));
+  }
+
+  @Test
+  public void testAllInSeconds() {
     assertEquals("3600 seconds is 50% of the movie",
         hms(1, 0, 0).format("%t seconds is 50%% of the movie"));
+    assertEquals("1 hour is 50% of the movie",
+        sec(3600).format("%h hour is 50%% of the movie"));
   }
 
   @Test
@@ -54,6 +60,7 @@ public abstract class AbstractDurationFormatTest {
   @Test(expected = IllegalArgumentException.class)
   public void testMalformed() {
     hms(0, 5, 1).format("%y");
+    sec(500).format("%T seconds is %m minutes");
   }
 
   /*

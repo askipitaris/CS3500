@@ -40,6 +40,12 @@ public final class CompactDuration extends AbstractDuration {
     return new CompactDuration(seconds);
   }
 
+  /**
+   *
+   * @param template the template by which the time will be formatted
+   * @return String representing the formatted time
+   * @throws IllegalArgumentException if any identifer in the template is malformed
+   */
   @Override
   public String format(String template) {
     String output = "";
