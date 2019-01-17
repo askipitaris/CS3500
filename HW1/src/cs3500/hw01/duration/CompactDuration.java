@@ -40,12 +40,6 @@ public final class CompactDuration extends AbstractDuration {
     return new CompactDuration(seconds);
   }
 
-  /**
-   *
-   * @param template the template by which the time will be formatted
-   * @return String representing the formatted time
-   * @throws IllegalArgumentException if any identifer in the template is malformed
-   */
   @Override
   public String format(String template) {
     String output = "";
@@ -53,7 +47,10 @@ public final class CompactDuration extends AbstractDuration {
     for (int i = 0; i < template.length(); i++) {
       if (template.charAt(i) == '%') {
         i++;
-        if (template.charAt(i) == 'H') {
+        if (i >= template.length()) {
+          throw new IllegalArgumentException("Malformed template");
+        }
+        else if (template.charAt(i) == 'H') {
           output += String.format("%02d", hoursOf(inSeconds));
         }
         else if (template.charAt(i) == 'h') {

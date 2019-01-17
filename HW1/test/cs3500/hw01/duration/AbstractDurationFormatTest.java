@@ -1,31 +1,44 @@
 package cs3500.hw01.duration;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
-/** Tests for the format method of {@link Duration}s. 
-    Add your tests to this class to assure that your format 
-    method works properly
-*/
+import org.junit.Test;
+
+/**
+ * Tests for the format method of {@link Duration}s. Add your tests to this class to assure that
+ * your format method works properly
+ */
 public abstract class AbstractDurationFormatTest {
+
   @Test
   public void formatExample1() {
     assertEquals("4 hours, 0 minutes, and 9 seconds",
-                  hms(4, 0, 9)
-                    .format("%h hours, %m minutes, and %s seconds"));
+        hms(4, 0, 9)
+            .format("%h hours, %m minutes, and %s seconds"));
   }
 
   @Test
   public void formatExample2() {
     assertEquals("4:05:17",
-                  hms(4, 5, 17).format("%h:%M:%S"));
+        hms(4, 5, 17).format("%h:%M:%S"));
+
   }
 
   // ADD MORE TESTS HERE
   // Your tests must only use hms(...) and sec(...) to construct new Durations
   // and must *not* directly say "new CompactDuration(...)" or
   // "new HmsDuration(...)"
+
+  @Test(expected = IllegalArgumentException.class)
+  public void wrongOrder() {
+    hms(1, 0, 0).format("t%");
+  }
+
+  @Test
+  public void sandwich() {
+    assertEquals("t3600",
+        hms(1,0,0).format("t%t"));
+  }
 
   @Test
   public void testAllLeadingZeros() {
@@ -39,6 +52,12 @@ public abstract class AbstractDurationFormatTest {
   public void testDoublePercent() {
     assertEquals("1 hour is 50% of the movie",
         hms(1, 0, 0).format("%h hour is 50%% of the movie"));
+  }
+
+  @Test
+  public void testTripplePercent() {
+    assertEquals("%3600",
+        hms(1, 0, 0).format("%%%t"));
   }
 
   @Test
@@ -61,6 +80,8 @@ public abstract class AbstractDurationFormatTest {
   public void testMalformed() {
     hms(0, 5, 1).format("%y");
     sec(500).format("%T seconds is %m minutes");
+    hms(0, 5, 1).format("%d:%02d:%02d");
+    sec(180).format("%");
   }
 
   /*
@@ -69,9 +90,10 @@ public abstract class AbstractDurationFormatTest {
     will supply particular implementations of Duration to be used within 
     your tests.
    */
+
   /**
-   * Constructs an instance of the class under test representing the duration
-   * given in hours, minutes, and seconds.
+   * Constructs an instance of the class under test representing the duration given in hours,
+   * minutes, and seconds.
    *
    * @param hours the hours in the duration
    * @param minutes the minutes in the duration
@@ -81,8 +103,7 @@ public abstract class AbstractDurationFormatTest {
   protected abstract Duration hms(int hours, int minutes, int seconds);
 
   /**
-   * Constructs an instance of the class under test representing the duration
-   * given in seconds.
+   * Constructs an instance of the class under test representing the duration given in seconds.
    *
    * @param inSeconds the total seconds in the duration
    * @return an instance of the class under test
@@ -90,6 +111,7 @@ public abstract class AbstractDurationFormatTest {
   protected abstract Duration sec(long inSeconds);
 
   public static final class HmsDurationTest extends AbstractDurationFormatTest {
+
     @Override
     protected Duration hms(int hours, int minutes, int seconds) {
       return new HmsDuration(hours, minutes, seconds);
@@ -102,6 +124,7 @@ public abstract class AbstractDurationFormatTest {
   }
 
   public static final class CompactDurationTest extends AbstractDurationFormatTest {
+
     @Override
     protected Duration hms(int hours, int minutes, int seconds) {
       return new CompactDuration(hours, minutes, seconds);

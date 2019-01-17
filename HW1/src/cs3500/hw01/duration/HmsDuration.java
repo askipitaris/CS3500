@@ -43,16 +43,6 @@ public final class HmsDuration extends AbstractDuration {
     return new HmsDuration(seconds);
   }
 
-  /**
-   * <p>Formats the output based on the template. Each identifier starts with a '%' followed by
-   * 'H' for hours with a leading zero, 'h' for hours, 'M' for minutes with a leading zero,
-   * 'm' for minutes, 'S' for seconds with a leading zero, 's' for seconds, 't' for time in seconds
-   * or another '%' for just a percent symbol
-   *
-   * @param template the template by which the time will be formatted
-   * @return String representing the formatted time
-   * @throws IllegalArgumentException if any identifer in the template is malformed
-   */
   @Override
   public String format(String template) {
     String output = "";
@@ -60,7 +50,10 @@ public final class HmsDuration extends AbstractDuration {
     for (int i = 0; i < template.length(); i++) {
       if (template.charAt(i) == '%') {
         i++;
-        if (template.charAt(i) == 'H') {
+        if (i >= template.length()) {
+          throw new IllegalArgumentException("Malformed template");
+        }
+        else if (template.charAt(i) == 'H') {
           output += String.format("%02d", hours);
         }
         else if (template.charAt(i) == 'h') {
