@@ -45,41 +45,8 @@ public final class HmsDuration extends AbstractDuration {
 
   @Override
   public String format(String template) {
-    /*if (template.isEmpty()) {
-      throw new IllegalArgumentException("Empty template");
-    } else {
-      String output = "";
-      for (int i = 0; i < template.length(); i++) {
-        if (template.charAt(i) == '%') {
-          i++;
-          if (i >= template.length()) {
-            throw new IllegalArgumentException("Malformed template");
-          } else if (template.charAt(i) == 'H') {
-            output += String.format("%02d", hours);
-          } else if (template.charAt(i) == 'h') {
-            output += String.format("%d", hours);
-          } else if (template.charAt(i) == 'M') {
-            output += String.format("%02d", minutes);
-          } else if (template.charAt(i) == 'm') {
-            output += String.format("%d", minutes);
-          } else if (template.charAt(i) == 'S') {
-            output += String.format("%02d", seconds);
-          } else if (template.charAt(i) == 's') {
-            output += String.format("%d", seconds);
-          } else if (template.charAt(i) == '%') {
-            output += "%";
-          } else if (template.charAt(i) == 't') {
-            output += inSeconds();
-          } else {
-            throw new IllegalArgumentException("Malformed template");
-          }
-        } else {
-          output += template.charAt(i);
-        }
-      }
-      return output;
-    }*/
     String output = "";
+
     for (int i = 0; i < template.length(); i++) {
       if (template.charAt(i) == '%') {
         i++;
@@ -104,6 +71,8 @@ public final class HmsDuration extends AbstractDuration {
         } else {
           throw new IllegalArgumentException("Malformed template");
         }
+      } else if (template.equals("")) {
+        return "";
       } else {
         output += template.charAt(i);
       }

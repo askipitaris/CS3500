@@ -114,8 +114,6 @@ public abstract class AbstractDurationFormatTest {
         hms(1, 0, 0).format("\\%t"));
   }
 
-
-
   /*
     Leave this section alone: It contains two abstract methods to
     create Durations, and concrete implementations of this testing class

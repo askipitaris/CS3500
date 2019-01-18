@@ -41,41 +41,8 @@ public final class CompactDuration extends AbstractDuration {
 
   @Override
   public String format(String template) {
-    /*if (template.isEmpty()) {
-      throw new IllegalArgumentException("Empty template");
-    } else {
-      String output = "";
-      for (int i = 0; i < template.length(); i++) {
-        if (template.charAt(i) == '%') {
-          i++;
-          if (i >= template.length()) {
-            throw new IllegalArgumentException("Malformed template");
-          } else if (template.charAt(i) == 'H') {
-            output += String.format("%02d", hoursOf(inSeconds));
-          } else if (template.charAt(i) == 'h') {
-            output += String.format("%d", hoursOf(inSeconds));
-          } else if (template.charAt(i) == 'M') {
-            output += String.format("%02d", minutesOf(inSeconds));
-          } else if (template.charAt(i) == 'm') {
-            output += String.format("%d", minutesOf(inSeconds));
-          } else if (template.charAt(i) == 'S') {
-            output += String.format("%02d", secondsOf(inSeconds));
-          } else if (template.charAt(i) == 's') {
-            output += String.format("%d", secondsOf(inSeconds));
-          } else if (template.charAt(i) == '%') {
-            output += "%";
-          } else if (template.charAt(i) == 't') {
-            output += inSeconds;
-          } else {
-            throw new IllegalArgumentException("Malformed template");
-          }
-        } else {
-          output += template.charAt(i);
-        }
-      }
-      return output;
-    }*/
     String output = "";
+
     for (int i = 0; i < template.length(); i++) {
       if (template.charAt(i) == '%') {
         i++;
@@ -100,6 +67,8 @@ public final class CompactDuration extends AbstractDuration {
         } else {
           throw new IllegalArgumentException("Malformed template");
         }
+      } else if (template.equals("")) {
+        return "";
       } else {
         output += template.charAt(i);
       }
