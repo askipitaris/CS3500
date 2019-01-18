@@ -17,7 +17,6 @@ public class WebpageTest {
         + "https://course.ccs.neu.edu/cs3500/.", this.courseSite.citeApa());
   }
 
-
   @Test
   public void testCiteApaBogus() {
     assertNotEquals("This is not formatted correctly!",

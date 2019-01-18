@@ -40,7 +40,7 @@ public abstract class AbstractDurationFormatTest {
   @Test
   public void sandwich() {
     assertEquals("t3600",
-        hms(1,0,0).format("t%t"));
+        hms(1, 0, 0).format("t%t"));
   }
 
   @Test
@@ -102,9 +102,16 @@ public abstract class AbstractDurationFormatTest {
   }
 
   @Test
+  public void emptyTemplate() {
+    assertEquals("",
+        sec(100).format(""));
+    //hms(1, 0, 0).format("");
+  }
+
+  @Test
   public void testBackslash() {
     assertEquals("\\3600",
-        hms(1,0,0).format("\\%t"));
+        hms(1, 0, 0).format("\\%t"));
   }
 
 

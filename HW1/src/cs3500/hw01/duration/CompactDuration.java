@@ -1,13 +1,12 @@
 package cs3500.hw01.duration;
 
 /**
- * Durations represented compactly, with a range of 0 to
- * 2<sup>63</sup>-1 seconds.
+ * Durations represented compactly, with a range of 0 to 2<sup>63</sup>-1 seconds.
  */
 public final class CompactDuration extends AbstractDuration {
+
   /**
-   * Constructs a duration in terms of its length in hours, minutes, and
-   * seconds.
+   * Constructs a duration in terms of its length in hours, minutes, and seconds.
    *
    * @param hours the number of hours
    * @param minutes the number of minutes
@@ -42,43 +41,66 @@ public final class CompactDuration extends AbstractDuration {
 
   @Override
   public String format(String template) {
+    /*if (template.isEmpty()) {
+      throw new IllegalArgumentException("Empty template");
+    } else {
+      String output = "";
+      for (int i = 0; i < template.length(); i++) {
+        if (template.charAt(i) == '%') {
+          i++;
+          if (i >= template.length()) {
+            throw new IllegalArgumentException("Malformed template");
+          } else if (template.charAt(i) == 'H') {
+            output += String.format("%02d", hoursOf(inSeconds));
+          } else if (template.charAt(i) == 'h') {
+            output += String.format("%d", hoursOf(inSeconds));
+          } else if (template.charAt(i) == 'M') {
+            output += String.format("%02d", minutesOf(inSeconds));
+          } else if (template.charAt(i) == 'm') {
+            output += String.format("%d", minutesOf(inSeconds));
+          } else if (template.charAt(i) == 'S') {
+            output += String.format("%02d", secondsOf(inSeconds));
+          } else if (template.charAt(i) == 's') {
+            output += String.format("%d", secondsOf(inSeconds));
+          } else if (template.charAt(i) == '%') {
+            output += "%";
+          } else if (template.charAt(i) == 't') {
+            output += inSeconds;
+          } else {
+            throw new IllegalArgumentException("Malformed template");
+          }
+        } else {
+          output += template.charAt(i);
+        }
+      }
+      return output;
+    }*/
     String output = "";
-
     for (int i = 0; i < template.length(); i++) {
       if (template.charAt(i) == '%') {
         i++;
         if (i >= template.length()) {
           throw new IllegalArgumentException("Malformed template");
-        }
-        else if (template.charAt(i) == 'H') {
+        } else if (template.charAt(i) == 'H') {
           output += String.format("%02d", hoursOf(inSeconds));
-        }
-        else if (template.charAt(i) == 'h') {
+        } else if (template.charAt(i) == 'h') {
           output += String.format("%d", hoursOf(inSeconds));
-        }
-        else if (template.charAt(i) == 'M') {
+        } else if (template.charAt(i) == 'M') {
           output += String.format("%02d", minutesOf(inSeconds));
-        }
-        else if (template.charAt(i) == 'm') {
+        } else if (template.charAt(i) == 'm') {
           output += String.format("%d", minutesOf(inSeconds));
-        }
-        else if (template.charAt(i) == 'S') {
+        } else if (template.charAt(i) == 'S') {
           output += String.format("%02d", secondsOf(inSeconds));
-        }
-        else if (template.charAt(i) == 's') {
+        } else if (template.charAt(i) == 's') {
           output += String.format("%d", secondsOf(inSeconds));
-        }
-        else if (template.charAt(i) == '%') {
+        } else if (template.charAt(i) == '%') {
           output += "%";
-        }
-        else if (template.charAt(i) == 't') {
+        } else if (template.charAt(i) == 't') {
           output += inSeconds;
-        }
-        else {
+        } else {
           throw new IllegalArgumentException("Malformed template");
         }
-      }
-      else {
+      } else {
         output += template.charAt(i);
       }
     }
