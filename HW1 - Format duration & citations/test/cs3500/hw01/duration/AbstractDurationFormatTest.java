@@ -99,6 +99,7 @@ public abstract class AbstractDurationFormatTest {
     sec(180).format("%");
     hms(1, 0, 0).format("t%");
     sec(1000).format("%h:%M:%S%");
+    sec(1000).format(null);
   }
 
   @Test
