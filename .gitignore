@@ -14,7 +14,6 @@
 workspace.xml
 tasks.xml
 *.iws
-*.iml
 *.jar
 *.war
 *.nar
