@@ -10,7 +10,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   int sRow;
   int sCol;
 
-  Cell[][] board;
+  public Cell[][] board;
 
   /**
    * Constructor 1: Constructs a game using no arguments. Creates a game with an arm thickness of 3,
@@ -21,7 +21,8 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     this.sRow = 3;
     this.sCol = 3;
 
-    this.board = new Cell[this.armThickness * 3][this.armThickness * 3];
+    this.board = new Cell[this.armThickness * 3 - 2][this.armThickness * 3 - 2];
+    this.buildGrid();
   }
 
   /**
@@ -33,8 +34,8 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @param sCol
    */
   public MarbleSolitaireModelImpl(int sRow, int sCol) {
-    if ((sRow < 3 && sCol < 3) || (sRow > 4 && sCol > 4)
-        || (sRow < 3 && sCol > 4) || (sRow > 4 && sCol < 3)) {
+    if ((sRow < 2 && sCol < 2) || (sRow > 4 && sCol > 4)
+        || (sRow < 2 && sCol > 4) || (sRow > 4 && sCol < 2)) {
       throw new IllegalArgumentException("Invalid empty cell position (r,c)");
     } else {
       this.armThickness = 3;
@@ -75,14 +76,34 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     } else {
       throw new IllegalArgumentException("Arm thickness must be positive and odd.");
     }
-    if ((sRow <= armThickness && sCol < armThickness)
+    if ((sRow < (armThickness - 1) && sCol < (armThickness - 1))
         || (sRow > (armThickness * 2 - 2) && sCol > (armThickness * 2 - 2))
-        || (sRow < armThickness && sCol > (armThickness * 2 - 2))
-        || (sRow > (armThickness * 2 - 2) && sCol < armThickness)) {
+        || (sRow < (armThickness - 1) && sCol > (armThickness * 2 - 2))
+        || (sRow > (armThickness * 2 - 2) && sCol < (armThickness - 1))) {
       throw new IllegalArgumentException("Invalid empty cell position (r,c)");
     } else {
       this.sRow = sRow;
       this.sCol = sCol;
+    }
+  }
+
+  /**
+   * Builds a grid of cells in a cross shape.
+   */
+  public void buildGrid() {
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board.length; j++) {
+        if (this.sRow == i && this.sCol == j) {
+          this.board[i][j] = new Cell(i, j, CellState.Empty);
+        } else if ((i < (this.armThickness - 1) && j < (this.armThickness - 1))
+            || (i > (this.armThickness * 2 - 2) && j > (this.armThickness * 2 - 2))
+            || (i < (this.armThickness - 1) && j > (this.armThickness * 2 - 2))
+            || (i > (this.armThickness * 2 - 2) && j < (this.armThickness - 1))) {
+          this.board[i][j] = new Cell(i, j, CellState.Inaccessible);
+        } else {
+          this.board[i][j] = new Cell(i, j, CellState.Filled);
+        }
+      }
     }
   }
 
