@@ -49,7 +49,9 @@ public class MarbleSolitaireModelImplTest {
 
   @Test
   public void testIsGameOver() {
-
+    MarbleSolitaireModel t4 = new MarbleSolitaireModelImpl();
+    assertEquals(false,
+        t4.isGameOver());
   }
 
   @Test
@@ -74,7 +76,8 @@ public class MarbleSolitaireModelImplTest {
 
   @Test
   public void testGetScore() {
-
+    assertEquals(32,
+        new MarbleSolitaireModelImpl().getScore());
   }
 
   @Test(expected = IllegalArgumentException.class)

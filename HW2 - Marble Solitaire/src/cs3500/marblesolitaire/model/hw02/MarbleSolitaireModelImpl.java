@@ -27,7 +27,11 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   /**
    * Constructor 2: Constructs a game with an empty space a specified row and column with an arm
    * thickness of 3.Throws IllegalArgumentExpection with message "Invalid empty cell position (r,c)"
-   * if the specified positon is not valid.
+   * if the specified position is not valid.
+   *
+   * @param sRow
+   * @param sCol
+   * @throws IllegalArgumentException
    */
   public MarbleSolitaireModelImpl(int sRow, int sCol) {
     if ((sRow < 2 && sCol < 2) || (sRow > 4 && sCol > 4)
@@ -44,8 +48,11 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
 
   /**
    * Constructor 3: Constructs a game using the specified arm thickness with an empty space at an
-   * automatically determined positon. Throws an IllegalArgumentException with message "Arm
+   * automatically determined position. Throws an IllegalArgumentException with message "Arm
    * thickness must be positive and odd."
+   *
+   * @param armThickness
+   * @throws IllegalArgumentException
    */
   public MarbleSolitaireModelImpl(int armThickness) {
     if (armThickness % 2 == 1 && armThickness > 0) {
@@ -63,6 +70,11 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * Constructor 4: Constructs a game using the specified arm thickness with an empty position at
    * the specified row and column. Throws an IllegalArgumentException if the positon is invalid or
    * if the thickness is invalid
+   *
+   * @param armThickness
+   * @param sRow
+   * @param sCol
+   * @throws IllegalArgumentException
    */
   public MarbleSolitaireModelImpl(int armThickness, int sRow, int sCol) {
     if (armThickness % 2 == 1 && armThickness > 0) {
@@ -83,7 +95,8 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   }
 
   /**
-   * Builds a grid of cells in a cross shape.
+   * Builds a grid of cells in a cross shape. Makes sure that all CellState are set appropriatly
+   * by checking where they are in the 2D array.
    */
   public void buildGrid() {
     this.board = new Cell[this.armThickness * 3 - 2][this.armThickness * 3 - 2];
@@ -110,8 +123,11 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
 
   @Override
   public boolean isGameOver() {
-    // If score <= 1 then the game is over
-    return false;
+    if (this.getScore() <= 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @Override
@@ -141,7 +157,14 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
 
   @Override
   public int getScore() {
-    // Go through the array and count all Cells with a state of Filled
-    return 0;
+    int score = 0;
+    for (int i = 0; i < (this.armThickness * 3) - 2; i++) {
+      for (int j = 0; j < (this.armThickness * 3) - 2; j++) {
+        if (this.board[i][j].state.equals(CellState.Filled)) {
+          score += 1;
+        }
+      }
+    }
+    return score;
   }
 }
