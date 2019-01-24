@@ -1,20 +1,19 @@
+import static org.junit.Assert.assertEquals;
+
 import cs3500.marblesolitaire.model.hw02.CellState;
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 public class MarbleSolitaireModelImplTest {
 
   @Test
-  public void testBuildGrid(){
+  public void testBuildGrid() {
     MarbleSolitaireModel t1 = new MarbleSolitaireModelImpl();
     assertEquals(CellState.Empty,
         ((MarbleSolitaireModelImpl) t1).board[3][3].state);
     assertEquals(CellState.Filled,
-        ((MarbleSolitaireModelImpl) t1).board[0][2].state);
-    assertEquals(CellState.Filled,
-        ((MarbleSolitaireModelImpl) t1).board[0][3].state);
+        ((MarbleSolitaireModelImpl) t1).board[2][2].state);
     assertEquals(CellState.Filled,
         ((MarbleSolitaireModelImpl) t1).board[3][1].state);
     assertEquals(CellState.Inaccessible,
@@ -30,6 +29,20 @@ public class MarbleSolitaireModelImplTest {
   }
 
   @Test
+  public void testBuildGrid2() {
+    MarbleSolitaireModel t2 = new MarbleSolitaireModelImpl(2, 2);
+    assertEquals(CellState.Empty,
+        ((MarbleSolitaireModelImpl) t2).board[2][2].state);
+  }
+
+  @Test
+  public void testBuildGrid3() {
+    MarbleSolitaireModel t3 = new MarbleSolitaireModelImpl(5, 5, 4);
+    assertEquals(CellState.Empty,
+        ((MarbleSolitaireModelImpl) t3).board[5][4].state);
+  }
+
+  @Test
   public void testMove() {
 
   }
@@ -41,14 +54,22 @@ public class MarbleSolitaireModelImplTest {
 
   @Test
   public void testGameState() {
-    /*assertEquals("    O O O    \n"
-        + "    O O O    \n"
-        + "O O O O O O O\n"
-        + "O O O _ O O O\n"
-        + "O O O O O O O\n"
-        + "    O O O    \n"
-        + "    O O O    ",
-    new MarbleSolitaireModelImpl().getGameState());*/
+    assertEquals("    o o o    \n"
+            + "    o o o    \n"
+            + "o o o o o o o\n"
+            + "o o o _ o o o\n"
+            + "o o o o o o o\n"
+            + "    o o o    \n"
+            + "    o o o    ",
+        new MarbleSolitaireModelImpl().getGameState());
+    assertEquals("    o _ o    \n"
+            + "    o o o    \n"
+            + "o o o o o o o\n"
+            + "o o o o o o o\n"
+            + "o o o o o o o\n"
+            + "    o o o    \n"
+            + "    o o o    ",
+        new MarbleSolitaireModelImpl(0, 3).getGameState());
   }
 
   @Test
@@ -72,8 +93,7 @@ public class MarbleSolitaireModelImplTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidConstructorFour() {
-    //Rewrite these
-    /*new MarbleSolitaireModelImpl(4, 5, 5);
-    new MarbleSolitaireModelImpl(5, 5, 6);*/
+    new MarbleSolitaireModelImpl(4, 6, 6);
+    new MarbleSolitaireModelImpl(5, 0, 1);
   }
 }
