@@ -1,5 +1,4 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import cs3500.marblesolitaire.model.hw02.CellState;
@@ -12,8 +11,8 @@ public class MarbleSolitaireModelImplTest {
   public void testBuildGrid() {
     MarbleSolitaireModelImpl game = new MarbleSolitaireModelImpl();
     assertEquals(CellState.Empty, game.board[3][3].state);
-    assertEquals(CellState.Filled, game.board[2][2].state);
-    assertEquals(CellState.Filled, game.board[3][1].state);
+    assertEquals(CellState.Marble, game.board[2][2].state);
+    assertEquals(CellState.Marble, game.board[3][1].state);
     assertEquals(CellState.Inaccessible, game.board[0][0].state);
     assertEquals(CellState.Inaccessible, game.board[1][1].state);
     assertEquals(CellState.Inaccessible, game.board[5][1].state);
@@ -42,10 +41,10 @@ public class MarbleSolitaireModelImplTest {
         5, 3, 3, 3, game4.board[4][3]));
   }
 
-  @Test
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidMove() {
     MarbleSolitaireModelImpl game5 = new MarbleSolitaireModelImpl();
-    assertFalse(game5.isValidMove(0, 2, 0, 4, game5.board[0][3]));
+    game5.isValidMove(0, 2, 0, 4, game5.board[0][3]);
   }
 
   @Test
@@ -60,6 +59,53 @@ public class MarbleSolitaireModelImplTest {
             + "    O O O\n"
             + "    O O O",
         game6.getGameState());
+
+    game6.move(3,2, 3, 4);
+    assertEquals("    O O O\n"
+            + "    O O O\n"
+            + "O O O O O O O\n"
+            + "O O _ _ O _ O\n"
+            + "O O O O O O O\n"
+            + "    O O O\n"
+            + "    O O O",
+        game6.getGameState());
+
+    game6.move(1,3, 3, 3);
+    assertEquals("    O O O\n"
+            + "    O _ O\n"
+            + "O O O _ O O O\n"
+            + "O O _ O O _ O\n"
+            + "O O O O O O O\n"
+            + "    O O O\n"
+            + "    O O O",
+        game6.getGameState());
+
+    game6.move(5,2, 3, 2);
+    assertEquals("    O O O\n"
+            + "    O _ O\n"
+            + "O O O _ O O O\n"
+            + "O O O O O _ O\n"
+            + "O O _ O O O O\n"
+            + "    _ O O\n"
+            + "    O O O",
+        game6.getGameState());
+
+    MarbleSolitaireModelImpl a = new MarbleSolitaireModelImpl(5, 0, 4);
+    a.move(0, 6, 0, 4);
+    assertEquals("        O _ _ O O\n"
+        + "        O O O O O\n"
+        + "        O O O O O\n"
+        + "        O O O O O\n"
+        + "O O O O O O O O O O O O O\n"
+        + "O O O O O O O O O O O O O\n"
+        + "O O O O O O O O O O O O O\n"
+        + "O O O O O O O O O O O O O\n"
+        + "O O O O O O O O O O O O O\n"
+        + "        O O O O O\n"
+        + "        O O O O O\n"
+        + "        O O O O O\n"
+        + "        O O O O O"
+        , a.getGameState());
   }
 
   @Test(expected = IllegalArgumentException.class)

@@ -97,7 +97,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
             || (i > (this.armThickness * 2 - 2) && j < (this.armThickness - 1))) {
           this.board[i][j] = new Cell(i, j, CellState.Inaccessible);
         } else {
-          this.board[i][j] = new Cell(i, j, CellState.Filled);
+          this.board[i][j] = new Cell(i, j, CellState.Marble);
         }
       }
     }
@@ -110,29 +110,34 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @param fromCol the col from which the player is moving.
    * @param toRow is the row to which the player is moving.
    * @param toCol is the col to which the player is moving.
-   * @param midCell is the cell between the two points
+   * @param midCell is the cell between the two movement points.
    * @return boolean that says whether this is a valid move or not.
    */
-  public boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell) {
-    return this.board[fromRow][fromCol].state.equals(CellState.Filled)
-        && this.board[toRow][toRow].state.equals(CellState.Empty)
-        && midCell.state.equals(CellState.Filled)
-        && ((Math.abs(toRow - fromRow) == 2 && Math.abs(toCol - fromCol) == 0)
-        || (Math.abs(toRow - fromRow) == 0 && Math.abs(toCol - fromCol) == 2));
+  public boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell)
+      throws IllegalArgumentException {
+    if (this.board[fromRow][fromCol].state != CellState.Marble) {
+      throw new IllegalArgumentException("The cell you are moving from must have a marble");
+    } else if (this.board[toRow][toCol].state != CellState.Empty) {
+      throw new IllegalArgumentException("This cell you are moving to must be empty");
+    } else if (midCell.state != CellState.Marble) {
+      throw new IllegalArgumentException("The cell between your movement points must "
+          + "have a marble");
+    } else if ((Math.abs(toCol - fromCol) != 2 && Math.abs(toRow - fromRow) == 0)
+        || (Math.abs(toCol - fromCol) == 0 && Math.abs(toRow - fromRow) != 2) ) {
+      throw new IllegalArgumentException("The distance between cells must be 2 and must "
+          + "be horizontal or vertical");
+    } else {
+      return true;
+    }
   }
 
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
     Cell midCell = this.board[fromRow + (toRow - fromRow) / 2][fromCol + (toCol - fromCol) / 2];
-    if (fromRow < 0 || fromCol < 0 || toRow < 0 || toCol < 0 || fromRow >= board.length
-        || fromCol >= board.length || toRow >= board.length || toCol >= board.length) {
-      throw new ArrayIndexOutOfBoundsException("Invalid move, one or more cells are out of bounds");
-    } else if (this.isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
+    if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
       this.board[fromRow][fromCol].state = CellState.Empty;
       midCell.state = CellState.Empty;
-      this.board[toRow][toCol].state = CellState.Filled;
-    } else {
-      throw new IllegalArgumentException("Invalid move, one or more cells are inaccessible");
+      this.board[toRow][toCol].state = CellState.Marble;
     }
   }
 
@@ -148,10 +153,10 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
       for (int j = 0; j < (this.armThickness * 3) - 2; j++) {
         if (this.board[i][j].state.equals(CellState.Empty)) {
           state += "_";
-        } else if (this.board[i][j].state.equals(CellState.Filled)) {
+        } else if (this.board[i][j].state.equals(CellState.Marble)) {
           state += "O";
         } else if (this.board[i][j].state.equals(CellState.Inaccessible)
-            && j + 2 < this.board.length) {
+            && j < (this.armThickness * 2) - 2) {
           state += " ";
         }
         if (j + 1 < this.board.length && this.board[i][j + 1].state != CellState.Inaccessible) {
@@ -173,7 +178,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     int score = 0;
     for (int i = 0; i < (this.armThickness * 3) - 2; i++) {
       for (int j = 0; j < (this.armThickness * 3) - 2; j++) {
-        if (this.board[i][j].state.equals(CellState.Filled)) {
+        if (this.board[i][j].state.equals(CellState.Marble)) {
           score += 1;
         }
       }
