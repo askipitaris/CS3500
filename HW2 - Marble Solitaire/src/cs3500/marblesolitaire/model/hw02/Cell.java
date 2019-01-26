@@ -9,11 +9,11 @@ public class Cell {
   public CellState state;
 
   /**
-   * Constructs a cell.
+   * Constructs a cell that stores a location in a 2D array.
    *
-   * @param row       ... The x position of this Cell.
-   * @param col       ... The y position of this Cell.
-   * @param state     ... The {@link CellState} of this Cell.
+   * @param row is the 'y' position of the cell on a grid.
+   * @param col is the 'x' positon of the cell on a grid.
+   * @param state is the {@link CellState} of this Cell.
    */
   public Cell(int row, int col, CellState state) {
     this.row = row;

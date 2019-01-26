@@ -143,7 +143,20 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
 
   @Override
   public boolean isGameOver() {
-    return this.getScore() <= 1;
+    for (int i = 0; i < this.board.length; i++) {
+      for (int j = 0; j < this.board.length; j++) {
+        if (this.isValidMove(i, j, i + 2, j, this.board[i + 1][j])) {
+          return false;
+        } else if (this.isValidMove(i, j, i - 2, j, this.board[i - 1][j])) {
+          return false;
+        } else if ((this.isValidMove(i, j, i , j + 2, this.board[i][j + 2]))) {
+          return false;
+        } else if ((this.isValidMove(i, j, i - 2, j, this.board[i - 1][j]))) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   @Override
