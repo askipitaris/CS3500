@@ -10,41 +10,41 @@ public class MarbleSolitaireModelImplTest {
   @Test
   public void testBuildGrid() {
     MarbleSolitaireModelImpl game = new MarbleSolitaireModelImpl();
-    assertEquals(CellState.Empty, game.board[3][3].state);
-    assertEquals(CellState.Marble, game.board[2][2].state);
-    assertEquals(CellState.Marble, game.board[3][1].state);
-    assertEquals(CellState.Inaccessible, game.board[0][0].state);
-    assertEquals(CellState.Inaccessible, game.board[1][1].state);
-    assertEquals(CellState.Inaccessible, game.board[5][1].state);
-    assertEquals(CellState.Inaccessible, game.board[1][5].state);
-    assertEquals(CellState.Inaccessible, game.board[5][5].state);
+    assertEquals(CellState.Empty, game.getBoard(3, 3).getState());
+    assertEquals(CellState.Marble, game.getBoard(2, 2).getState());
+    assertEquals(CellState.Marble, game.getBoard(3, 1).getState());
+    assertEquals(CellState.Inaccessible, game.getBoard(0, 0).getState());
+    assertEquals(CellState.Inaccessible, game.getBoard(1, 1).getState());
+    assertEquals(CellState.Inaccessible, game.getBoard(5, 1).getState());
+    assertEquals(CellState.Inaccessible, game.getBoard(1, 5).getState());
+    assertEquals(CellState.Inaccessible, game.getBoard(5, 5).getState());
   }
 
   @Test
   public void testBuildGrid2() {
     MarbleSolitaireModelImpl game2 = new MarbleSolitaireModelImpl(2, 2);
-    assertEquals(CellState.Empty, game2.board[2][2].state);
+    assertEquals(CellState.Empty, game2.getBoard(2, 2).getState());
   }
 
   @Test
   public void testBuildGrid3() {
     MarbleSolitaireModelImpl game3 = new MarbleSolitaireModelImpl(5, 5, 4);
-    assertEquals(CellState.Empty, game3.board[5][4].state);
+    assertEquals(CellState.Empty, game3.getBoard(5, 4).getState());
   }
 
   @Test
   public void testIsValidMove() {
     MarbleSolitaireModelImpl game4 = new MarbleSolitaireModelImpl();
     assertTrue(((MarbleSolitaireModelImpl) game4).isValidMove(
-        3, 5, 3, 3, game4.board[3][4]));
+        3, 5, 3, 3, game4.getBoard(3, 4)));
     assertTrue(((MarbleSolitaireModelImpl) game4).isValidMove(
-        5, 3, 3, 3, game4.board[4][3]));
+        5, 3, 3, 3, game4.getBoard(4, 3)));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidMove() {
     MarbleSolitaireModelImpl game5 = new MarbleSolitaireModelImpl();
-    game5.isValidMove(0, 2, 0, 4, game5.board[0][3]);
+    game5.isValidMove(0, 2, 0, 4, game5.getBoard(0, 3));
   }
 
   @Test
@@ -118,6 +118,7 @@ public class MarbleSolitaireModelImplTest {
   public void testMoveOutOfBounds() {
     MarbleSolitaireModelImpl game8 = new MarbleSolitaireModelImpl();
     game8.move(0, 2, -2, 2);
+    game8.move(15, 0, 3, 5);
   }
 
   @Test

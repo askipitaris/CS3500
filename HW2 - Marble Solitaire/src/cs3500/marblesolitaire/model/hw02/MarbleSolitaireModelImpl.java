@@ -1,15 +1,15 @@
 package cs3500.marblesolitaire.model.hw02;
 
 /**
- * Implementation of possible operations in Marble Solitaire. One instace of the class represents
+ * Implementation of possible operations in Marble Solitaire. One instance of the class represents
  * one instance of the game.
  */
 public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
 
-  public Cell[][] board;
-  int armThickness;
-  int sRow;
-  int sCol;
+  private Cell[][] board;
+  private int armThickness;
+  private int sRow;
+  private int sCol;
 
   /**
    * Constructor 1: Constructs a game using no arguments. Creates a game with an arm thickness of 3,
@@ -104,6 +104,17 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   }
 
   /**
+   * Returns this cell that exists at the given row and col.
+   *
+   * @param row is the specified row.
+   * @param col is the specified col.
+   * @return is the cell at the specified location.
+   */
+  public Cell getBoard(int row, int col) {
+    return this.board[row][col];
+  }
+
+  /**
    * Determines if the given move is valid.
    *
    * @param fromRow is the row from which the player is moving.
@@ -115,17 +126,23 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    */
   public boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell)
       throws IllegalArgumentException {
-    if (this.board[fromRow][fromCol].state != CellState.Marble) {
+    // Implement try, catch for everything
+    if (this.board[fromRow][fromCol].getState() != CellState.Marble) {
       throw new IllegalArgumentException("The cell you are moving from must have a marble");
-    } else if (this.board[toRow][toCol].state != CellState.Empty) {
+    } else if (this.board[toRow][toCol].getState() != CellState.Empty) {
       throw new IllegalArgumentException("This cell you are moving to must be empty");
-    } else if (midCell.state != CellState.Marble) {
+    } else if (midCell.getState() != CellState.Marble) {
       throw new IllegalArgumentException("The cell between your movement points must "
           + "have a marble");
     } else if ((Math.abs(toCol - fromCol) != 2 && Math.abs(toRow - fromRow) == 0)
         || (Math.abs(toCol - fromCol) == 0 && Math.abs(toRow - fromRow) != 2) ) {
       throw new IllegalArgumentException("The distance between cells must be 2 and must "
           + "be horizontal or vertical");
+    } else if (fromRow < 0 || fromRow >= this.board.length || fromCol < 0
+        || fromCol >= this.board.length) {
+      throw new IllegalArgumentException("From cell must be on the board");
+    } else if (toRow < 0 || toRow >= this.board.length || toCol < 0 || toCol >= this.board.length) {
+      throw new IllegalArgumentException("To cell must be on the board");
     } else {
       return true;
     }
@@ -135,14 +152,25 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
     Cell midCell = this.board[fromRow + (toRow - fromRow) / 2][fromCol + (toCol - fromCol) / 2];
     if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
-      this.board[fromRow][fromCol].state = CellState.Empty;
-      midCell.state = CellState.Empty;
-      this.board[toRow][toCol].state = CellState.Marble;
+      this.board[fromRow][fromCol].setState(CellState.Empty);
+      midCell.setState(CellState.Empty);
+      this.board[toRow][toCol].setState(CellState.Marble);
     }
+    /*try {
+      if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
+        this.board[fromRow][fromCol].setState(CellState.Empty);
+        midCell.setState(CellState.Empty);
+        this.board[toRow][toCol].setState(CellState.Marble);
+      }
+    }
+    catch (IllegalArgumentException e) {
+      System.out.println("Invalid move.");
+    }*/
   }
 
   @Override
   public boolean isGameOver() {
+    /*
     for (int i = 0; i < this.board.length; i++) {
       for (int j = 0; j < this.board.length; j++) {
         if (this.isValidMove(i, j, i + 2, j, this.board[i + 1][j])) {
@@ -157,6 +185,8 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
       }
     }
     return true;
+     */
+    return this.getScore() <= 1;
   }
 
   @Override
@@ -164,18 +194,19 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     String state = "";
     for (int i = 0; i < (this.armThickness * 3) - 2; i++) {
       for (int j = 0; j < (this.armThickness * 3) - 2; j++) {
-        if (this.board[i][j].state.equals(CellState.Empty)) {
+        if (this.board[i][j].getState().equals(CellState.Empty)) {
           state += "_";
-        } else if (this.board[i][j].state.equals(CellState.Marble)) {
+        } else if (this.board[i][j].getState().equals(CellState.Marble)) {
           state += "O";
-        } else if (this.board[i][j].state.equals(CellState.Inaccessible)
+        } else if (this.board[i][j].getState().equals(CellState.Inaccessible)
             && j < (this.armThickness * 2) - 2) {
           state += " ";
         }
-        if (j + 1 < this.board.length && this.board[i][j + 1].state != CellState.Inaccessible) {
+        if (j + 1 < this.board.length
+            && this.board[i][j + 1].getState() != CellState.Inaccessible) {
           state += " ";
         } else if (j < (this.armThickness * 2) - 2
-            && this.board[i][j + 1].state.equals(CellState.Inaccessible)) {
+            && this.board[i][j + 1].getState().equals(CellState.Inaccessible)) {
           state += " ";
         }
       }
@@ -191,7 +222,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     int score = 0;
     for (int i = 0; i < (this.armThickness * 3) - 2; i++) {
       for (int j = 0; j < (this.armThickness * 3) - 2; j++) {
-        if (this.board[i][j].state.equals(CellState.Marble)) {
+        if (this.board[i][j].getState().equals(CellState.Marble)) {
           score += 1;
         }
       }
