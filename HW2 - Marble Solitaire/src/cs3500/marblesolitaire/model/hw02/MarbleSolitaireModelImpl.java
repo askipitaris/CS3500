@@ -31,7 +31,8 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   public MarbleSolitaireModelImpl(int sRow, int sCol) {
     if ((sRow < 2 && sCol < 2) || (sRow > 4 && sCol > 4)
         || (sRow < 2 && sCol > 4) || (sRow > 4 && sCol < 2)) {
-      throw new IllegalArgumentException("Invalid empty cell position (r,c)");
+      throw new IllegalArgumentException(String.format("Invalid empty cell position (%d, %d)",
+          sRow, sCol));
     } else {
       this.armThickness = 3;
       this.sRow = sRow;
@@ -73,7 +74,8 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
         || (sRow > (armThickness * 2 - 2) && sCol > (armThickness * 2 - 2))
         || (sRow < (armThickness - 1) && sCol > (armThickness * 2 - 2))
         || (sRow > (armThickness * 2 - 2) && sCol < (armThickness - 1))) {
-      throw new IllegalArgumentException("Invalid empty cell position (r,c)");
+      throw new IllegalArgumentException(String.format("Invalid empty cell position (%d, %d)",
+          sRow, sCol));
     } else {
       this.sRow = sRow;
       this.sCol = sCol;
@@ -82,7 +84,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   }
 
   /**
-   * Builds a grid of cells in a cross shape. Makes sure that all CellState are set appropriatly by
+   * Builds a grid of cells in a cross shape. Makes sure that all CellState are set appropriately by
    * checking where they are in the 2D array.
    */
   public void buildGrid() {
@@ -110,7 +112,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @param col is the specified col.
    * @return is the cell at the specified location.
    */
-  public Cell getBoard(int row, int col) {
+  public Cell getCell(int row, int col) {
     return this.board[row][col];
   }
 
@@ -141,15 +143,16 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     if (fromRow >= 0 && fromRow < this.board.length && fromCol >= 0 && fromCol < this.board.length
         && toRow >= 0 && toRow < this.board.length && toCol >= 0 && toCol < this.board.length) {
       midCell = this.board[fromRow + (toRow - fromRow) / 2][fromCol + (toCol - fromCol) / 2];
+      if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
+        this.board[fromRow][fromCol].setState(CellState.Empty);
+        midCell.setState(CellState.Empty);
+        this.board[toRow][toCol].setState(CellState.Marble);
+      } else {
+        throw new IllegalArgumentException("Invalid movement");
+      }
     } else {
-      throw new IllegalArgumentException("Invalid start or end cell");
-    }
-    if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
-      this.board[fromRow][fromCol].setState(CellState.Empty);
-      midCell.setState(CellState.Empty);
-      this.board[toRow][toCol].setState(CellState.Marble);
-    } else {
-      throw new IllegalArgumentException("Invalid move");
+      throw new IllegalArgumentException(String.format("Invalid start cell (%d, %d) "
+          + "or end cell (%d, %d)", fromRow, fromCol, toRow, toCol));
     }
   }
 
@@ -161,25 +164,15 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   public boolean outOfMoves() {
     for (int i = 0; i < this.board.length; i++) {
       for (int j = 0; j < this.board.length; j++) {
-        if (i + 2 < this.board.length) {
-          if (this.isValidMove(i, j, i + 2, j, this.board[i + 1][j])) {
-            return false;
-          }
-        }
-        if (i - 2 >= 0) {
-          if (this.isValidMove(i, j, i - 2, j, this.board[i - 1][j])) {
-            return false;
-          }
-        }
-        if (j + 2 < this.board.length) {
-          if (this.isValidMove(i, j, i, j + 2, this.board[i][j + 1])) {
-            return false;
-          }
-        }
-        if (j - 2 >= 0) {
-          if (this.isValidMove(i, j, i, j - 2, this.board[i][j - 1])) {
-            return false;
-          }
+        if ((i + 2 < this.board.length
+            && this.isValidMove(i, j, i + 2, j, this.board[i + 1][j]))
+            || (i - 2 >= 0
+            && this.isValidMove(i, j, i - 2, j, this.board[i - 1][j]))
+            || (j + 2 < this.board.length
+            && this.isValidMove(i, j, i, j + 2, this.board[i][j + 1]))
+            || (j - 2 >= 0
+            && this.isValidMove(i, j, i, j - 2, this.board[i][j - 1]))) {
+          return false;
         }
       }
     }
@@ -204,11 +197,10 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
             && j < (this.armThickness * 2) - 2) {
           state += " ";
         }
-        if (j + 1 < this.board.length
-            && this.board[i][j + 1].getState() != CellState.Inaccessible) {
-          state += " ";
-        } else if (j < (this.armThickness * 2) - 2
-            && this.board[i][j + 1].getState().equals(CellState.Inaccessible)) {
+        if ((j + 1 < this.board.length
+            && this.board[i][j + 1].getState() != CellState.Inaccessible)
+            || (j < (this.armThickness * 2) - 2
+            && this.board[i][j + 1].getState().equals(CellState.Inaccessible))) {
           state += " ";
         }
       }
