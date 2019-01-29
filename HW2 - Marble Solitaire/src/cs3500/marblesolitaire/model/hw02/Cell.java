@@ -45,7 +45,7 @@ public class Cell {
   }
 
   /**
-   * Returns the col of this cell.
+   * Returns the col of this Cell.
    */
   public int getCol() {
     return this.col;

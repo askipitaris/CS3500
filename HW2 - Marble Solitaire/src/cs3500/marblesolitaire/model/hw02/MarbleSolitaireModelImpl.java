@@ -124,69 +124,71 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @param midCell is the cell between the two movement points.
    * @return boolean that says whether this is a valid move or not.
    */
-  public boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell)
-      throws IllegalArgumentException {
-    // Implement try, catch for everything
-    if (this.board[fromRow][fromCol].getState() != CellState.Marble) {
-      throw new IllegalArgumentException("The cell you are moving from must have a marble");
-    } else if (this.board[toRow][toCol].getState() != CellState.Empty) {
-      throw new IllegalArgumentException("This cell you are moving to must be empty");
-    } else if (midCell.getState() != CellState.Marble) {
-      throw new IllegalArgumentException("The cell between your movement points must "
-          + "have a marble");
-    } else if ((Math.abs(toCol - fromCol) != 2 && Math.abs(toRow - fromRow) == 0)
-        || (Math.abs(toCol - fromCol) == 0 && Math.abs(toRow - fromRow) != 2) ) {
-      throw new IllegalArgumentException("The distance between cells must be 2 and must "
-          + "be horizontal or vertical");
-    } else if (fromRow < 0 || fromRow >= this.board.length || fromCol < 0
-        || fromCol >= this.board.length) {
-      throw new IllegalArgumentException("From cell must be on the board");
-    } else if (toRow < 0 || toRow >= this.board.length || toCol < 0 || toCol >= this.board.length) {
-      throw new IllegalArgumentException("To cell must be on the board");
-    } else {
-      return true;
-    }
+  public boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell) {
+    return !((fromRow < 0 || fromRow >= this.board.length || fromCol < 0
+        || fromCol >= this.board.length)
+        || (toRow < 0 || toRow >= this.board.length || toCol < 0 || toCol >= this.board.length)
+        || (this.board[fromRow][fromCol].getState() != CellState.Marble)
+        || (this.board[toRow][toCol].getState() != CellState.Empty)
+        || (midCell.getState() != CellState.Marble)
+        || ((Math.abs(toCol - fromCol) != 2 && Math.abs(toRow - fromRow) == 0)
+        || (Math.abs(toCol - fromCol) == 0 && Math.abs(toRow - fromRow) != 2)));
   }
 
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
-    Cell midCell = this.board[fromRow + (toRow - fromRow) / 2][fromCol + (toCol - fromCol) / 2];
+    Cell midCell;
+    if (fromRow >= 0 && fromRow < this.board.length && fromCol >= 0 && fromCol < this.board.length
+        && toRow >= 0 && toRow < this.board.length && toCol >= 0 && toCol < this.board.length) {
+      midCell = this.board[fromRow + (toRow - fromRow) / 2][fromCol + (toCol - fromCol) / 2];
+    } else {
+      throw new IllegalArgumentException("Invalid start or end cell");
+    }
     if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
       this.board[fromRow][fromCol].setState(CellState.Empty);
       midCell.setState(CellState.Empty);
       this.board[toRow][toCol].setState(CellState.Marble);
+    } else {
+      throw new IllegalArgumentException("Invalid move");
     }
-    /*try {
-      if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
-        this.board[fromRow][fromCol].setState(CellState.Empty);
-        midCell.setState(CellState.Empty);
-        this.board[toRow][toCol].setState(CellState.Marble);
-      }
-    }
-    catch (IllegalArgumentException e) {
-      System.out.println("Invalid move.");
-    }*/
   }
 
-  @Override
-  public boolean isGameOver() {
-    /*
+  /**
+   * Checks if there are any valid moves left on the board.
+   *
+   * @return true if you are out of moves, or false if there is at least one valid move.
+   */
+  public boolean outOfMoves() {
     for (int i = 0; i < this.board.length; i++) {
       for (int j = 0; j < this.board.length; j++) {
-        if (this.isValidMove(i, j, i + 2, j, this.board[i + 1][j])) {
-          return false;
-        } else if (this.isValidMove(i, j, i - 2, j, this.board[i - 1][j])) {
-          return false;
-        } else if ((this.isValidMove(i, j, i , j + 2, this.board[i][j + 2]))) {
-          return false;
-        } else if ((this.isValidMove(i, j, i - 2, j, this.board[i - 1][j]))) {
-          return false;
+        if (i + 2 < this.board.length) {
+          if (this.isValidMove(i, j, i + 2, j, this.board[i + 1][j])) {
+            return false;
+          }
+        }
+        if (i - 2 >= 0) {
+          if (this.isValidMove(i, j, i - 2, j, this.board[i - 1][j])) {
+            return false;
+          }
+        }
+        if (j + 2 < this.board.length) {
+          if (this.isValidMove(i, j, i, j + 2, this.board[i][j + 1])) {
+            return false;
+          }
+        }
+        if (j - 2 >= 0) {
+          if (this.isValidMove(i, j, i, j - 2, this.board[i][j - 1])) {
+            return false;
+          }
         }
       }
     }
     return true;
-     */
-    return this.getScore() <= 1;
+  }
+
+  @Override
+  public boolean isGameOver() {
+    return this.getScore() <= 1 || this.outOfMoves();
   }
 
   @Override

@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import cs3500.marblesolitaire.model.hw02.CellState;
@@ -35,16 +36,22 @@ public class MarbleSolitaireModelImplTest {
   @Test
   public void testIsValidMove() {
     MarbleSolitaireModelImpl game4 = new MarbleSolitaireModelImpl();
-    assertTrue(((MarbleSolitaireModelImpl) game4).isValidMove(
+    assertTrue(game4.isValidMove(
         3, 5, 3, 3, game4.getBoard(3, 4)));
-    assertTrue(((MarbleSolitaireModelImpl) game4).isValidMove(
+    assertTrue(game4.isValidMove(
         5, 3, 3, 3, game4.getBoard(4, 3)));
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void testOutOfBoundsMove() {
+    MarbleSolitaireModelImpl game4 = new MarbleSolitaireModelImpl();
+    game4.move(-1, 3, 1, 3);
+  }
+
+  @Test
   public void testInvalidMove() {
     MarbleSolitaireModelImpl game5 = new MarbleSolitaireModelImpl();
-    game5.isValidMove(0, 2, 0, 4, game5.getBoard(0, 3));
+    assertFalse(game5.isValidMove(0, 2, 0, 4, game5.getBoard(0, 3)));
   }
 
   @Test
@@ -104,8 +111,7 @@ public class MarbleSolitaireModelImplTest {
         + "        O O O O O\n"
         + "        O O O O O\n"
         + "        O O O O O\n"
-        + "        O O O O O"
-        , a.getGameState());
+        + "        O O O O O", a.getGameState());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -114,7 +120,7 @@ public class MarbleSolitaireModelImplTest {
     game7.move(0, 2, 0, 4);
   }
 
-  @Test(expected = ArrayIndexOutOfBoundsException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testMoveOutOfBounds() {
     MarbleSolitaireModelImpl game8 = new MarbleSolitaireModelImpl();
     game8.move(0, 2, -2, 2);
@@ -124,8 +130,51 @@ public class MarbleSolitaireModelImplTest {
   @Test
   public void testIsGameOver() {
     MarbleSolitaireModelImpl game9 = new MarbleSolitaireModelImpl();
-    assertEquals(false,
-        game9.isGameOver());
+    assertFalse(game9.isGameOver());
+    game9.move(3, 1, 3, 3);
+    assertFalse(game9.isGameOver());
+    game9.move(3, 4, 3, 2);
+    assertFalse(game9.isGameOver());
+    game9.move(5, 3, 3, 3);
+    assertFalse(game9.isGameOver());
+    game9.move(3, 2, 3, 4);
+    assertFalse(game9.isGameOver());
+    game9.move(4, 1, 4, 3);
+    assertFalse(game9.isGameOver());
+    game9.move(4, 4, 4, 2);
+    assertFalse(game9.isGameOver());
+    game9.move(6, 4, 4, 4);
+    assertFalse(game9.isGameOver());
+    game9.move(6, 2, 6, 4);
+    assertFalse(game9.isGameOver());
+    game9.move(4, 2, 6, 2);
+    assertFalse(game9.isGameOver());
+    game9.move(4, 5, 4, 3);
+    assertFalse(game9.isGameOver());
+    game9.move(3, 5, 3, 3);
+    assertFalse(game9.isGameOver());
+    game9.move(3, 3, 5, 3);
+    assertFalse(game9.isGameOver());
+    game9.move(1, 2, 3, 2);
+    assertFalse(game9.isGameOver());
+    game9.move(1, 3, 3, 3);
+    assertFalse(game9.isGameOver());
+    game9.move(3, 3, 3, 1);
+    assertFalse(game9.isGameOver());
+    game9.move(3, 0, 3, 2);
+    assertFalse(game9.isGameOver());
+    game9.move(2, 0, 2, 2);
+    assertFalse(game9.isGameOver());
+    game9.move(2, 2, 4, 2);
+    assertFalse(game9.isGameOver());
+    game9.move(1, 4, 3, 4);
+    assertFalse(game9.isGameOver());
+    game9.move(2, 6, 2, 4);
+    assertFalse(game9.isGameOver());
+    game9.move(2, 4, 4, 4);
+    assertFalse(game9.isGameOver());
+    game9.move(4, 6, 2, 6);
+    assertTrue(game9.isGameOver());
   }
 
   @Test
