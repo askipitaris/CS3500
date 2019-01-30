@@ -1,7 +1,8 @@
 package cs3500.marblesolitaire.model.hw02;
 
 /**
- * Represents a Cell on the board and all operations possible for a cell.
+ * Represents a Cell on the board and all operations possible for a cell. A Cell has a row, col and
+ * state.
  */
 public class Cell {
   private int row;

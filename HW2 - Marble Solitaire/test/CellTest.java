@@ -5,7 +5,7 @@ import cs3500.marblesolitaire.model.hw02.CellState;
 import org.junit.Test;
 
 /**
- * Tests methods relating to Cell objects.
+ * Tests methods relating instances of Cells.
  */
 public class CellTest {
 

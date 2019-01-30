@@ -31,7 +31,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   public MarbleSolitaireModelImpl(int sRow, int sCol) {
     if ((sRow < 2 && sCol < 2) || (sRow > 4 && sCol > 4)
         || (sRow < 2 && sCol > 4) || (sRow > 4 && sCol < 2)) {
-      throw new IllegalArgumentException(String.format("Invalid empty cell position (%d, %d)",
+      throw new IllegalArgumentException(String.format("Invalid empty cell position (%d,%d)",
           sRow, sCol));
     } else {
       this.armThickness = 3;
@@ -74,7 +74,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
         || (sRow > (armThickness * 2 - 2) && sCol > (armThickness * 2 - 2))
         || (sRow < (armThickness - 1) && sCol > (armThickness * 2 - 2))
         || (sRow > (armThickness * 2 - 2) && sCol < (armThickness - 1))) {
-      throw new IllegalArgumentException(String.format("Invalid empty cell position (%d, %d)",
+      throw new IllegalArgumentException(String.format("Invalid empty cell position (%d,%d)",
           sRow, sCol));
     } else {
       this.sRow = sRow;
@@ -87,7 +87,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * Builds a grid of cells in a cross shape. Makes sure that all CellState are set appropriately by
    * checking where they are in the 2D array.
    */
-  public void buildGrid() {
+  private void buildGrid() {
     this.board = new Cell[this.armThickness * 3 - 2][this.armThickness * 3 - 2];
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board.length; j++) {
@@ -112,7 +112,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @param col is the specified col.
    * @return is the cell at the specified location.
    */
-  public Cell getCell(int row, int col) {
+  private Cell getCell(int row, int col) {
     return this.board[row][col];
   }
 
@@ -126,15 +126,16 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @param midCell is the cell between the two movement points.
    * @return boolean that says whether this is a valid move or not.
    */
-  public boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell) {
+  private boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell) {
     return !((fromRow < 0 || fromRow >= this.board.length || fromCol < 0
         || fromCol >= this.board.length)
         || (toRow < 0 || toRow >= this.board.length || toCol < 0 || toCol >= this.board.length)
         || (this.board[fromRow][fromCol].getState() != CellState.Marble)
         || (this.board[toRow][toCol].getState() != CellState.Empty)
         || (midCell.getState() != CellState.Marble)
-        || ((Math.abs(toCol - fromCol) != 2 && Math.abs(toRow - fromRow) == 0)
-        || (Math.abs(toCol - fromCol) == 0 && Math.abs(toRow - fromRow) != 2)));
+        || (Math.abs(toCol - fromCol) != 2 && toRow == fromRow)
+        || (toCol == fromCol && Math.abs(toRow - fromRow) != 2)
+        || (Math.abs(toCol - fromCol) >= 2 && (Math.abs(toRow - fromRow) >= 2)));
   }
 
   @Override
@@ -143,25 +144,21 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     if (fromRow >= 0 && fromRow < this.board.length && fromCol >= 0 && fromCol < this.board.length
         && toRow >= 0 && toRow < this.board.length && toCol >= 0 && toCol < this.board.length) {
       midCell = this.board[fromRow + (toRow - fromRow) / 2][fromCol + (toCol - fromCol) / 2];
-      if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
-        this.board[fromRow][fromCol].setState(CellState.Empty);
-        midCell.setState(CellState.Empty);
-        this.board[toRow][toCol].setState(CellState.Marble);
-      } else {
-        throw new IllegalArgumentException("Invalid movement");
-      }
     } else {
-      throw new IllegalArgumentException(String.format("Invalid start cell (%d, %d) "
-          + "or end cell (%d, %d)", fromRow, fromCol, toRow, toCol));
+      throw new IllegalArgumentException(String.format("Invalid start cell (%d,%d) or end cell "
+          + "(%d,%d)", fromRow, fromCol, toRow, toCol));
+    }
+    if (isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
+      this.board[fromRow][fromCol].setState(CellState.Empty);
+      midCell.setState(CellState.Empty);
+      this.board[toRow][toCol].setState(CellState.Marble);
+    } else {
+      throw new IllegalArgumentException("Invalid movement");
     }
   }
 
-  /**
-   * Checks if there are any valid moves left on the board.
-   *
-   * @return true if you are out of moves, or false if there is at least one valid move.
-   */
-  public boolean outOfMoves() {
+  @Override
+  public boolean isGameOver() {
     for (int i = 0; i < this.board.length; i++) {
       for (int j = 0; j < this.board.length; j++) {
         if ((i + 2 < this.board.length
@@ -177,11 +174,6 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
       }
     }
     return true;
-  }
-
-  @Override
-  public boolean isGameOver() {
-    return this.getScore() <= 1 || this.outOfMoves();
   }
 
   @Override
