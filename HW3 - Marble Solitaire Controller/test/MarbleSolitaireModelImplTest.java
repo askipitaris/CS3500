@@ -156,6 +156,7 @@ public class MarbleSolitaireModelImplTest {
     game9.move(2, 4, 4, 4);
     game9.move(4, 6, 2, 6);
     assertTrue(game9.isGameOver());
+    System.out.print(game9.getGameState());
   }
 
   @Test
