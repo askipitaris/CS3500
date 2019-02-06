@@ -23,64 +23,101 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
   public MarbleSolitaireControllerImpl(Readable rd, Appendable ap) throws IllegalArgumentException {
     if (rd == null || ap == null) {
       throw new IllegalArgumentException("Neither argument can be null.");
+    } else {
+      this.input = rd;
+      this.output = ap;
     }
-
-    this.input = rd;
-    this.output = ap;
   }
 
   @Override
   public void playGame(MarbleSolitaireModel model) {
-    char exit;
-    int fromRow;
-    int fromCol;
-    int toRow;
-    int toCol;
+    if (model == null) {
+      throw new IllegalArgumentException("Model cannot be null.");
+    }
 
     Scanner s = new Scanner(this.input);
-    fromRow = s.nextInt();
-    fromCol = s.nextInt();
-    toRow = s.nextInt();
-    toCol = s.nextInt();
-    //exit = s.next().charAt(0);
 
-    /*if (exit == 'q' || exit == 'Q') {
-      try {
-        this.output.append("Game quit!\nState of game when quit:\n");
-        this.output.append(model.getGameState()).append("\n");
-        this.output.append("Score: ").append(String.valueOf(model.getScore()));
-      } catch (IOException e) {
-        throw new IllegalStateException("Could not append game quite to output.");
-      }
-    } else*/ if (fromRow > 0 && fromCol > 0 && toRow > 0 && toCol > 0) {
-      try {
-        model.move(fromRow - 1, fromCol - 1, toRow - 1, toCol - 1);
-      } catch (IllegalArgumentException e) {
-        try {
-          this.output.append("Invalid move. Play again. ").append(e.getMessage());
-        } catch (IOException ignore) {
-          throw new IllegalStateException("Could not append movement error to output.");
+    int fromRow = 0;
+    int fromCol = 0;
+    int toRow = 0;
+    int toCol = 0;
+
+    while (s.hasNext()) {
+      char temp = s.next().charAt(0);
+
+      if (Character.isDigit(temp) && Integer.parseInt(Character.toString(temp)) > 0) {
+        if (fromRow <= 0) {
+          fromRow = Integer.parseInt(Character.toString(temp));
+        } else if (fromCol <= 0) {
+          fromCol = Integer.parseInt(Character.toString(temp));
+        } else if (toRow <= 0) {
+          toRow = Integer.parseInt(Character.toString(temp));
+        } else if (toCol <= 0) {
+          toCol = Integer.parseInt(Character.toString(temp));
         }
       }
 
-      if (model.isGameOver()) {
+      if (fromRow > 0 && fromCol > 0 && toRow > 0 && toCol > 0) {
+        try {
+          model.move(fromRow - 1, fromCol - 1, toRow - 1, toCol - 1);
+        } catch (IllegalArgumentException e) {
+          try {
+            this.output.append("Invalid move.\n");
+          } catch (IOException ioe) {
+            throw new IllegalStateException("Unable to append Invalid move");
+          }
+        }
+
+        fromRow = 0;
+        fromCol = 0;
+        toRow = 0;
+        toCol = 0;
+      }
+
+      if (temp == 'q' || temp == 'Q') {
+        try {
+          this.output.append("Game quit!\n").append("State of game when quit:\n");
+        } catch (IOException ioe) {
+          throw new IllegalStateException("Unable to append game quit");
+        }
+
+        this.appendGameState(model);
+        return;
+      } else if (model.isGameOver()) {
         try {
           this.output.append("Game over!\n");
-          this.output.append(model.getGameState()).append("\n");
-          this.output.append("Score: ").append(String.valueOf(model.getScore()));
-        } catch (IOException e) {
-          throw new IllegalStateException("Could not append game over to output.");
+        } catch (IOException ioe) {
+          throw new IllegalStateException("Unable to append game over");
         }
-      } else {
+        this.appendGameState(model);
+        return;
+      } else if (!Character.isDigit(temp)
+          || (Character.isDigit(temp) && Integer.parseInt(Character.toString(temp)) <= 0)) {
         try {
-          this.output.append(model.getGameState()).append("\n");
-          this.output.append("Score: ").append(String.valueOf(model.getScore()));
-        } catch (IOException e) {
-          throw new IllegalStateException("Could not append game state to output.");
+          this.output.append("Invalid value. Play again. '").append(temp)
+              .append("' is not valid.\n");
+        } catch (IOException ioe) {
+          throw new IllegalStateException("Unable to append Invalid value.");
         }
       }
-    } else {
-      throw new IllegalArgumentException("Invalid args.");
+    }
+
+    if (!model.isGameOver()) {
+      throw new IllegalStateException("Premature termination.");
+    }
+  }
+
+  /**
+   * Appends the current board and score to the output.
+   *
+   * @param model is the model currently being used.
+   */
+  private void appendGameState(MarbleSolitaireModel model) {
+    try {
+      this.output.append(model.getGameState()).append("\n").append("Score: ")
+          .append(String.valueOf(model.getScore()));
+    } catch (IOException ioe) {
+      throw new IllegalStateException("Unable to append move.");
     }
   }
 

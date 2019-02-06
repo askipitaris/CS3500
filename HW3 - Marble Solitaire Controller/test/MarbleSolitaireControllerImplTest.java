@@ -35,13 +35,14 @@ public class MarbleSolitaireControllerImplTest {
   @Test
   public void testMove() {
     MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
-    Readable in = new StringReader("4 6 4 4");
+    Readable in = new StringReader("4 6 4 4 q");
     Appendable out = new StringBuilder();
     MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
 
     exController.playGame(exModel);
 
-    assertEquals("    O O O\n"
+    assertEquals("Game quit!\nState of game when quit:\n"
+        + "    O O O\n"
         + "    O O O\n"
         + "O O O O O O O\n"
         + "O O O O _ _ O\n"
@@ -49,7 +50,7 @@ public class MarbleSolitaireControllerImplTest {
         + "    O O O\n"
         + "    O O O\nScore: 31", out.toString());
   }
-  
+
   @Test
   public void testMoveGameOver() {
     MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
@@ -95,10 +96,153 @@ public class MarbleSolitaireControllerImplTest {
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidMove() {
     MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
-    Readable in = new StringReader("0 7 3 7");
+
+    exModel.move(1, 3, 1, 5);
+  }
+
+  @Test
+  public void testInvalidMove2() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("1 3 1 5 q");
     Appendable out = new StringBuilder();
     MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
 
     exController.playGame(exModel);
+    assertEquals("Invalid move.\nGame quit!\nState of game when quit:\n"
+        + "    O O O\n"
+        + "    O O O\n"
+        + "O O O O O O O\n"
+        + "O O O _ O O O\n"
+        + "O O O O O O O\n"
+        + "    O O O\n"
+        + "    O O O\nScore: 32", out.toString());
+  }
+
+  @Test
+  public void testUnexpectedValue() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("4 e q");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Invalid value. Play again. 'e' is not valid.\n"
+        + "Game quit!\nState of game when quit:\n"
+        + "    O O O\n"
+        + "    O O O\n"
+        + "O O O O O O O\n"
+        + "O O O _ O O O\n"
+        + "O O O O O O O\n"
+        + "    O O O\n"
+        + "    O O O\nScore: 32", out.toString());
+  }
+
+  @Test
+  public void testUnexpectedValue2() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("4 e 6 4 4 q");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Invalid value. Play again. 'e' is not valid.\nGame quit!"
+        + "\nState of game when quit:\n"
+        + "    O O O\n"
+        + "    O O O\n"
+        + "O O O O O O O\n"
+        + "O O O O _ _ O\n"
+        + "O O O O O O O\n"
+        + "    O O O\n"
+        + "    O O O\nScore: 31", out.toString());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullModel() {
+    MarbleSolitaireModelImpl exModel = null;
+    Readable in = new StringReader("4 6 4 4");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testUnableToTransmit() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("4 6 4 4");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testUnableToReadInput() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+  }
+
+
+  @Test
+  public void testQuit() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("4 6 q 4");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Game quit!\nState of game when quit:\n"
+        + "    O O O\n"
+        + "    O O O\n"
+        + "O O O O O O O\n"
+        + "O O O _ O O O\n"
+        + "O O O O O O O\n"
+        + "    O O O\n"
+        + "    O O O\nScore: 32", out.toString());
+  }
+
+  @Test
+  public void testQuit2() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("4 Q 4 4");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Game quit!\nState of game when quit:\n"
+        + "    O O O\n"
+        + "    O O O\n"
+        + "O O O O O O O\n"
+        + "O O O _ O O O\n"
+        + "O O O O O O O\n"
+        + "    O O O\n"
+        + "    O O O\nScore: 32", out.toString());
+  }
+
+  @Test
+  public void testQuit3() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("4 6 4 4 Q");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Game quit!\nState of game when quit:\n"
+        + "    O O O\n"
+        + "    O O O\n"
+        + "O O O O O O O\n"
+        + "O O O O _ _ O\n"
+        + "O O O O O O O\n"
+        + "    O O O\n"
+        + "    O O O\nScore: 31", out.toString());
   }
 }
