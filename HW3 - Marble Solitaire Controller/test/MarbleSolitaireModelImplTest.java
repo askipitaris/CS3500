@@ -54,6 +54,13 @@ public class MarbleSolitaireModelImplTest {
     assertFalse(game5.isValidMove(0, 2, 0, 4, game5.getCell(0, 3)));
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testMoveDiffRow() {
+    MarbleSolitaireModelImpl exGame = new MarbleSolitaireModelImpl();
+
+    exGame.move(3, 5, 4, 3);
+  }
+
   @Test
   public void testMove() {
     MarbleSolitaireModelImpl game6 = new MarbleSolitaireModelImpl();
@@ -67,7 +74,7 @@ public class MarbleSolitaireModelImplTest {
             + "    O O O",
         game6.getGameState());
 
-    game6.move(3,2, 3, 4);
+    game6.move(3, 2, 3, 4);
     assertEquals("    O O O\n"
             + "    O O O\n"
             + "O O O O O O O\n"
@@ -77,7 +84,7 @@ public class MarbleSolitaireModelImplTest {
             + "    O O O",
         game6.getGameState());
 
-    game6.move(1,3, 3, 3);
+    game6.move(1, 3, 3, 3);
     assertEquals("    O O O\n"
             + "    O _ O\n"
             + "O O O _ O O O\n"
@@ -87,7 +94,7 @@ public class MarbleSolitaireModelImplTest {
             + "    O O O",
         game6.getGameState());
 
-    game6.move(5,2, 3, 2);
+    game6.move(5, 2, 3, 2);
     assertEquals("    O O O\n"
             + "    O _ O\n"
             + "O O O _ O O O\n"

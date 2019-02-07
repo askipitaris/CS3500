@@ -87,7 +87,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * Builds a grid of cells in a cross shape. Makes sure that all CellState are set appropriately by
    * checking where they are in the 2D array.
    */
-  public void buildGrid() {
+  private void buildGrid() {
     this.board = new Cell[this.armThickness * 3 - 2][this.armThickness * 3 - 2];
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board.length; j++) {
@@ -117,7 +117,11 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   }
 
   /**
-   * Determines if the given move is valid.
+   * Determines if the given move is valid. The first condition (111-111) checks if the given values
+   * are out of bounds. The second condition (137) checks if the cell you are moving from currently
+   * has a marble. The third (138) checks if the cell you are moving to is empty. The fourth (139)
+   * checks if each cell you are moving over has a marble. The fifth (140-141) checks to make sure
+   * each move has a distance of two and is not diagonal.
    *
    * @param fromRow is the row from which the player is moving.
    * @param fromCol the col from which the player is moving.
@@ -134,7 +138,8 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
         || (this.board[toRow][toCol].getState() != CellState.Empty)
         || (midCell.getState() != CellState.Marble)
         || ((Math.abs(toCol - fromCol) != 2 && Math.abs(toRow - fromRow) == 0)
-        || (Math.abs(toCol - fromCol) == 0 && Math.abs(toRow - fromRow) != 2)));
+        || (Math.abs(toCol - fromCol) == 0 && Math.abs(toRow - fromRow) != 2))
+        || (Math.abs(toCol - fromCol) != 0 && Math.abs(toRow - fromRow) != 0));
   }
 
   @Override
@@ -161,7 +166,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    *
    * @return true if you are out of moves, or false if there is at least one valid move.
    */
-  public boolean outOfMoves() {
+  private boolean outOfMoves() {
     for (int i = 0; i < this.board.length; i++) {
       for (int j = 0; j < this.board.length; j++) {
         if ((i + 2 < this.board.length
@@ -186,29 +191,29 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
 
   @Override
   public String getGameState() {
-    String state = "";
+    StringBuilder state = new StringBuilder();
     for (int i = 0; i < (this.armThickness * 3) - 2; i++) {
       for (int j = 0; j < (this.armThickness * 3) - 2; j++) {
         if (this.board[i][j].getState().equals(CellState.Empty)) {
-          state += "_";
+          state.append("_");
         } else if (this.board[i][j].getState().equals(CellState.Marble)) {
-          state += "O";
+          state.append("O");
         } else if (this.board[i][j].getState().equals(CellState.Inaccessible)
             && j < (this.armThickness * 2) - 2) {
-          state += " ";
+          state.append(" ");
         }
         if ((j + 1 < this.board.length
             && this.board[i][j + 1].getState() != CellState.Inaccessible)
             || (j < (this.armThickness * 2) - 2
             && this.board[i][j + 1].getState().equals(CellState.Inaccessible))) {
-          state += " ";
+          state.append(" ");
         }
       }
       if (i + 1 < this.board.length) {
-        state += "\n";
+        state.append("\n");
       }
     }
-    return state;
+    return state.toString();
   }
 
   @Override

@@ -43,17 +43,29 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
     int toCol = 0;
 
     while (s.hasNext()) {
-      char temp = s.next().charAt(0);
+      String nextValue = s.next();
 
-      if (Character.isDigit(temp) && Integer.parseInt(Character.toString(temp)) > 0) {
-        if (fromRow <= 0) {
-          fromRow = Integer.parseInt(Character.toString(temp));
-        } else if (fromCol <= 0) {
-          fromCol = Integer.parseInt(Character.toString(temp));
-        } else if (toRow <= 0) {
-          toRow = Integer.parseInt(Character.toString(temp));
-        } else if (toCol <= 0) {
-          toCol = Integer.parseInt(Character.toString(temp));
+      try {
+        if (Integer.parseInt(nextValue) > 0) {
+          if (fromRow <= 0) {
+            fromRow = Integer.parseInt(nextValue);
+          } else if (fromCol <= 0) {
+            fromCol = Integer.parseInt(nextValue);
+          } else if (toRow <= 0) {
+            toRow = Integer.parseInt(nextValue);
+          } else if (toCol <= 0) {
+            toCol = Integer.parseInt(nextValue);
+          }
+        }
+      } catch (NumberFormatException nfe) {
+        if (nextValue.equals("q") || nextValue.equals("Q")) {
+          this.appendText("Game quit!\n");
+          this.appendText("State of game when quit:\n");
+          this.appendText(model.getGameState() + "\n");
+          this.appendText("Score: " + model.getScore());
+          return;
+        } else {
+          this.appendText("Invalid value. Play again. \"" + nextValue + "\" is not valid.\n");
         }
       }
 
@@ -61,11 +73,7 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
         try {
           model.move(fromRow - 1, fromCol - 1, toRow - 1, toCol - 1);
         } catch (IllegalArgumentException e) {
-          try {
-            this.output.append("Invalid move.\n");
-          } catch (IOException ioe) {
-            throw new IllegalStateException("Unable to append Invalid move");
-          }
+          this.appendText("Invalid move.\n");
         }
 
         fromRow = 0;
@@ -74,31 +82,11 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
         toCol = 0;
       }
 
-      if (temp == 'q' || temp == 'Q') {
-        try {
-          this.output.append("Game quit!\n").append("State of game when quit:\n");
-        } catch (IOException ioe) {
-          throw new IllegalStateException("Unable to append game quit");
-        }
-
-        this.appendGameState(model);
+      if (model.isGameOver()) {
+        this.appendText("Game over!\n");
+        this.appendText(model.getGameState() + "\n");
+        this.appendText("Score: " + model.getScore());
         return;
-      } else if (model.isGameOver()) {
-        try {
-          this.output.append("Game over!\n");
-        } catch (IOException ioe) {
-          throw new IllegalStateException("Unable to append game over");
-        }
-        this.appendGameState(model);
-        return;
-      } else if (!Character.isDigit(temp)
-          || (Character.isDigit(temp) && Integer.parseInt(Character.toString(temp)) <= 0)) {
-        try {
-          this.output.append("Invalid value. Play again. '").append(temp)
-              .append("' is not valid.\n");
-        } catch (IOException ioe) {
-          throw new IllegalStateException("Unable to append Invalid value.");
-        }
       }
     }
 
@@ -108,28 +96,27 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
   }
 
   /**
-   * Appends the current board and score to the output.
+   * Adds the given text to the output.
    *
-   * @param model is the model currently being used.
+   * @param text is the text to be appended.
    */
-  private void appendGameState(MarbleSolitaireModel model) {
+  private void appendText(String text) {
     try {
-      this.output.append(model.getGameState()).append("\n").append("Score: ")
-          .append(String.valueOf(model.getScore()));
+      this.output.append(text);
     } catch (IOException ioe) {
-      throw new IllegalStateException("Unable to append move.");
+      throw new IllegalStateException("Unable to append text");
     }
   }
 
   /**
-   * Returns the input option.
+   * Returns the input field.
    */
   public Readable getInput() {
     return this.input;
   }
 
   /**
-   * Returns the output.
+   * Returns the output field.
    */
   public Appendable getOutput() {
     return this.output;
