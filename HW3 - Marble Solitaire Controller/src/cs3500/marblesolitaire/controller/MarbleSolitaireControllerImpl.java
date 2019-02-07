@@ -59,10 +59,10 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
         }
       } catch (NumberFormatException nfe) {
         if (nextValue.equals("q") || nextValue.equals("Q")) {
-          this.appendText("Game quit!\n");
-          this.appendText("State of game when quit:\n");
-          this.appendText(model.getGameState() + "\n");
-          this.appendText("Score: " + model.getScore());
+          this.appendText("Game quit!\n"
+              + "State of game when quit:\n"
+              + model.getGameState() + "\n"
+              + "Score: " + model.getScore());
           return;
         } else {
           this.appendText("Invalid value. Play again. \"" + nextValue + "\" is not valid.\n");
@@ -83,9 +83,9 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
       }
 
       if (model.isGameOver()) {
-        this.appendText("Game over!\n");
-        this.appendText(model.getGameState() + "\n");
-        this.appendText("Score: " + model.getScore());
+        this.appendText("Game over!\n"
+            + model.getGameState() + "\n"
+            + "Score: " + model.getScore());
         return;
       }
     }

@@ -52,32 +52,53 @@ public class MarbleSolitaireControllerImplTest {
   }
 
   @Test
+  public void testTwoMoves() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("4 6 4 4 2 5 4 5 q");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Game quit!\nState of game when quit:\n"
+        + "    O O O\n"
+        + "    O O _\n"
+        + "O O O O _ O O\n"
+        + "O O O O O _ O\n"
+        + "O O O O O O O\n"
+        + "    O O O\n"
+        + "    O O O\nScore: 30", out.toString());
+  }
+
+  @Test
   public void testMoveGameOver() {
     MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
 
-    exModel.move(3, 1, 3, 3);
-    exModel.move(3, 4, 3, 2);
-    exModel.move(5, 3, 3, 3);
-    exModel.move(3, 2, 3, 4);
-    exModel.move(4, 1, 4, 3);
-    exModel.move(4, 4, 4, 2);
-    exModel.move(6, 4, 4, 4);
-    exModel.move(6, 2, 6, 4);
-    exModel.move(4, 2, 6, 2);
-    exModel.move(4, 5, 4, 3);
-    exModel.move(3, 5, 3, 3);
-    exModel.move(3, 3, 5, 3);
-    exModel.move(1, 2, 3, 2);
-    exModel.move(1, 3, 3, 3);
-    exModel.move(3, 3, 3, 1);
-    exModel.move(3, 0, 3, 2);
-    exModel.move(2, 0, 2, 2);
-    exModel.move(2, 2, 4, 2);
-    exModel.move(1, 4, 3, 4);
-    exModel.move(2, 6, 2, 4);
-    exModel.move(2, 4, 4, 4);
+    Readable in = new StringReader("4 2 4 4 4 5 4 3 6 4 4 4 4 3 4 5 5 2 5 4 5 5 5 3 7 5 5 5 "
+        + "7 3 7 4 5 3 7 3 5 6 5 4 4 6 4 4 4 4 6 4 2 3 4 3 2 4 4 4 4 4 4 2 4 1 4 3 3 1 3 3 3 3 5 3 "
+        + "2 5 4 5 3 7 3 4 3 5 5 5 5 7 3 7");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
 
-    Readable in = new StringReader("5 7 3 7");
+    exController.playGame(exModel);
+
+    assertEquals("Game over!\n"
+        + "    O O O\n"
+        + "    _ _ _\n"
+        + "_ _ _ _ _ _ O\n"
+        + "_ _ _ _ _ _ _\n"
+        + "O _ O _ O _ _\n"
+        + "    _ O _\n"
+        + "    O _ O\nScore: 10", out.toString());
+  }
+
+  @Test
+  public void testMoveGameOverQuit() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+
+    Readable in = new StringReader("4 2 4 4 4 5 4 3 6 4 4 4 4 3 4 5 5 2 5 4 5 5 5 3 7 5 5 5 "
+        + "7 3 7 4 5 3 7 3 5 6 5 4 4 6 4 4 4 4 6 4 2 3 4 3 2 4 4 4 4 4 4 2 4 1 4 3 3 1 3 3 3 3 5 3 "
+        + "2 5 4 5 3 7 3 4 3 5 5 5 5 7 3 7 q");
     Appendable out = new StringBuilder();
     MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
 
@@ -101,7 +122,7 @@ public class MarbleSolitaireControllerImplTest {
   }
 
   @Test
-  public void testInvalidMove2() {
+  public void testInvalidMoveQuit() {
     MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
     Readable in = new StringReader("1 3 1 5 q");
     Appendable out = new StringBuilder();
@@ -139,7 +160,7 @@ public class MarbleSolitaireControllerImplTest {
   }
 
   @Test
-  public void testUnexpectedValue2() {
+  public void testRedoInput() {
     MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
     Readable in = new StringReader("4 e 6 4 4 q");
     Appendable out = new StringBuilder();
@@ -158,9 +179,29 @@ public class MarbleSolitaireControllerImplTest {
         + "    O O O\nScore: 31", out.toString());
   }
 
+  @Test
+  public void testRedoInput2() {
+    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
+    Readable in = new StringReader("4 6 x 4 4 q");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Invalid value. Play again. \"x\" is not valid.\nGame quit!\n"
+        + "State of game when quit:\n"
+        + "    O O O\n"
+        + "    O O O\n"
+        + "O O O O O O O\n"
+        + "O O O O _ _ O\n"
+        + "O O O O O O O\n"
+        + "    O O O\n"
+        + "    O O O\nScore: 31", out.toString());
+  }
+
   @Test(expected = IllegalArgumentException.class)
   public void testNullModel() {
-    Readable in = new StringReader("4 6 4 4");
+    Readable in = new StringReader("4 6 4 4 q");
     Appendable out = new StringBuilder();
     MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
 
@@ -185,26 +226,6 @@ public class MarbleSolitaireControllerImplTest {
     MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
 
     exController.playGame(exModel);
-  }
-
-  @Test
-  public void testRedoInput() {
-    MarbleSolitaireModelImpl exModel = new MarbleSolitaireModelImpl();
-    Readable in = new StringReader("4 6 x 4 4 q");
-    Appendable out = new StringBuilder();
-    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
-
-    exController.playGame(exModel);
-
-    assertEquals("Invalid value. Play again. \"x\" is not valid.\nGame quit!\n"
-        + "State of game when quit:\n"
-        + "    O O O\n"
-        + "    O O O\n"
-        + "O O O O O O O\n"
-        + "O O O O _ _ O\n"
-        + "O O O O O O O\n"
-        + "    O O O\n"
-        + "    O O O\nScore: 31", out.toString());
   }
 
   @Test
@@ -282,5 +303,4 @@ public class MarbleSolitaireControllerImplTest {
         + "    O O O\n"
         + "    O O O\nScore: 30", out.toString());
   }
-
 }

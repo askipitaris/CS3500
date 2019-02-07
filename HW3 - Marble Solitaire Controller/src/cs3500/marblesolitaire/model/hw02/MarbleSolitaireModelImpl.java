@@ -142,6 +142,20 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
         || (Math.abs(toCol - fromCol) != 0 && Math.abs(toRow - fromRow) != 0));
   }
 
+  /**
+   * Throws IllegalArgument exception if the move is not possible or if the start or end cells are
+   * not valid.
+   *
+   * @param fromRow the row number of the position to be moved from
+   *                (starts at 0)
+   * @param fromCol the column number of the position to be moved from
+   *                (starts at 0)
+   * @param toRow the row number of the position to be moved to
+   *              (starts at 0)
+   * @param toCol the column number of the position to be moved to
+   *              (starts at 0)
+   * @throws IllegalArgumentException
+   */
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
     Cell midCell;
