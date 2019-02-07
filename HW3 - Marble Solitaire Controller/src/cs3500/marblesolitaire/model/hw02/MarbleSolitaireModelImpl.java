@@ -154,7 +154,8 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    *              (starts at 0)
    * @param toCol the column number of the position to be moved to
    *              (starts at 0)
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if the start or end cells are not valid.
+   * @throws IllegalArgumentException if the movement is not valid.
    */
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
