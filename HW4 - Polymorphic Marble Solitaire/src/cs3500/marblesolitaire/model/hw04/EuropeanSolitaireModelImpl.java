@@ -73,12 +73,7 @@ public class EuropeanSolitaireModelImpl extends AbstractSolitaireModelImpl {
     if (!((sRow < (armThickness - 1) && sCol < (armThickness - 1))
         || (sRow > (armThickness * 2 - 2) && sCol > (armThickness * 2 - 2))
         || (sRow < (armThickness - 1) && sCol > (armThickness * 2 - 2))
-        || (sRow > (armThickness * 2 - 2) && sCol < (armThickness - 1)))
-
-        || (sRow == (armThickness - 2) && sCol == (armThickness - 2))
-        || (sRow == (armThickness - 2) && sCol == (armThickness * 2 - 1))
-        || (sRow == (armThickness * 2 - 1) && sCol == (armThickness - 2))
-        || (sRow == (armThickness * 2 - 1) && sCol == (armThickness * 2 - 1))) {
+        || (sRow > (armThickness * 2 - 2) && sCol < (armThickness - 1)))) {
       super.sRow = sRow;
       super.sCol = sCol;
       this.buildGrid();
