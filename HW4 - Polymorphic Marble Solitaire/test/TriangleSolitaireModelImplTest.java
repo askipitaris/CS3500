@@ -68,6 +68,14 @@ public class TriangleSolitaireModelImplTest {
             + " O O O O\n"
             + "O O O O O",
         new TriangleSolitaireModelImpl(2, 2).getGameState());
+    assertEquals(
+        "      _\n"
+            + "     O O\n"
+            + "    O O O\n"
+            + "   O O O O\n"
+            + "  O O O O O\n"
+            + " O O O O O O\n"
+            + "O O O O O O O",
+        new TriangleSolitaireModelImpl(7).getGameState());
   }
-
 }
