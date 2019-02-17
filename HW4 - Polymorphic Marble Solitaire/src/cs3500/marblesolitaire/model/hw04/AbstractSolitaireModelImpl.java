@@ -39,7 +39,7 @@ public abstract class AbstractSolitaireModelImpl implements MarbleSolitaireModel
    * @param midCell is the cell between the two movement points.
    * @return boolean that says whether this is a valid move or not.
    */
-  private boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell) {
+  protected boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell) {
     return !((fromRow < 0 || fromRow >= this.board.length || fromCol < 0
         || fromCol >= this.board.length)
         || (toRow < 0 || toRow >= this.board.length || toCol < 0 || toCol >= this.board.length)
