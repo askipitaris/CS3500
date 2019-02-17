@@ -148,4 +148,59 @@ public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
     }
     return state.toString();
   }
+
+  /**
+   * This implementation differs from the one defined in {@link AbstractSolitaireModelImpl} in that
+   * it allows for moves that are two rows above and below, along the four diagonal directions
+   * instead of having straight, vertical movements.
+   *
+   * @param fromRow is the row from which the player is moving.
+   * @param fromCol the col from which the player is moving.
+   * @param toRow is the row to which the player is moving.
+   * @param toCol is the col to which the player is moving.
+   * @param midCell is the cell between the two movement points.
+   * @return boolean that says whether this is a valid move or not.
+   */
+  @Override
+  protected boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, Cell midCell) {
+    return !((fromRow < 0 || fromRow >= this.board.length || fromCol < 0
+        || fromCol >= this.board.length)
+        || (toRow < 0 || toRow >= this.board.length || toCol < 0 || toCol >= this.board.length)
+        || (this.board[fromRow][fromCol].getState() != CellState.Marble)
+        || (this.board[toRow][toCol].getState() != CellState.Empty)
+        || (midCell.getState() != CellState.Marble)
+        || !((fromRow == toRow && Math.abs(fromCol - toCol) == 2)
+        || (Math.abs(fromRow - toRow) == 2 && fromCol == toCol)
+        || (fromRow - toRow == 2 && fromCol - toCol == 2)
+        || (toRow - fromRow == -2 && fromCol - toCol == -2)));
+  }
+
+  /**
+   * This implementation differs from the one define in {@link AbstractSolitaireModelImpl} in that
+   * it allows for moves that are tow rows above and below, along the four diagonal directions.
+   *
+   * @param fromRow the row number of the position to be moved from (starts at 0)
+   * @param fromCol the column number of the position to be moved from (starts at 0)
+   * @param toRow the row number of the position to be moved to (starts at 0)
+   * @param toCol the column number of the position to be moved to (starts at 0)
+   * @throws IllegalArgumentException if the start cell, end cell or movement is not valid.
+   */
+  @Override
+  public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
+    Cell midCell;
+    if (fromRow >= 0 && fromRow < this.board.length && fromCol >= 0 && fromCol < this.board.length
+        && toRow >= 0 && toRow < this.board.length && toCol >= 0 && toCol < this.board.length) {
+      midCell = this.board[fromRow + (toRow - fromRow) / 2][fromCol + (toCol - fromCol) / 2];
+      if (this.isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
+        this.board[fromRow][fromCol].setState(CellState.Empty);
+        midCell.setState(CellState.Empty);
+        this.board[toRow][toCol].setState(CellState.Marble);
+      } else {
+        throw new IllegalArgumentException("Invalid movement");
+      }
+    } else {
+      throw new IllegalArgumentException(String.format("Invalid start cell (%d, %d) "
+          + "or end cell (%d, %d)", fromRow, fromCol, toRow, toCol));
+    }
+  }
 }
