@@ -10,6 +10,14 @@ import java.io.InputStreamReader;
  * Main method for Marble Solitaire. Used to run the game.
  */
 public final class MarbleSolitaire {
+  /**
+   * Takes in a series of arguments that construct a game of Marble Solitaire. Arguments are
+   * whitespace delimited. Valid arguments start with the type of game ("english", "european", or
+   * "triangular") with optional arguments afterwards. Optional arguments are -size N or -hole N1 N2
+   * and can be in any order.
+   *
+   * @param args are the arguments that the main methods accept.
+   */
   public static void main(String[] args) {
     String type = "";
     int size = 0;
