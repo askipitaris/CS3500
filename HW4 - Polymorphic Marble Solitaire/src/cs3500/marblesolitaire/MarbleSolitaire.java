@@ -65,6 +65,8 @@ public final class MarbleSolitaire {
         case "triangular":
           controller.playGame(new TriangleSolitaireModelImpl(size, sRow, sCol));
           break;
+        default:
+          break;
       }
     } catch (IllegalArgumentException e) {
       System.out.println("Something failed");
