@@ -32,9 +32,11 @@ public interface MarbleSolitaireController {
    * transmit the message "Invalid move. Play again. X", where X describes why the input was
    * invalid.
    *
+   * <p>Modified to explicitly throw IllegalArgumentException and IllegalStateException.
+   *
    * @param model is the model provided to this controller.
    * @throws IllegalArgumentException if the provided model is null.
    * @throws IllegalStateException if the controller cannot receive input or transmit output.
    */
-  void playGame(MarbleSolitaireModel model);
+  void playGame(MarbleSolitaireModel model) throws IllegalArgumentException, IllegalStateException;
 }
