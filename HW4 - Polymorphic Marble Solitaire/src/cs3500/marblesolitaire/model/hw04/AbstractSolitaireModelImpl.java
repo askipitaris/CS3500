@@ -85,7 +85,7 @@ public abstract class AbstractSolitaireModelImpl implements MarbleSolitaireModel
    *
    * @return true if you are out of moves, or false if there is at least one valid move.
    */
-  private boolean outOfMoves() {
+  protected boolean outOfMoves() {
     for (int i = 0; i < this.board.length; i++) {
       for (int j = 0; j < this.board.length; j++) {
         if ((i + 2 < this.board.length
