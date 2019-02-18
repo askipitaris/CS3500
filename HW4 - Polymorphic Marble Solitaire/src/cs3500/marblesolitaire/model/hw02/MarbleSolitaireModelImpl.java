@@ -82,9 +82,10 @@ public class MarbleSolitaireModelImpl extends AbstractSolitaireModelImpl {
 
   /**
    * Builds a grid of cells in a cross shape. Makes sure that all CellState are set appropriately by
-   * checking where they are in the 2D array.
+   * checking if they are within the cross shape.
    */
-  private void buildGrid() {
+  @Override
+  protected void buildGrid() {
     super.board = new Cell[super.armThickness * 3 - 2][super.armThickness * 3 - 2];
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board.length; j++) {

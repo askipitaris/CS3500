@@ -95,10 +95,11 @@ public class EuropeanSolitaireModelImpl extends AbstractSolitaireModelImpl {
   }
 
   /**
-   * Builds a grid of cells in an octagonal shape. Makes sure that all CellState are set
-   * appropriately by checking where they are in the 2D array.
+   * Builds a grid of cells in an octagonal shape. Makes sure that all CellState are set appropriately by
+   * checking if they are within the octagonal shape.
    */
-  private void buildGrid() {
+  @Override
+  protected void buildGrid() {
     super.board = new Cell[super.armThickness * 3 - 2][super.armThickness * 3 - 2];
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board.length; j++) {

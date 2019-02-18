@@ -77,32 +77,6 @@ public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
   }
 
   /**
-   * Builds a grid in the shape of a triangle. Makes sure that all CellState are set appropriately
-   * by checking where they are in the 2D array.
-   *
-   * <p>Determines if the cell is valid by checking if the current column <= row. For example, on
-   * row 0, the only valid cell will be at (0,0). On row 1, valid cells are (1,0) and (1,1). This
-   * continues for the value of armThickness.
-   *
-   * <p>This means that the board is stored like a right triangle, with all columns at 0 being
-   * along the left side of the board.
-   */
-  private void buildGrid() {
-    super.board = new Cell[super.armThickness][super.armThickness];
-    for (int i = 0; i < board.length; i++) {
-      for (int j = 0; j < board.length; j++) {
-        if (super.sRow == i && super.sCol == j) {
-          super.board[i][j] = new Cell(i, j, CellState.Empty);
-        } else if (j <= i) {
-          super.board[i][j] = new Cell(i, j, CellState.Marble);
-        } else {
-          super.board[i][j] = new Cell(i, j, CellState.Inaccessible);
-        }
-      }
-    }
-  }
-
-  /**
    * Returns the game state for Triangle Marble Solitaire. No spaces after the last item on each
    * row. O represents a position that has a marble. _ a position that is empty and " " represents a
    * position that is invalid.
@@ -211,5 +185,32 @@ public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
       }
     }
     return score;
+  }
+
+  /**
+   * Builds a grid in the shape of a triangle. Makes sure that all CellState are set appropriately by
+   * checking if they are within the triangular shape.
+   *
+   * <p>Determines if the cell is valid by checking if the current column <= row. For example, on
+   * row 0, the only valid cell will be at (0,0). On row 1, valid cells are (1,0) and (1,1). This
+   * continues for the value of armThickness.
+   *
+   * <p>This means that the board is stored like a right triangle, with all columns at 0 being
+   * along the left side of the board.
+   */
+  @Override
+  protected void buildGrid() {
+    super.board = new Cell[super.armThickness][super.armThickness];
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board.length; j++) {
+        if (super.sRow == i && super.sCol == j) {
+          super.board[i][j] = new Cell(i, j, CellState.Empty);
+        } else if (j <= i) {
+          super.board[i][j] = new Cell(i, j, CellState.Marble);
+        } else {
+          super.board[i][j] = new Cell(i, j, CellState.Inaccessible);
+        }
+      }
+    }
   }
 }

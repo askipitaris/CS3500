@@ -5,7 +5,11 @@ import cs3500.marblesolitaire.model.hw02.CellState;
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 
 /**
- * Abstract class for various versions of Marble Solitaire.
+ * Abstract class for various versions of Marble Solitaire. Because european, english and triangle
+ * marble solitaire are all very similar, everything except for constructors and any methods
+ * that have specific implementations have been move from
+ * {@link cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl} to this class. Any individual
+ * type of Marble solitaire extends this class. This has been done to minimize repeated code.
  */
 public abstract class AbstractSolitaireModelImpl implements MarbleSolitaireModel {
 
@@ -147,4 +151,14 @@ public abstract class AbstractSolitaireModelImpl implements MarbleSolitaireModel
     }
     return score;
   }
+
+  /**
+   * Builds a grid in a specific shape as needed by the specific type of Marble Solitaire. The
+   * possible options are a cross for english marble solitaire, an octagon for european marble
+   * solitaire and a triangle for triangular marble solitaire.
+   *
+   * <p>Also ensures that all cells are set correctly by checking that each cell is within the grid
+   * allowed by the type of marble solitaire.
+   */
+  protected abstract void buildGrid();
 }
