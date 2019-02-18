@@ -179,4 +179,21 @@ public class TriangleSolitaireModelImplTest {
     game.move(4, 1, 2, 1);
     assertTrue(game.isGameOver());
   }
+
+  @Test
+  public void testGetScore() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl();
+    assertEquals(14, game.getScore());
+
+    game.move(2, 0, 0, 0);
+    game.move(4, 0, 2, 0);
+    game.move(4, 2, 4, 0);
+    game.move(4, 4, 4, 2);
+    game.move(2, 2, 4, 4);
+    game.move(0, 0, 2, 2);
+    game.move(2, 1, 4, 3);
+    game.move(4, 3, 4, 1);
+    game.move(4, 1, 2, 1);
+    assertEquals(5, game.getScore());
+  }
 }
