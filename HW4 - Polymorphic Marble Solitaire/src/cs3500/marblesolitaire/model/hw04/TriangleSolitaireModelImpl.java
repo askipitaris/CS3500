@@ -172,35 +172,50 @@ public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
         || !((fromRow == toRow && Math.abs(fromCol - toCol) == 2)
         || (Math.abs(fromRow - toRow) == 2 && fromCol == toCol)
         || (fromRow - toRow == 2 && fromCol - toCol == 2)
-        || (toRow - fromRow == -2 && fromCol - toCol == -2)));
+        || (fromRow - toRow == -2 && fromCol - toCol == -2)));
   }
 
   /**
-   * This implementation differs from the one define in {@link AbstractSolitaireModelImpl} in that
-   * it allows for moves that are tow rows above and below, along the four diagonal directions.
+   * Checks if there are any valid moves left on the board. This implementation differs from the one
+   * define in {@link AbstractSolitaireModelImpl} in that uses the overwritten version of
+   * isValidMove
    *
-   * @param fromRow the row number of the position to be moved from (starts at 0)
-   * @param fromCol the column number of the position to be moved from (starts at 0)
-   * @param toRow the row number of the position to be moved to (starts at 0)
-   * @param toCol the column number of the position to be moved to (starts at 0)
-   * @throws IllegalArgumentException if the start cell, end cell or movement is not valid.
+   * @return true if you are out of moves, or false if there is at least one valid move.
    */
   @Override
-  public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
-    Cell midCell;
-    if (fromRow >= 0 && fromRow < this.board.length && fromCol >= 0 && fromCol < this.board.length
-        && toRow >= 0 && toRow < this.board.length && toCol >= 0 && toCol < this.board.length) {
-      midCell = this.board[fromRow + (toRow - fromRow) / 2][fromCol + (toCol - fromCol) / 2];
-      if (this.isValidMove(fromRow, fromCol, toRow, toCol, midCell)) {
-        this.board[fromRow][fromCol].setState(CellState.Empty);
-        midCell.setState(CellState.Empty);
-        this.board[toRow][toCol].setState(CellState.Marble);
-      } else {
-        throw new IllegalArgumentException("Invalid movement");
+  protected boolean outOfMoves() {
+    for (int i = 0; i < super.board.length; i++) {
+      for (int j = 0; j < super.board.length; j++) {
+        if ((i + 2 < super.board.length
+            && this.isValidMove(i, j, i + 2, j, super.board[i + 1][j]))
+            || (i - 2 >= 0
+            && this.isValidMove(i, j, i - 2, j, super.board[i - 1][j]))
+            || (j + 2 <= i && this.isValidMove(i, j, i, j + 2, super.board[i][j + 1]))
+            || (j - 2 >= 0 && this.isValidMove(i, j, i, j - 2, super.board[i][j - 1]))) {
+          return false;
+        }
       }
-    } else {
-      throw new IllegalArgumentException(String.format("Invalid start cell (%d, %d) "
-          + "or end cell (%d, %d)", fromRow, fromCol, toRow, toCol));
     }
+    return true;
+  }
+
+  /**
+   * Counts the amount of marbles remaining on the board. This differs from the one defined in
+   * {@link AbstractSolitaireModelImpl} in that the size of the board is different for triangles
+   * than for the regular cross.
+   *
+   * @return the number of marbles currently on the board
+   */
+  @Override
+  public int getScore() {
+    int score = 0;
+    for (int i = 0; i < super.armThickness; i++) {
+      for (int j = 0; j < super.armThickness; j++) {
+        if (super.board[i][j].getState().equals(CellState.Marble)) {
+          score += 1;
+        }
+      }
+    }
+    return score;
   }
 }
