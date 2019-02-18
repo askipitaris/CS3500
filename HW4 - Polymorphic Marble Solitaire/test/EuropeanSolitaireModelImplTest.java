@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import cs3500.marblesolitaire.model.hw02.CellState;
 import cs3500.marblesolitaire.model.hw04.EuropeanSolitaireModelImpl;
@@ -107,8 +109,8 @@ public class EuropeanSolitaireModelImplTest {
 
   @Test
   public void testMove() {
-    EuropeanSolitaireModelImpl game6 = new EuropeanSolitaireModelImpl();
-    game6.move(3, 5, 3, 3);
+    EuropeanSolitaireModelImpl game = new EuropeanSolitaireModelImpl();
+    game.move(3, 5, 3, 3);
     assertEquals("    O O O\n"
             + "  O O O O O\n"
             + "O O O O O O O\n"
@@ -116,9 +118,9 @@ public class EuropeanSolitaireModelImplTest {
             + "O O O O O O O\n"
             + "  O O O O O\n"
             + "    O O O",
-        game6.getGameState());
+        game.getGameState());
 
-    game6.move(3, 2, 3, 4);
+    game.move(3, 2, 3, 4);
     assertEquals("    O O O\n"
             + "  O O O O O\n"
             + "O O O O O O O\n"
@@ -126,9 +128,9 @@ public class EuropeanSolitaireModelImplTest {
             + "O O O O O O O\n"
             + "  O O O O O\n"
             + "    O O O",
-        game6.getGameState());
+        game.getGameState());
 
-    game6.move(1, 3, 3, 3);
+    game.move(1, 3, 3, 3);
     assertEquals("    O O O\n"
             + "  O O _ O O\n"
             + "O O O _ O O O\n"
@@ -136,9 +138,9 @@ public class EuropeanSolitaireModelImplTest {
             + "O O O O O O O\n"
             + "  O O O O O\n"
             + "    O O O",
-        game6.getGameState());
+        game.getGameState());
 
-    game6.move(5, 2, 3, 2);
+    game.move(5, 2, 3, 2);
     assertEquals("    O O O\n"
             + "  O O _ O O\n"
             + "O O O _ O O O\n"
@@ -146,7 +148,7 @@ public class EuropeanSolitaireModelImplTest {
             + "O O _ O O O O\n"
             + "  O _ O O O\n"
             + "    O O O",
-        game6.getGameState());
+        game.getGameState());
 
     EuropeanSolitaireModelImpl a = new EuropeanSolitaireModelImpl(5, 0, 4);
     a.move(0, 6, 0, 4);
@@ -165,11 +167,37 @@ public class EuropeanSolitaireModelImplTest {
         + "        O O O O O", a.getGameState());
   }
 
-  // TODO Test game to completion.
   @Test
   public void testGameOver() {
     EuropeanSolitaireModelImpl game = new EuropeanSolitaireModelImpl();
-
+    game.move(3, 5, 3, 3);
+    game.move(3, 2, 3, 4);
+    game.move(1, 3, 3, 3);
+    game.move(5, 2, 3, 2);
+    game.move(4, 3, 2, 3);
+    game.move(4, 5, 4, 3);
+    game.move(4, 0, 4, 2);
+    game.move(3, 2, 5, 2);
+    game.move(3, 0, 3, 2);
+    assertFalse(game.isGameOver());
+    game.move(6, 2, 4, 2);
+    game.move(5, 4, 5, 2);
+    game.move(5, 1, 5, 3);
+    game.move(6, 4, 6, 2);
+    game.move(1, 1, 3, 1);
+    game.move(4, 2, 4, 4);
+    game.move(3, 2, 3, 0);
+    game.move(2, 0, 4, 0);
+    assertFalse(game.isGameOver());
+    game.move(1, 2, 3, 2);
+    game.move(2, 4, 2, 2);
+    game.move(2, 2, 4, 2);
+    game.move(0, 4, 2, 4);
+    game.move(0, 2, 0, 4);
+    game.move(3, 4, 1, 4);
+    game.move(0, 4, 2, 4);
+    game.move(2, 5, 2, 3);
+    assertTrue(game.isGameOver());
   }
 
   @Test(expected = IllegalArgumentException.class)
