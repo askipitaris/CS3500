@@ -9,8 +9,8 @@ import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 public interface MarbleSolitaireController {
 
   /**
-   * This method plays a new game of the MarbleSolitaire using the provided model. It should
-   * throw and IllegalArgumentException if the provided model is null. It should throw an
+   * This method plays a new game of the MarbleSolitaire using the provided model. It should throw
+   * and IllegalArgumentException if the provided model is null. It should throw an
    * IllegalStateException only if the controller is unable to to successfully receive input or
    * transmit output.
    *

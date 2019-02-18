@@ -2,6 +2,8 @@ import static org.junit.Assert.assertEquals;
 
 import cs3500.marblesolitaire.controller.MarbleSolitaireControllerImpl;
 import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl;
+import cs3500.marblesolitaire.model.hw04.EuropeanSolitaireModelImpl;
+import cs3500.marblesolitaire.model.hw04.TriangleSolitaireModelImpl;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import org.junit.Test;
@@ -49,6 +51,42 @@ public class MarbleSolitaireControllerImplTest {
         + "O O O O O O O\n"
         + "    O O O\n"
         + "    O O O\nScore: 31", out.toString());
+  }
+
+  @Test
+  public void testEuropeanMove() {
+    EuropeanSolitaireModelImpl exModel = new EuropeanSolitaireModelImpl();
+    Readable in = new StringReader("4 6 4 4 q");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Game quit!\nState of game when quit:\n"
+        + "    O O O\n"
+        + "  O O O O O\n"
+        + "O O O O O O O\n"
+        + "O O O O _ _ O\n"
+        + "O O O O O O O\n"
+        + "  O O O O O\n"
+        + "    O O O\nScore: 35", out.toString());
+  }
+
+  @Test
+  public void testTriangularMove() {
+    TriangleSolitaireModelImpl exModel = new TriangleSolitaireModelImpl();
+    Readable in = new StringReader("3 1 1 1 q");
+    Appendable out = new StringBuilder();
+    MarbleSolitaireControllerImpl exController = new MarbleSolitaireControllerImpl(in, out);
+
+    exController.playGame(exModel);
+
+    assertEquals("Game quit!\nState of game when quit:\n"
+        + "    O\n"
+        + "   _ O\n"
+        + "  _ O O\n"
+        + " O O O O\n"
+        + "O O O O O\nScore: 13", out.toString());
   }
 
   @Test

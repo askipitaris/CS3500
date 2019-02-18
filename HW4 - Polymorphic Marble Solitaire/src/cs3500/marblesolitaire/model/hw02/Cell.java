@@ -4,6 +4,7 @@ package cs3500.marblesolitaire.model.hw02;
  * Represents a Cell on the board and all operations possible for a cell.
  */
 public class Cell {
+
   private int row;
   private int col;
   private CellState state;

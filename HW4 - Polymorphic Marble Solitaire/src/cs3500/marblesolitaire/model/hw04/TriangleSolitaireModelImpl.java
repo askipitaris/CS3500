@@ -188,8 +188,8 @@ public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
   }
 
   /**
-   * Builds a grid in the shape of a triangle. Makes sure that all CellState are set appropriately by
-   * checking if they are within the triangular shape.
+   * Builds a grid in the shape of a triangle. Makes sure that all CellState are set appropriately
+   * by checking if they are within the triangular shape.
    *
    * <p>Determines if the cell is valid by checking if the current column <= row. For example, on
    * row 0, the only valid cell will be at (0,0). On row 1, valid cells are (1,0) and (1,1). This
