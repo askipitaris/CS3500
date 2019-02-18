@@ -7,8 +7,9 @@ import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
 /**
  * Abstract class for various versions of Marble Solitaire. Because european, english and triangle
  * marble solitaire are all very similar, everything except for constructors and any methods that
- * have specific implementations have been move from {@link cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl}
- * to this class. Any individual type of Marble solitaire extends this class. This has been done to
+ * have specific implementations have been move from
+ * {@link cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl} to this class. Any individual
+ * type of Marble solitaire extends this class. This has been done to
  * minimize repeated code.
  */
 public abstract class AbstractSolitaireModelImpl implements MarbleSolitaireModel {

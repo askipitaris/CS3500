@@ -119,8 +119,8 @@ public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
 
   /**
    * This implementation differs from the one defined in {@link AbstractSolitaireModelImpl} in that
-   * it allows for moves that are two rows above and below, along the four diagonal directions
-   * instead of having straight, vertical movements.
+   * it allows for horizontal moves as well as those that are two rows above and below, along the
+   * four diagonal directions instead of having straight, vertical movements.
    *
    * @param fromRow is the row from which the player is moving.
    * @param fromCol the col from which the player is moving.
@@ -156,8 +156,12 @@ public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
       for (int j = 0; j < super.board.length; j++) {
         if ((i + 2 < super.board.length
             && this.isValidMove(i, j, i + 2, j, super.board[i + 1][j]))
+            || (i + 2 < super.board.length && j + 2 < super.board.length
+            && this.isValidMove(i, j, i + 2, j + 2, super.board[i + 1][j + 1]))
             || (i - 2 >= 0
             && this.isValidMove(i, j, i - 2, j, super.board[i - 1][j]))
+            || (i - 2 >= 0 && j - 2 >= 0
+            && this.isValidMove(i, j, i - 2, j - 2, super.board[i - 1][j - 1]))
             || (j + 2 <= i && this.isValidMove(i, j, i, j + 2, super.board[i][j + 1]))
             || (j - 2 >= 0 && this.isValidMove(i, j, i, j - 2, super.board[i][j - 1]))) {
           return false;
