@@ -6,7 +6,10 @@ import java.util.Scanner;
 
 /**
  * Implementation of MarbleSolitaireController. One instance of this class in one instance of the
- * controller.
+ * controller. This implementation takes values and will execute a movement when enough valid values
+ * are inputted. If a q or Q is inputted, the game will quit and return the game state. If the game
+ * ends, the game state at the time of completion is shown. Any random values, such as 'x' will be
+ * ignored.
  */
 public class MarbleSolitaireControllerImpl implements MarbleSolitaireController {
 
@@ -14,7 +17,8 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
   private Appendable output;
 
   /**
-   * Constructs a new controller.
+   * Constructs a new controller. Takes in a model a readable and appendable. Throws Illegal
+   * argument exception if either argument is null.
    *
    * @param rd is the given input.
    * @param ap is the output resulting from the given input.
@@ -30,7 +34,8 @@ public class MarbleSolitaireControllerImpl implements MarbleSolitaireController 
   }
 
   @Override
-  public void playGame(MarbleSolitaireModel model) {
+  public void playGame(MarbleSolitaireModel model)
+      throws IllegalArgumentException, IllegalStateException {
     if (model == null) {
       throw new IllegalArgumentException("Model cannot be null.");
     }
