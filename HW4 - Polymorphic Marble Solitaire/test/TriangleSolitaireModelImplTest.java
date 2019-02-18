@@ -1,8 +1,9 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import cs3500.marblesolitaire.model.hw02.CellState;
 import cs3500.marblesolitaire.model.hw04.TriangleSolitaireModelImpl;
-import javax.swing.table.TableRowSorter;
 import org.junit.Test;
 
 public class TriangleSolitaireModelImplTest {
@@ -137,11 +138,11 @@ public class TriangleSolitaireModelImplTest {
         + "  _ O O\n"
         + " _ _ O O\n"
         + "O O _ O O", game.getGameState());
-    TriangleSolitaireModelImpl game2 = new TriangleSolitaireModelImpl();
-    game2.move(2, 2, 0, 0);
-    assertEquals("    O\n"
+    TriangleSolitaireModelImpl game2 = new TriangleSolitaireModelImpl(2, 2);
+    game2.move(0, 0, 2, 2);
+    assertEquals("    _\n"
         + "   O _\n"
-        + "  O O _\n"
+        + "  O O O\n"
         + " O O O O\n"
         + "O O O O O", game2.getGameState());
   }
@@ -162,4 +163,20 @@ public class TriangleSolitaireModelImplTest {
     game.move(4, 3, 4, 4);
   }
 
+  @Test
+  public void testIsGameOver() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl();
+    game.move(2, 0, 0, 0);
+    game.move(4, 0, 2, 0);
+    game.move(4, 2, 4, 0);
+    assertFalse(game.isGameOver());
+    game.move(4, 4, 4, 2);
+    game.move(2, 2, 4, 4);
+    game.move(0, 0, 2, 2);
+    assertFalse(game.isGameOver());
+    game.move(2, 1, 4, 3);
+    game.move(4, 3, 4, 1);
+    game.move(4, 1, 2, 1);
+    assertTrue(game.isGameOver());
+  }
 }
