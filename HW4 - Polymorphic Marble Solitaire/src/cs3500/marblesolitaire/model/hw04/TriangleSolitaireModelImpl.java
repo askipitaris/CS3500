@@ -86,12 +86,6 @@ public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
    *
    * <p>This means that the board is stored like a right triangle, with all columns at 0 being
    * along the left side of the board.
-   *
-   * <p>_ <- (0,0)
-   * <p>O O <- (1,1)
-   * <p>O O O <- (2,2)
-   * <p>O O O O <- (3,3)
-   * <p>O O O O O <- (4,4)
    */
   private void buildGrid() {
     super.board = new Cell[super.armThickness][super.armThickness];
