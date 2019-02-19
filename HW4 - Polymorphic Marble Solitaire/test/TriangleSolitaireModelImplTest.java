@@ -211,6 +211,7 @@ public class TriangleSolitaireModelImplTest {
     TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl();
     game.move(2, 0, 4, 0);
   }
+
   @Test(expected = IllegalArgumentException.class)
   public void testNoMarbleMid() {
     TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl(1,0);

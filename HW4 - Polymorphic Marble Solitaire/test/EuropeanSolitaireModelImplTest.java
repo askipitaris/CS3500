@@ -224,6 +224,7 @@ public class EuropeanSolitaireModelImplTest {
     EuropeanSolitaireModelImpl game = new EuropeanSolitaireModelImpl();
     game.move(0, 2, 0, 4);
   }
+
   @Test(expected = IllegalArgumentException.class)
   public void testNoMarbleMid() {
     EuropeanSolitaireModelImpl game = new EuropeanSolitaireModelImpl();
