@@ -9,8 +9,10 @@ import cs3500.marblesolitaire.model.hw02.MarbleSolitaireModel;
  * marble solitaire are all very similar, everything except for constructors and any methods that
  * have specific implementations have been move from
  * {@link cs3500.marblesolitaire.model.hw02.MarbleSolitaireModelImpl} to this class. Any individual
- * type of Marble solitaire extends this class. This has been done to
- * minimize repeated code.
+ * type of marble solitaire extends this class. This has been done to minimize repeated code.
+ *
+ * <p>All methods aside from the buildGrid method have default implementations. This is because
+ * every version of marble solitaire will have a unique grid shape.
  */
 public abstract class AbstractSolitaireModelImpl implements MarbleSolitaireModel {
 

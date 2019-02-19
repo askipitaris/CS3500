@@ -5,13 +5,28 @@ import cs3500.marblesolitaire.model.hw02.CellState;
 
 /**
  * Implementation of possible operations in Triangular Marble Solitaire. One instance of the class
- * represents one instance of the game.
+ * represents one instance of the game. Triangular solitaire is unique in that the board is shaped
+ * like a triangle.
+ *
+ * <p>The triangular board does not use a standard coordinate system. This means that
+ * the way the grid is built and displayed needs to be changed. The grid is initially built as a
+ * right triangle, then the grid is shifted into the shape of an equilateral triangle when it is
+ * rendered.
+ *
+ * <p>The movement is also different than the system found in European and English marble
+ * solitaire. In triangular marble solitaire, the play can move horizontally or to positions
+ * that are two rows above and below along the four diagonal directions.
+ *
+ * <p>Note: In this version of marble solitaire, "armThickness" refers to the number of rows in the
+ * triangle.
+ *
+ * <p>Extends {@link AbstractSolitaireModelImpl}.
  */
 public class TriangleSolitaireModelImpl extends AbstractSolitaireModelImpl {
 
   /**
-   * Constructor 1: Constructs a game using no arguments. Creates a game with an arm thickness of 5,
-   * with the empty position at (0,0).
+   * Constructor 1: Constructs a game using no arguments. Creates a game with 5 rows, with the empty
+   * position at (0,0).
    */
   public TriangleSolitaireModelImpl() {
     super.armThickness = 5;

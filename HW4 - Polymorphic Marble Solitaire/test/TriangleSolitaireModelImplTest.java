@@ -75,6 +75,52 @@ public class TriangleSolitaireModelImplTest {
   }
 
   @Test
+  public void testBuildGrid() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl();
+    assertEquals(CellState.Empty, game.getCell(0, 0).getState());
+    assertEquals(CellState.Marble, game.getCell(2, 2).getState());
+    assertEquals(CellState.Marble, game.getCell(3, 1).getState());
+    assertEquals(CellState.Inaccessible, game.getCell(0, 1).getState());
+    assertEquals(CellState.Marble, game.getCell(1, 0).getState());
+    assertEquals(CellState.Marble, game.getCell(1, 1).getState());
+  }
+
+  @Test
+  public void testBuildGrid2() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl(6);
+    assertEquals(CellState.Empty, game.getCell(0, 0).getState());
+    assertEquals(CellState.Marble, game.getCell(2, 2).getState());
+    assertEquals(CellState.Marble, game.getCell(3, 1).getState());
+    assertEquals(CellState.Inaccessible, game.getCell(0, 1).getState());
+    assertEquals(CellState.Marble, game.getCell(1, 0).getState());
+    assertEquals(CellState.Marble, game.getCell(1, 1).getState());
+    assertEquals(CellState.Marble, game.getCell(5, 5).getState());
+  }
+
+  @Test
+  public void testBuildGrid3() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl(2, 2);
+    assertEquals(CellState.Marble, game.getCell(0, 0).getState());
+    assertEquals(CellState.Empty, game.getCell(2, 2).getState());
+    assertEquals(CellState.Marble, game.getCell(3, 1).getState());
+    assertEquals(CellState.Inaccessible, game.getCell(0, 1).getState());
+    assertEquals(CellState.Marble, game.getCell(1, 0).getState());
+    assertEquals(CellState.Marble, game.getCell(1, 1).getState());
+  }
+
+  @Test
+  public void testBuildGrid4() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl(6, 2,2);
+    assertEquals(CellState.Marble, game.getCell(0, 0).getState());
+    assertEquals(CellState.Empty, game.getCell(2, 2).getState());
+    assertEquals(CellState.Marble, game.getCell(3, 1).getState());
+    assertEquals(CellState.Inaccessible, game.getCell(0, 1).getState());
+    assertEquals(CellState.Marble, game.getCell(1, 0).getState());
+    assertEquals(CellState.Marble, game.getCell(1, 1).getState());
+    assertEquals(CellState.Marble, game.getCell(5, 5).getState());
+  }
+  
+  @Test
   public void testGameState() {
     assertEquals(
         "    _\n"
@@ -161,6 +207,12 @@ public class TriangleSolitaireModelImplTest {
     game.move(3, 0, 0, 0);
     game.move(3, 3, 0, 0);
     game.move(4, 3, 4, 4);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMoveOutOfBounds() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl();
+    game.move(0, 0, 0, 2);
   }
 
   @Test

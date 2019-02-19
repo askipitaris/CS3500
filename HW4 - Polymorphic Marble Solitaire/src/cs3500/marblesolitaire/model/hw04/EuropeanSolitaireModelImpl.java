@@ -6,6 +6,13 @@ import cs3500.marblesolitaire.model.hw02.CellState;
 /**
  * Implementation of possible operations in European Marble Solitaire. One instance of the class
  * represents one instance of the game.
+ *
+ * <p>This version of marble solitaire has an octagonal grid, with valid movements being those that
+ * jump over a marble to an empty position two points away, both vertically and horizontally.
+ *
+ * <p>Note: In this version of marble solitaire, "armThickness" refers to the size of each side.
+ *
+ * <p>Extends {@link AbstractSolitaireModelImpl}.
  */
 public class EuropeanSolitaireModelImpl extends AbstractSolitaireModelImpl {
 
@@ -25,12 +32,29 @@ public class EuropeanSolitaireModelImpl extends AbstractSolitaireModelImpl {
    * Constructor 2: Constructs a game with an empty space a specified row and column with an arm
    * thickness of 3.Throws IllegalArgumentException with message "Invalid empty cell position (r,c)"
    * if the specified position is not valid.
+   *
+   * <p>The if statement checks if the selected empty location is valid. First by checking if
+   * it is within the initial cross shape, then checking if it is within the diagonal portions of
+   * the octagon.
    */
   public EuropeanSolitaireModelImpl(int sRow, int sCol) {
     if (!((sRow < 2 && sCol < 2) || (sRow > 4 && sCol > 4)
         || (sRow < 2 && sCol > 4) || (sRow > 4 && sCol < 2))
         || (sRow == 1 && sCol == 1) || (sRow == 1 && sCol == 5)
         || (sRow == 5 && sCol == 1) || (sRow == 5 && sCol == 5)) {
+      super.armThickness = 3;
+      super.sRow = sRow;
+      super.sCol = sCol;
+
+      this.buildGrid();
+    } else if (((sRow < (super.armThickness - 1) && sCol < (super.armThickness - 1))
+        && sCol >= (super.armThickness - 1) - sRow)
+        || ((sRow < (super.armThickness - 1) && sCol > (super.armThickness * 2 - 2))
+        && sCol <= (super.armThickness * 3 - 2) - (super.armThickness - sRow))
+        || (((sRow > (super.armThickness * 2 - 2) && sCol < (super.armThickness - 1)))
+        && sCol >= (sRow - (super.armThickness * 2 - 2)))
+        || ((sRow > (super.armThickness * 2 - 2) && sCol > (super.armThickness * 2 - 2))
+        && sCol <= (super.armThickness * 3 - 2) - (sRow - (super.armThickness * 2 - 3)))) {
       super.armThickness = 3;
       super.sRow = sRow;
       super.sCol = sCol;
@@ -46,6 +70,8 @@ public class EuropeanSolitaireModelImpl extends AbstractSolitaireModelImpl {
    * Constructor 3: Constructs a game using the specified arm thickness with an empty space at an
    * automatically determined position. Throws an IllegalArgumentException with message "Arm
    * thickness must be positive and odd."
+   *
+   * <p>The if statement checks is the size of each face is valid.
    */
   public EuropeanSolitaireModelImpl(int armThickness) {
     if (armThickness % 2 == 1 && armThickness > 0) {
@@ -63,6 +89,13 @@ public class EuropeanSolitaireModelImpl extends AbstractSolitaireModelImpl {
    * Constructor 4: Constructs a game using the specified arm thickness with an empty position at
    * the specified row and column. Throws an IllegalArgumentException if the position is invalid or
    * if the thickness is invalid
+   *
+   * <p>The first if statement checks is the size of each face is valid.
+   *
+   * <p>The second if statement checks if the selected empty location is valid. First by checking
+   * if
+   * it is within the initial cross shape, then checking if it is within the diagonal portions of
+   * the octagon.
    */
   public EuropeanSolitaireModelImpl(int armThickness, int sRow, int sCol) {
     if (armThickness % 2 == 1 && armThickness > 0) {

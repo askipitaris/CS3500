@@ -15,25 +15,23 @@ public final class MarbleSolitaire {
    * Takes in a series of arguments that construct a game of Marble Solitaire. Arguments are
    * whitespace delimited. Valid arguments start with the type of game ("english", "european", or
    * "triangular") with optional arguments afterwards. Optional arguments are -size N or -hole N1 N2
-   * and can be in any order.
+   * and can be in any order. You can have
    *
    * @param args are the arguments that the main methods accept.
    */
   public static void main(String[] args) {
-    String type = "";
     int size = 0;
     int sRow = 0;
     int sCol = 0;
+
     MarbleSolitaireControllerImpl controller =
         new MarbleSolitaireControllerImpl(new InputStreamReader(System.in), System.out);
 
     if (args[0].equals("english") || args[0].equals("european")) {
-      type = args[0];
       size = 3;
       sRow = 3;
       sCol = 3;
     } else if (args[0].equals("triangular")) {
-      type = args[0];
       size = 5;
       sRow = 0;
       sCol = 0;
@@ -41,8 +39,8 @@ public final class MarbleSolitaire {
 
     if (args.length >= 2 && args[1].equals("-size")) {
       size = Integer.parseInt(args[2]);
-      sRow = Integer.parseInt(args[2]) - 1;
-      sCol = Integer.parseInt(args[2]) - 1;
+      sRow = Integer.parseInt(args[2]) + ((Integer.parseInt(args[2]) - 3) / 2);
+      sCol = Integer.parseInt(args[2]) + ((Integer.parseInt(args[2]) - 3) / 2);
     } else if (args.length >= 2 && args[1].equals("-hole")) {
       sRow = Integer.parseInt(args[2]) - 1;
       sCol = Integer.parseInt(args[3]) - 1;
@@ -56,7 +54,7 @@ public final class MarbleSolitaire {
     }
 
     try {
-      switch (type) {
+      switch (args[0]) {
         case "english":
           controller.playGame(new MarbleSolitaireModelImpl(size, sRow, sCol));
           break;
@@ -67,6 +65,7 @@ public final class MarbleSolitaire {
           controller.playGame(new TriangleSolitaireModelImpl(size, sRow, sCol));
           break;
         default:
+          System.out.println(args[0] + " is not a valid marble solitaire type.");
           break;
       }
     } catch (IllegalArgumentException e) {

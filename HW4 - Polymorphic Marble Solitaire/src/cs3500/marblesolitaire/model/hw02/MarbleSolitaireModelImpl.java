@@ -5,6 +5,16 @@ import cs3500.marblesolitaire.model.hw04.AbstractSolitaireModelImpl;
 /**
  * Implementation of possible operations in English Marble Solitaire. One instance of the class
  * represents one instance of the game.
+ *
+ * <p>This version of marble solitaire has a grid in the shape of a cross, with valid movements
+ * being those that jump over a marble to an empty position two points away, both vertically and
+ * horizontally.
+ *
+ * <p>This class has been heavily modified since the previous assignment. In order to minimize
+ * repeated code, most of the methods that were once in this class have been moved to {@link
+ * AbstractSolitaireModelImpl}, which is now being extended by all versions of Marble Solitaire.
+ *
+ * <p>Extends {@link AbstractSolitaireModelImpl}.
  */
 public class MarbleSolitaireModelImpl extends AbstractSolitaireModelImpl {
 
