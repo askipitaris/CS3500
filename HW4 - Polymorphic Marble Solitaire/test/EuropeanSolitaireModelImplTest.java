@@ -213,6 +213,23 @@ public class EuropeanSolitaireModelImplTest {
     game.move(15, 0, 3, 5);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testNoMarbleFrom() {
+    EuropeanSolitaireModelImpl game = new EuropeanSolitaireModelImpl();
+    game.move(3,3, 3, 1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMarbleTo() {
+    EuropeanSolitaireModelImpl game = new EuropeanSolitaireModelImpl();
+    game.move(0, 2, 0, 4);
+  }
+  @Test(expected = IllegalArgumentException.class)
+  public void testNoMarbleMid() {
+    EuropeanSolitaireModelImpl game = new EuropeanSolitaireModelImpl();
+    game.move(3, 2,3,4);
+  }
+
   @Test
   public void testGetScore() {
     assertEquals(36,

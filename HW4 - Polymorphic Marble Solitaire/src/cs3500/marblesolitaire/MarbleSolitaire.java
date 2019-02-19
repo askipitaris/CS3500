@@ -14,17 +14,16 @@ import java.io.InputStreamReader;
 public final class MarbleSolitaire {
 
   /**
-   * Takes in a series of arguments that construct a game of Marble Solitaire. Arguments are
-   * whitespace delimited. Valid arguments start with the type of game ("english", "european", or
-   * "triangular") with optional arguments afterwards. Optional arguments are -size N or -hole N1 N2
-   * and can be in any order.
+   * The method iterates through every argument and determines which type of constructor needs to be
+   * given to the controller. The arguments can be given in any order and are whitespace delimited,
+   * meaning "english -size 5 -hole 5 6" is equally valid as "-hole 5 6 english -size 5".
    *
-   * @param args are the arguments that the main methods accept.
+   * @param args are the arguments given the program.
    */
   public static void main(String[] args) {
     String type = "";
-    boolean optionSize = false;
-    boolean optionHole = false;
+    boolean optionalSize = false;
+    boolean optionalHole = false;
     int size = 3;
     int sRow = 3;
     int sCol = 3;
@@ -43,16 +42,16 @@ public final class MarbleSolitaire {
           case "-size":
             size = Integer.parseInt(args[i + 1]);
             i += 1;
-            optionSize = true;
+            optionalSize = true;
             break;
           case "-hole":
             sRow = Integer.parseInt(args[i + 1]);
             sCol = Integer.parseInt(args[i + 2]);
             i += 2;
-            optionHole = true;
+            optionalHole = true;
             break;
           default:
-            System.out.println(args[0] + " is not a valid marble solitaire type.");
+            break;
         }
       } catch (IndexOutOfBoundsException oob) {
         System.out.println("Invalid arguments");
@@ -60,7 +59,7 @@ public final class MarbleSolitaire {
     }
 
     try {
-      controller.playGame(getModel(size, sRow, sCol, optionSize, optionHole, type));
+      controller.playGame(getModel(size, sRow, sCol, optionalSize, optionalHole, type));
     } catch (IllegalArgumentException e) {
       System.out.println("Something went wrong");
     }
@@ -69,28 +68,37 @@ public final class MarbleSolitaire {
   /**
    * Determines which model should be used given from the command line arguments.
    *
+   * <p>Each if statement checks which optional arguments were given in the initial command in
+   * order to determine which version of the constructors to use. Within each if statement
+   * is a switch  statement that determines which version of marble solitaire is supposed to be
+   * created.
+   *
+   * <p>Because when the user specifies the location for the empty position, they that start at 1
+   * instead of at 0 (for instance a location that would be 3,3 in the model is input as 4,4),
+   * the inputted rows and columns are subtracted by one when given to the model.
+   *
    * @param size the given size of the board.
    * @param sRow the row of the selected empty position.
    * @param sCol the column of the selected empty position.
-   * @param optionSize whether the size is different than default.
-   * @param optionHole whether the empty position is different than default.
+   * @param optionalSize whether the size is different than the default.
+   * @param optionalHole whether the empty position is different than the default.
    * @param type the type of marble solitaire.
    * @return the correct model needed from the arguments.
    */
-  private static MarbleSolitaireModel getModel(int size, int sRow, int sCol, boolean optionSize,
-      boolean optionHole, String type) {
-    if (optionSize && optionHole) {
+  private static MarbleSolitaireModel getModel(int size, int sRow, int sCol, boolean optionalSize,
+      boolean optionalHole, String type) throws IllegalArgumentException {
+    if (optionalSize && optionalHole) {
       switch (type) {
         case "english":
-          return new MarbleSolitaireModelImpl(size, sRow, sCol);
+          return new MarbleSolitaireModelImpl(size, sRow - 1, sCol - 1);
         case "european":
-          return new EuropeanSolitaireModelImpl(size, sRow, sCol);
+          return new EuropeanSolitaireModelImpl(size, sRow - 1, sCol - 1);
         case "triangular":
-          return new TriangleSolitaireModelImpl(size, sRow, sCol);
+          return new TriangleSolitaireModelImpl(size, sRow - 1, sCol - 1);
         default:
           break;
       }
-    } else if (optionSize) {
+    } else if (optionalSize) {
       switch (type) {
         case "english":
           return new MarbleSolitaireModelImpl(size);
@@ -101,14 +109,14 @@ public final class MarbleSolitaire {
         default:
           break;
       }
-    } else if (optionHole) {
+    } else if (optionalHole) {
       switch (type) {
         case "english":
-          return new MarbleSolitaireModelImpl(sRow, sCol);
+          return new MarbleSolitaireModelImpl(sRow - 1, sCol - 1);
         case "european":
-          return new EuropeanSolitaireModelImpl(sRow, sCol);
+          return new EuropeanSolitaireModelImpl(sRow - 1, sCol - 1);
         case "triangular":
-          return new TriangleSolitaireModelImpl(sRow, sCol);
+          return new TriangleSolitaireModelImpl(sRow - 1, sCol - 1);
         default:
           break;
       }

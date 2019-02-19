@@ -201,6 +201,23 @@ public class TriangleSolitaireModelImplTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
+  public void testNoMarbleFrom() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl();
+    game.move(0,0, 2, 0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testMarbleTo() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl();
+    game.move(2, 0, 4, 0);
+  }
+  @Test(expected = IllegalArgumentException.class)
+  public void testNoMarbleMid() {
+    TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl(1,0);
+    game.move(2,0,0,0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
   public void testInvalidMove() {
     TriangleSolitaireModelImpl game = new TriangleSolitaireModelImpl();
     game.move(2, 1, 0, 0);
