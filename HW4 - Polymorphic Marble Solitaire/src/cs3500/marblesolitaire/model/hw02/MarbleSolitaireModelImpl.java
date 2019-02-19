@@ -53,12 +53,15 @@ public class MarbleSolitaireModelImpl extends AbstractSolitaireModelImpl {
    * Constructor 3: Constructs a game using the specified arm thickness with an empty space at an
    * automatically determined position. Throws an IllegalArgumentException with message "Arm
    * thickness must be positive and odd."
+   *
+   * <p>Note: Fixed a bug present in previous versions where the empty location would not be in the
+   * correct position.
    */
   public MarbleSolitaireModelImpl(int armThickness) {
     if (armThickness % 2 == 1 && armThickness > 0) {
       super.armThickness = armThickness;
-      super.sRow = armThickness;
-      super.sCol = armThickness;
+      super.sRow = armThickness + ((armThickness - 3) / 2);
+      super.sCol = armThickness + ((armThickness - 3) / 2);
 
       this.buildGrid();
     } else {

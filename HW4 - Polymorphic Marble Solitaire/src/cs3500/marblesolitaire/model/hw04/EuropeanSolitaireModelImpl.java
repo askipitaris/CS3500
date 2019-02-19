@@ -76,8 +76,8 @@ public class EuropeanSolitaireModelImpl extends AbstractSolitaireModelImpl {
   public EuropeanSolitaireModelImpl(int armThickness) {
     if (armThickness % 2 == 1 && armThickness > 0) {
       super.armThickness = armThickness;
-      super.sRow = armThickness;
-      super.sCol = armThickness;
+      super.sRow = armThickness + ((armThickness - 3) / 2);
+      super.sCol = armThickness + ((armThickness - 3) / 2);
 
       this.buildGrid();
     } else {

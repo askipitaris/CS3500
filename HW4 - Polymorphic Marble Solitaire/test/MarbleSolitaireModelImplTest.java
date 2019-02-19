@@ -33,6 +33,12 @@ public class MarbleSolitaireModelImplTest {
     assertEquals(CellState.Empty, game3.getCell(5, 4).getState());
   }
 
+  @Test
+  public void testBuildGridSize() {
+    MarbleSolitaireModelImpl game = new MarbleSolitaireModelImpl(5);
+    assertEquals(CellState.Empty, game.getCell(6, 6).getState());
+  }
+
   @Test(expected = IllegalArgumentException.class)
   public void testMoveDiffRow() {
     MarbleSolitaireModelImpl exGame = new MarbleSolitaireModelImpl();
