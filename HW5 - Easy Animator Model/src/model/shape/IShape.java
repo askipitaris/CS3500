@@ -29,4 +29,14 @@ public interface IShape {
    * @param by is the amount by which this shape will grow.
    */
   void grow(int by);
+
+  /**
+   * Gets the visibility of this shape.
+   */
+  boolean getVisibility();
+
+  /**
+   * Changes the visibility of this shape.
+   */
+  void setVisibility();
 }

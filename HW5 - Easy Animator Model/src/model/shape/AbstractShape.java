@@ -46,12 +46,22 @@ public abstract class AbstractShape implements IShape {
 
   @Override
   public void changeColor(Color c) {
-    this.color = c;
+    this.color = new Color(c.getRGB());
   }
 
   @Override
   public void grow(int s) {
     this.height += (s / 2);
     this.width += (s / 2);
+  }
+
+  @Override
+  public boolean getVisibility() {
+    return this.visible;
+  }
+
+  @Override
+  public void setVisibility() {
+    this.visible = !this.visible;
   }
 }
