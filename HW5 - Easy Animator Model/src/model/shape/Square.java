@@ -20,11 +20,9 @@ public class Square extends Rectangle {
    * @param color is the color of the square.
    * @param appearTick is the tick when the square will appear.
    * @param disappearTick is the tick when the square will disappear.
-   * @param visible is the visibility of the square.
    */
-  public Square(int sideLength, Posn posn, Color color, int appearTick,
-      int disappearTick, boolean visible) {
-    super(sideLength, sideLength, posn, color, appearTick, disappearTick, visible);
+  public Square(int sideLength, Posn posn, Color color, int appearTick, int disappearTick) {
+    super(sideLength, sideLength, posn, color, appearTick, disappearTick);
   }
 
 

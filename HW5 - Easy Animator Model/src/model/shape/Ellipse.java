@@ -19,10 +19,8 @@ public class Ellipse extends AbstractShape {
    * @param color is the color of the ellipse.
    * @param appearTick is the tick when the ellipse will appear.
    * @param disappearTick is the tick when the ellipse will disappear.
-   * @param visible is the visibility of the tick.
    */
-  public Ellipse(int height, int width, Posn posn, Color color, int appearTick,
-      int disappearTick, boolean visible) {
-    super(height, width, posn, color, appearTick, disappearTick, visible);
+  public Ellipse(int height, int width, Posn posn, Color color, int appearTick, int disappearTick) {
+    super(height, width, posn, color, appearTick, disappearTick);
   }
 }

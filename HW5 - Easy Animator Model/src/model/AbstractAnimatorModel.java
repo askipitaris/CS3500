@@ -26,22 +26,19 @@ abstract class AbstractAnimatorModel implements AnimatorModel {
       int appearTick, int disappearTick, boolean visible) {
     switch (type) {
       case "circle":
-        IShape circle = new Circle(width, posn, color, appearTick, disappearTick, visible);
+        IShape circle = new Circle(width, posn, color, appearTick, disappearTick);
         shapes.put(name, circle);
         break;
       case "square":
-        IShape square = new Rectangle(height, width, posn, color, appearTick, disappearTick,
-            visible);
+        IShape square = new Rectangle(height, width, posn, color, appearTick, disappearTick);
         shapes.put(name, square);
         break;
       case "rectangle":
-        IShape rectangle = new Rectangle(height, width, posn, color, appearTick, disappearTick,
-            visible);
+        IShape rectangle = new Rectangle(height, width, posn, color, appearTick, disappearTick);
         shapes.put(name, rectangle);
         break;
       case "ellipse":
-        IShape ellipse = new Rectangle(height, width, posn, color, appearTick, disappearTick,
-            visible);
+        IShape ellipse = new Rectangle(height, width, posn, color, appearTick, disappearTick);
         shapes.put(name, ellipse);
         break;
       default:

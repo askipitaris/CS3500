@@ -13,10 +13,16 @@ public class Posn {
    *
    * @param x the x position of the cartesian point
    * @param y the y position of the cartesian point
+   * @throws IllegalArgumentException if the x or y value is not greater or equal 0
    */
-  Posn(int x, int y) {
-    this.x = x;
-    this.y = y;
+  public Posn(int x, int y) {
+    if (x >= 0 && y >= 0) {
+      this.x = x;
+      this.y = y;
+    } else {
+      throw new IllegalArgumentException("Invalid pos");
+    }
+
   }
 
   /**
@@ -24,7 +30,7 @@ public class Posn {
    *
    * @return the x position of this Posn
    */
-  private int getX() {
+  public int getX() {
     return this.x;
   }
 
@@ -33,7 +39,7 @@ public class Posn {
    *
    * @return the y position of this Posn
    */
-  private int getY() {
+  public int getY() {
     return this.y;
   }
 

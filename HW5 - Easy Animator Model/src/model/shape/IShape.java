@@ -31,6 +31,16 @@ public interface IShape {
   void grow(int by);
 
   /**
+   * Gets the current position of this shape.
+   */
+  Posn getPosn();
+
+  /**
+   * Gets the current color of this shape.
+   */
+  Color getColor();
+
+  /**
    * Gets the visibility of this shape.
    */
   boolean getVisibility();

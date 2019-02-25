@@ -20,11 +20,8 @@ public class Circle extends Ellipse {
    * @param color is the color of the circle.
    * @param appearTick is the tick when the circle will appear.
    * @param disappearTick is the tick when the circle will disappear.
-   * @param visible is the visibility of the ciricle.
    */
-  public Circle(int diameter, Posn posn, Color color, int appearTick,
-      int disappearTick,
-      boolean visible) {
-    super(diameter, diameter, posn, color, appearTick, disappearTick, visible);
+  public Circle(int diameter, Posn posn, Color color, int appearTick, int disappearTick) {
+    super(diameter, diameter, posn, color, appearTick, disappearTick);
   }
 }
