@@ -9,6 +9,12 @@ public class TestPosn {
   public void testBuildPosn() {
     Posn p = new Posn(3, 5);
     Posn p1 = new Posn(0, 0);
+
+    assertEquals(3, p.getX());
+    assertEquals(5, p.getY());
+
+    assertEquals(0, p1.getX());
+    assertEquals(0, p1.getY());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -29,5 +35,8 @@ public class TestPosn {
     Posn p = new Posn(3, 5);
 
     p.updatePos(new Posn(5, 6));
+
+    assertEquals(5, p.getX());
+    assertEquals(6, p.getY());
   }
 }
