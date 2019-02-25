@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.Color;
+import model.action.Action;
+import model.shape.IShape;
 import posn.Posn;
 
 /**
@@ -31,7 +33,7 @@ public interface AnimatorModel {
    * @param shape the shape that will change size
    * @param s the amount that the shape will change by
    */
-  void grow(String shape, int s);
+  void grow(String shape, double s);
 
   /**
    * Changes the visibility of the shape.
@@ -58,10 +60,37 @@ public interface AnimatorModel {
    * @param color color of the shape
    * @param appearTick time that shape appears in animation
    * @param disappearTick time that shape disappears in animation
-   * @param visible determines if the shape is visible on the screen
    * @throws IllegalArgumentException if the user doesn't provide a valid shape type
    */
   void add(String name, String type, int height, int width, Posn posn, Color color,
-      int appearTick, int disappearTick, boolean visible);
+      int appearTick, int disappearTick);
 
+  /**
+   * Get the size of the hashmap of shapes.
+   *
+   * @return the size of the hashmap as an int
+   */
+  int numOfShapes();
+
+  /**
+   * Adds actions to the action array.
+   */
+  void addActions(Action a);
+
+  /**
+   * Gets the state of the model and outputs each queued action as a sentence. If the shape
+   * specified in the action does not exist, it gets skipped. If it does exist, it outputs the time
+   * frame where the action will take place, then whether the position, size and color change.
+   */
+  String getState();
+
+  /**
+   * Gets a specific value from the hashmap of shapes. Mainly used when testing to make sure that
+   * actions are executed properly.
+   *
+   * @param name is the name of the shape
+   * @return the shape
+   */
+  IShape getShape(String name);
 }
+

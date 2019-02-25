@@ -3,6 +3,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import posn.Posn;
 
+/**
+ * Tests for the posn class.
+ */
 public class TestPosn {
 
   @Test

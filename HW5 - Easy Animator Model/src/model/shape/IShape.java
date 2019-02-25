@@ -28,7 +28,7 @@ public interface IShape {
    *
    * @param by is the amount by which this shape will grow.
    */
-  void grow(int by);
+  void grow(double by);
 
   /**
    * Gets the current position of this shape.
@@ -49,4 +49,18 @@ public interface IShape {
    * Changes the visibility of this shape.
    */
   void setVisibility();
+
+  /**
+   * Gets the height of this shape.
+   *
+   * @return the height as a double
+   */
+  int getHeight();
+
+  /**
+   * Gets the width of this shape.
+   *
+   * @return the width as a double
+   */
+  int getWidth();
 }

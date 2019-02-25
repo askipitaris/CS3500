@@ -11,6 +11,9 @@ import model.shape.Square;
 import org.junit.Test;
 import posn.Posn;
 
+/**
+ * Tests methods relating to shapes.
+ */
 public class TestShapes {
 
   @Test

@@ -48,9 +48,11 @@ public abstract class AbstractShape implements IShape {
   }
 
   @Override
-  public void grow(int s) {
-    this.height += (s / 2);
-    this.width += (s / 2);
+  public void grow(double s) {
+    double dH = this.height * s;
+    double dW = this.width * s;
+    this.height = (int) dH;
+    this.width = (int) dW;
   }
 
   @Override
@@ -71,5 +73,15 @@ public abstract class AbstractShape implements IShape {
   @Override
   public void setVisibility() {
     this.visible = !this.visible;
+  }
+
+  @Override
+  public int getHeight() {
+    return this.height;
+  }
+
+  @Override
+  public int getWidth() {
+    return this.width;
   }
 }
