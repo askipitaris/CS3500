@@ -10,7 +10,7 @@ import posn.Posn;
  */
 public class ActionTest {
 
-  private Action a = new Action("circle", 1, 10, new Posn(0, 5), 1, Color.blue);
+  private Action a = new Action("circle", 1, 10, new Posn(0, 5), new Posn(0, 5), 1, Color.blue);
 
   @Test
   public void getStartTime() {

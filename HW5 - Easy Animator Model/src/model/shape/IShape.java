@@ -63,4 +63,9 @@ public interface IShape {
    * @return the width as a double
    */
   int getWidth();
+
+  /**
+   *
+   */
+  String getType();
 }

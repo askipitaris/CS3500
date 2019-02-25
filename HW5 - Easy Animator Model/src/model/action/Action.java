@@ -11,6 +11,7 @@ public class Action {
   private int startTime;
   private int endTime;
   private Posn toPosn;
+  private Posn fromPosn;
   private int growBy;
   private Color newColor;
   private String shape;
@@ -25,13 +26,14 @@ public class Action {
    * @param growBy is the multiple that the shape will grow by.
    * @param newColor is the color that the shape will be at the end of the action.
    */
-  public Action(String shape, int startTime, int endTime, Posn toPosn, int growBy,
+  public Action(String shape, int startTime, int endTime, Posn toPosn, Posn fromPosn, int growBy,
       Color newColor) {
     if (growBy > 0 && startTime >= 0 && endTime >= 0) {
       this.shape = shape;
       this.startTime = startTime;
       this.endTime = endTime;
       this.toPosn = toPosn;
+      this.fromPosn = fromPosn;
       this.growBy = growBy;
       this.newColor = newColor;
     } else {
@@ -64,6 +66,15 @@ public class Action {
    */
   public Posn getToPosn() {
     return toPosn;
+  }
+
+  /**
+   * Gets the location that the shape will move from during this action.
+   *
+   * @return the location this shape is at before the move.
+   */
+  public Posn getFromPosn() {
+    return fromPosn;
   }
 
   /**

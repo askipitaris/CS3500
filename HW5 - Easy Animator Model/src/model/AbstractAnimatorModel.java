@@ -20,8 +20,8 @@ abstract class AbstractAnimatorModel implements AnimatorModel {
   int winWidth;
   int winHeight;
   Color winColor;
-  private Map<String, IShape> shapes = new HashMap<String, IShape>();
-  private ArrayList<Action> actions = new ArrayList<Action>();
+  private Map<String, IShape> shapes = new HashMap<>();
+  private ArrayList<Action> actions = new ArrayList<>();
   private StringBuilder state = new StringBuilder();
 
   @Override
@@ -29,19 +29,20 @@ abstract class AbstractAnimatorModel implements AnimatorModel {
       int appearTick, int disappearTick) {
     switch (type) {
       case "circle":
-        IShape circle = new Circle(width, posn, color, appearTick, disappearTick);
+        IShape circle = new Circle(width, posn, color, appearTick, disappearTick, type);
         shapes.put(name, circle);
         break;
       case "square":
-        IShape square = new Rectangle(height, width, posn, color, appearTick, disappearTick);
+        IShape square = new Rectangle(height, width, posn, color, appearTick, disappearTick, type);
         shapes.put(name, square);
         break;
       case "rectangle":
-        IShape rectangle = new Rectangle(height, width, posn, color, appearTick, disappearTick);
+        IShape rectangle = new Rectangle(height, width, posn, color, appearTick, disappearTick,
+            type);
         shapes.put(name, rectangle);
         break;
       case "ellipse":
-        IShape ellipse = new Rectangle(height, width, posn, color, appearTick, disappearTick);
+        IShape ellipse = new Rectangle(height, width, posn, color, appearTick, disappearTick, type);
         shapes.put(name, ellipse);
         break;
       default:
@@ -90,6 +91,11 @@ abstract class AbstractAnimatorModel implements AnimatorModel {
   }
 
   @Override
+  public ArrayList<Action> getActions() {
+    return actions;
+  }
+
+  @Override
   public String getState() {
     for (Action a : actions) {
       this.buildOutput(a);
@@ -106,49 +112,30 @@ abstract class AbstractAnimatorModel implements AnimatorModel {
    */
   private void buildOutput(Action a) {
     if (shapes.get(a.getShape()) != null) {
-      state.append("From time ").append(a.getStartTime()).append(" to ").append(a.getEndTime())
-          .append(", ").append(a.getShape());
+      state.append("shape ").append(a.getShape()).append(" ")
+          .append(shapes.get(a.getShape()).getType()).append("\n");
 
-      this.appendMovement(a);
-      this.appendSize(a);
-      this.appendColor(a);
+      state.append("motion ").append(a.getShape()).append(" ").append(a.getStartTime()).append(" ")
+          .append(a.getFromPosn().getX()).append(" ").append(a
+          .getFromPosn().getY()).append(" ").append(shapes.get(a.getShape()).getWidth()).append(" ")
+          .append(shapes
+              .get(a.getShape()).getHeight()).append(" ")
+          .append(shapes.get(a.getShape()).getColor().getRed()).append(" ")
+          .append(shapes.get(a.getShape()).getColor().getGreen()).append(" ").append(shapes
+          .get(a.getShape()).getColor().getBlue());
 
+      state.append("    ");
+
+      state.append(a.getEndTime()).append(" ").append(a.getToPosn().getX()).append(" ").append(a
+          .getToPosn().getY()).append(" ").append(shapes.get(a.getShape()).getWidth()).append(" ")
+          .append(shapes
+              .get(a.getShape()).getHeight()).append(" ")
+          .append(shapes.get(a.getShape()).getColor().getRed()).append(" ")
+          .append(shapes.get(a.getShape()).getColor().getGreen()).append(" ")
+          .append(shapes.get(a.getShape())
+              .getColor().getBlue());
     } else {
       state.append("No such shape: ").append(a.getShape()).append("\n");
-    }
-  }
-
-  private void appendMovement(Action a) {
-    if (shapes.get(a.getShape()).getPosn().getX() != a.getToPosn().getX()
-        || shapes.get(a.getShape()).getPosn().getY() != a.getToPosn().getY()) {
-      state.append(" moves from (").append(shapes.get(a.getShape()).getPosn().getX())
-          .append(",").append(shapes.get(a.getShape()).getPosn().getY()).append(") to (")
-          .append(a.getToPosn().getX()).append(",").append(a.getToPosn().getY()).append("), ");
-    } else {
-      state.append("stays put at ").append("(")
-          .append(shapes.get(a.getShape()).getPosn().getX())
-          .append(",").append(shapes.get(a.getShape()).getPosn().getY()).append("), ");
-    }
-  }
-
-  private void appendSize(Action a) {
-    if (a.getGrowBy() == 1) {
-      state.append("stays size ").append(shapes.get(a.getShape()).getWidth()).append("x")
-          .append(shapes.get(a.getShape()).getHeight());
-    } else if (a.getGrowBy() > 1 && a.getGrowBy() > 0) {
-      state.append("shrinks to ").append(shapes.get(a.getShape()).getWidth() * a.getGrowBy())
-          .append("x").append(shapes.get(a.getShape()).getHeight() * a.getGrowBy());
-    } else {
-      state.append("grows to ").append(shapes.get(a.getShape()).getWidth() * a.getGrowBy())
-          .append("x").append(shapes.get(a.getShape()).getHeight() * a.getGrowBy());
-    }
-  }
-
-  private void appendColor(Action a) {
-    if (shapes.get(a.getShape()).getColor().equals(a.getNewColor())) {
-      state.append(" and stays ").append(a.getNewColor().toString()).append(".");
-    } else {
-      state.append(" and changes to ").append(a.getNewColor().toString()).append(".\n");
     }
   }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import model.action.Action;
 import model.shape.IShape;
 import posn.Posn;
@@ -26,6 +27,12 @@ public interface AnimatorModel {
    * @param c the new color that the shape will turn to
    */
   void changeColor(String shape, Color c);
+
+  /**
+   * Returns the list of actions in the AbstractAnimatorModel class.
+   */
+  ArrayList<Action> getActions();
+
 
   /**
    * The new size that the shape will be.

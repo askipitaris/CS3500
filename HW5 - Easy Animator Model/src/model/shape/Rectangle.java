@@ -21,8 +21,8 @@ public class Rectangle extends AbstractShape {
    * @param disappearTick is the tick when the rectangle will disappear.
    */
   public Rectangle(int height, int width, Posn posn, Color color, int appearTick,
-      int disappearTick) {
-    super(height, width, posn, color, appearTick, disappearTick);
+      int disappearTick, String type) {
+    super(height, width, posn, color, appearTick, disappearTick, type);
   }
 
 }

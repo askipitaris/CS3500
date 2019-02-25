@@ -28,10 +28,12 @@ public class TestAnimatorModel {
   @Test
   public void testAddActions() {
     AnimatorModel exAnimation = new AnimatorModelImpl();
-    Action exAction = new Action("c", 11, 19, new Posn(300, 300),
+    Action exAction = new Action("c", 11, 19, new Posn(300, 300), new Posn(300, 310),
         1, Color.red);
 
     exAnimation.addActions(exAction);
+    assertEquals(1, exAnimation.getActions().size());
+
   }
 
   @Test
@@ -39,13 +41,13 @@ public class TestAnimatorModel {
     AnimatorModel exAnimation = new AnimatorModelImpl();
     exAnimation.add("c", "circle", 10, 10, new Posn(250, 250),
         Color.red, 10, 20);
-    Action exAction = new Action("c", 11, 19, new Posn(300, 300),
+    Action exAction = new Action("c", 11, 19, new Posn(300, 300), new Posn(300, 310),
         1, Color.red);
 
     exAnimation.addActions(exAction);
 
-    assertEquals("From time 11 to 19, c moves from (250,250) to (300,300), stays size "
-        + "10x10 and stays red.", exAnimation.getState());
+    assertEquals("shape c circle\n"
+        + "motion c 11 300 310 10 10 255 0 0    19 300 300 10 10 255 0 0", exAnimation.getState());
   }
 
   @Test
@@ -107,7 +109,7 @@ public class TestAnimatorModel {
   @Test
   public void testAnimationOver() {
     AnimatorModel exAnimation = new AnimatorModelImpl();
-    Action exAction = new Action("c", 11, 19, new Posn(300, 300),
+    Action exAction = new Action("c", 11, 19, new Posn(300, 300), new Posn(300, 310),
         1, Color.red);
     exAnimation.add("c", "circle", 10, 10, new Posn(250, 250),
         Color.red, 10, 20);

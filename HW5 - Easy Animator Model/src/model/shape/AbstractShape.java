@@ -16,6 +16,7 @@ public abstract class AbstractShape implements IShape {
   protected int appearTick;
   protected int disappearTick;
   protected boolean visible;
+  protected String type;
 
   /**
    * Abstract constructor.
@@ -26,8 +27,10 @@ public abstract class AbstractShape implements IShape {
    * @param color is the color of the shape.
    * @param appearTick is the tick this shape is meant to become visible.
    * @param disappearTick is the tick the shape is meant to become not visible.
+   * @param type the type of the shape
    */
-  AbstractShape(int height, int width, Posn posn, Color color, int appearTick, int disappearTick) {
+  AbstractShape(int height, int width, Posn posn, Color color, int appearTick, int disappearTick,
+      String type) {
     this.height = height;
     this.width = width;
     this.posn = posn;
@@ -35,6 +38,7 @@ public abstract class AbstractShape implements IShape {
     this.appearTick = appearTick;
     this.disappearTick = disappearTick;
     this.visible = false;
+    this.type = type;
   }
 
   @Override
@@ -83,5 +87,10 @@ public abstract class AbstractShape implements IShape {
   @Override
   public int getWidth() {
     return this.width;
+  }
+
+  @Override
+  public String getType() {
+    return this.type;
   }
 }
