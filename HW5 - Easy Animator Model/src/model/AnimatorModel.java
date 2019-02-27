@@ -59,7 +59,7 @@ public interface AnimatorModel {
       double growBy, Color newColor);
 
   /**
-   *
+   * Runs all the actions in the array of actions. Essentially runs the full animation.
    */
   void runAnimation();
 

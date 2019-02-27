@@ -111,18 +111,24 @@ public class Action {
    * @param a is the action that this will be compared to
    * @return a boolean as to whether this is the same as the given action.
    */
-  public boolean equals(Action a) {
-    return this.shape.equals(a.shape)
-        && this.startTime == a.startTime
-        && this.endTime == a.endTime
-        && this.toPosn.equals(a.toPosn)
-        && this.fromPosn.equals(a.fromPosn)
-        && this.growBy == a.growBy
-        && this.newColor.getRGB() == a.newColor.getRGB();
+  @Override
+  public boolean equals(Object a) {
+
+    if ( !(a instanceof Action)) {
+      return false;
+    }
+
+    return this.shape.equals(((Action) a).getShape())
+        && this.startTime == ((Action) a).getStartTime()
+        && this.endTime == ((Action) a).getEndTime()
+        && this.toPosn.equals(((Action) a).getToPosn())
+        && this.fromPosn.equals(((Action) a).getFromPosn())
+        && this.growBy == ((Action) a).getGrowBy()
+        && this.newColor.getRGB() == ((Action) a).getNewColor().getRGB();
   }
 
   /**
-   * Override hashCode()
+   * Override hashCode() so that it creates an accurate hascode.
    * @return the new hashCode.
    */
   @Override

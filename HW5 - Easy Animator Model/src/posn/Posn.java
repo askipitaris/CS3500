@@ -60,9 +60,15 @@ public class Posn {
    * @param p is the posn that this will be compared to.
    * @return a boolean as to whether this is hte same as the given posn.
    */
-  public boolean equals(Posn p) {
-    return this.getX() == p.getX()
-        && this.getY() == p.getY();
+  @Override
+  public boolean equals(Object p) {
+
+    if (!(p instanceof Posn)) {
+      return false;
+    }
+
+    return this.getX() == ((Posn) p).getX()
+        && this.getY() == ((Posn) p).getY();
   }
 
   /**

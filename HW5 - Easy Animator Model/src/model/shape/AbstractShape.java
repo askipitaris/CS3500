@@ -118,7 +118,7 @@ public abstract class AbstractShape implements IShape {
    * This enum represents all possible shapes. Used when methods need to know what type of shape
    * they are working with.
    */
-  public static enum ShapeType {
+  public enum ShapeType {
     Circle, Ellipse, Square, Rectangle
   }
 
@@ -127,15 +127,21 @@ public abstract class AbstractShape implements IShape {
    * @param s is the shape that this will be compared to.
    * @return a boolean which says if this is the same as the given shape.
    */
-  public boolean equals(IShape s) {
-    return this.getPosn().equals(s.getPosn())
-        && this.getColor().equals(s.getColor())
-        && this.getHeight() == s.getHeight()
-        && this.getWidth() == s.getWidth()
-        && this.getAppearTick() == s.getAppearTick()
-        && this.getDisappearTick() == s.getDisappearTick()
-        && this.getVisibility() == s.getVisibility()
-        && this.getType().equals(s.getType());
+  @Override
+  public boolean equals(Object s) {
+
+    if (!(s instanceof IShape)) {
+      return false;
+    }
+
+    return this.getPosn().equals(((IShape) s).getPosn())
+        && this.getColor().equals(((IShape) s).getColor())
+        && this.getHeight() == ((IShape) s).getHeight()
+        && this.getWidth() == ((IShape) s).getWidth()
+        && this.getAppearTick() == ((IShape) s).getAppearTick()
+        && this.getDisappearTick() == ((IShape) s).getDisappearTick()
+        && this.getVisibility() == ((IShape) s).getVisibility()
+        && this.getType().equals(((IShape) s).getType());
   }
 
   /**
