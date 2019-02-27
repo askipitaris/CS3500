@@ -22,7 +22,7 @@ public class Square extends Rectangle {
    * @param disappearTick is the tick when the square will disappear.
    */
   public Square(int sideLength, Posn posn, Color color, int appearTick, int disappearTick,
-      String type) {
+      ShapeType type) {
     super(sideLength, sideLength, posn, color, appearTick, disappearTick, type);
   }
 

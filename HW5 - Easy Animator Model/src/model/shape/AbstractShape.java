@@ -1,6 +1,7 @@
 package model.shape;
 
 import java.awt.Color;
+import java.util.Objects;
 import posn.Posn;
 
 /**
@@ -9,14 +10,14 @@ import posn.Posn;
  */
 public abstract class AbstractShape implements IShape {
 
-  protected int height;
-  protected int width;
   protected Posn posn;
   protected Color color;
-  protected int appearTick;
-  protected int disappearTick;
-  protected boolean visible;
-  protected String type;
+  private int height;
+  private int width;
+  private int appearTick;
+  private int disappearTick;
+  private boolean visible;
+  private ShapeType type;
 
   /**
    * Abstract constructor.
@@ -30,7 +31,7 @@ public abstract class AbstractShape implements IShape {
    * @param type the type of the shape
    */
   AbstractShape(int height, int width, Posn posn, Color color, int appearTick, int disappearTick,
-      String type) {
+      ShapeType type) {
     this.height = height;
     this.width = width;
     this.posn = posn;
@@ -90,7 +91,67 @@ public abstract class AbstractShape implements IShape {
   }
 
   @Override
-  public String getType() {
+  public ShapeType getType() {
     return this.type;
+  }
+
+  @Override
+  public void updateHeightAndWidth(double g) {
+    double nH = this.height * g;
+    double nW = this.width * g;
+
+    this.height = (int) nH;
+    this.width = (int) nW;
+  }
+
+  @Override
+  public int getAppearTick() {
+    return this.appearTick;
+  }
+
+  @Override
+  public int getDisappearTick() {
+    return this.disappearTick;
+  }
+
+  /**
+   * Override .equals to ensure that shapes are being correctly compared.
+   *
+   * @param s is the shape that this will be compared to.
+   * @return a boolean which says if this is the same as the given shape.
+   */
+  @Override
+  public boolean equals(Object s) {
+
+    if (!(s instanceof IShape)) {
+      return false;
+    }
+
+    return this.getPosn().equals(((IShape) s).getPosn())
+        && this.getColor().equals(((IShape) s).getColor())
+        && this.getHeight() == ((IShape) s).getHeight()
+        && this.getWidth() == ((IShape) s).getWidth()
+        && this.getAppearTick() == ((IShape) s).getAppearTick()
+        && this.getDisappearTick() == ((IShape) s).getDisappearTick()
+        && this.getVisibility() == ((IShape) s).getVisibility()
+        && this.getType().equals(((IShape) s).getType());
+  }
+
+  /**
+   * Override hashCode to ensure that things are being hashed correctly.
+   *
+   * @return the new hashCode
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(posn, color, height, width, appearTick, disappearTick, visible, type);
+  }
+
+  /**
+   * This enum represents all possible shapes. Used when methods need to know what type of shape
+   * they are working with.
+   */
+  public enum ShapeType {
+    Circle, Ellipse, Square, Rectangle
   }
 }

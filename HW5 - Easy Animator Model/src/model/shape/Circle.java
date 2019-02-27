@@ -22,7 +22,7 @@ public class Circle extends Ellipse {
    * @param disappearTick is the tick when the circle will disappear.
    */
   public Circle(int diameter, Posn posn, Color color, int appearTick, int disappearTick,
-      String type) {
+      ShapeType type) {
     super(diameter, diameter, posn, color, appearTick, disappearTick, type);
   }
 }

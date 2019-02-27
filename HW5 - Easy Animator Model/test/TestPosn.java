@@ -13,11 +13,11 @@ public class TestPosn {
     Posn p = new Posn(3, 5);
     Posn p1 = new Posn(0, 0);
 
-    assertEquals(3, p.getX());
-    assertEquals(5, p.getY());
+    assertEquals(3, p.getX(), 0.0001);
+    assertEquals(5, p.getY(), 0.0001);
 
-    assertEquals(0, p1.getX());
-    assertEquals(0, p1.getY());
+    assertEquals(0, p1.getX(), 0.0001);
+    assertEquals(0, p1.getY(), 0.0001);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -29,8 +29,8 @@ public class TestPosn {
   public void testGetPos() {
     Posn p = new Posn(10, 11);
 
-    assertEquals(10, p.getX());
-    assertEquals(11, p.getY());
+    assertEquals(10, p.getX(), 0.0001);
+    assertEquals(11, p.getY(), 0.0001);
   }
 
   @Test
@@ -39,7 +39,8 @@ public class TestPosn {
 
     p.updatePos(new Posn(5, 6));
 
-    assertEquals(5, p.getX());
-    assertEquals(6, p.getY());
+    assertEquals(5, p.getX(), 0.0001);
+    assertEquals(6, p.getY(), 0.0001);
   }
+
 }
