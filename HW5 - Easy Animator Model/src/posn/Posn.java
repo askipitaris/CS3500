@@ -1,5 +1,7 @@
 package posn;
 
+import java.util.Objects;
+
 /**
  * Represents a cartesian coordinate.
  */
@@ -51,5 +53,24 @@ public class Posn {
   public void updatePos(Posn p) {
     this.x = p.getX();
     this.y = p.getY();
+  }
+
+  /**
+   * Overrides .equals so that it compares posns correctly.
+   * @param p is the posn that this will be compared to.
+   * @return a boolean as to whether this is hte same as the given posn.
+   */
+  public boolean equals(Posn p) {
+    return this.getX() == p.getX()
+        && this.getY() == p.getY();
+  }
+
+  /**
+   * Override hashCode to ensure that things are being hashed correctly.
+   * @return the new hashCode
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(x, y);
   }
 }

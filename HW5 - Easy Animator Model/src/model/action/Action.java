@@ -1,6 +1,7 @@
 package model.action;
 
 import java.awt.Color;
+import java.util.Objects;
 import posn.Posn;
 
 /**
@@ -12,7 +13,7 @@ public class Action {
   private int endTime;
   private Posn toPosn;
   private Posn fromPosn;
-  private int growBy;
+  private double growBy;
   private Color newColor;
   private String shape;
 
@@ -26,7 +27,7 @@ public class Action {
    * @param growBy is the multiple that the shape will grow by.
    * @param newColor is the color that the shape will be at the end of the action.
    */
-  public Action(String shape, int startTime, int endTime, Posn toPosn, Posn fromPosn, int growBy,
+  public Action(String shape, int startTime, int endTime, Posn toPosn, Posn fromPosn, double growBy,
       Color newColor) {
     if (growBy > 0 && startTime >= 0 && endTime >= 0) {
       this.shape = shape;
@@ -83,7 +84,7 @@ public class Action {
    *
    * @return the multiple that this shape will grow by
    */
-  public int getGrowBy() {
+  public double getGrowBy() {
     return growBy;
   }
 
@@ -103,5 +104,29 @@ public class Action {
    */
   public String getShape() {
     return shape;
+  }
+
+  /**
+   * Overrides .equals so that it checks all fields appropriately.
+   * @param a is the action that this will be compared to
+   * @return a boolean as to whether this is the same as the given action.
+   */
+  public boolean equals(Action a) {
+    return this.shape.equals(a.shape)
+        && this.startTime == a.startTime
+        && this.endTime == a.endTime
+        && this.toPosn.equals(a.toPosn)
+        && this.fromPosn.equals(a.fromPosn)
+        && this.growBy == a.growBy
+        && this.newColor.getRGB() == a.newColor.getRGB();
+  }
+
+  /**
+   * Override hashCode()
+   * @return the new hashCode.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(shape, startTime, endTime, toPosn, fromPosn, growBy, newColor);
   }
 }

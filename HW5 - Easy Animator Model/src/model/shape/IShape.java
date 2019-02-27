@@ -1,6 +1,7 @@
 package model.shape;
 
 import java.awt.Color;
+import model.shape.AbstractShape.ShapeType;
 import posn.Posn;
 
 /**
@@ -65,7 +66,26 @@ public interface IShape {
   int getWidth();
 
   /**
-   *
+   * Grow the height and width using the given multiple.
+   * @param g is the multiple the height and width will grow by.
    */
-  String getType();
+  void updateHeightAndWidth(double g);
+
+  /**
+   * Retrieves the tick when this shape will first appear.
+   * @return an int that reprensts the appear tick
+   */
+  int getAppearTick();
+
+  /**
+   * Retrieves the tick when this shape will first disappear.
+   * @return an int that represents the disappear tick
+   */
+  int getDisappearTick();
+
+  /**
+   * Retrieves the type of this shape.
+   * @return the type of shape as an enum.
+   */
+  ShapeType getType();
 }

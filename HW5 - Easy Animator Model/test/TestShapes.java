@@ -3,6 +3,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
+import model.shape.AbstractShape;
+import model.shape.AbstractShape.ShapeType;
 import model.shape.Circle;
 import model.shape.Ellipse;
 import model.shape.IShape;
@@ -18,7 +20,7 @@ public class TestShapes {
 
   @Test
   public void testCircleConstructor() {
-    IShape c = new Circle(10, new Posn(3, 3), Color.red, 10, 90, "circle");
+    IShape c = new Circle(10, new Posn(3, 3), Color.red, 10, 90, AbstractShape.ShapeType.Circle);
 
     assertFalse(c.getVisibility());
     assertEquals(Color.red, c.getColor());
@@ -26,28 +28,29 @@ public class TestShapes {
 
   @Test
   public void testEllipseConstructor() {
-    IShape e = new Ellipse(10, 5, new Posn(3, 3), Color.black, 15, 20, "ellipse");
+    IShape e = new Ellipse(10, 5, new Posn(3, 3), Color.black, 15, 20,
+        AbstractShape.ShapeType.Ellipse);
 
     assertFalse(e.getVisibility());
   }
 
   @Test
   public void testRectangleConstructor() {
-    IShape r = new Rectangle(10, 5, new Posn(3, 3), Color.black, 15, 20, "rectangle");
+    IShape r = new Rectangle(10, 5, new Posn(3, 3), Color.black, 15, 20, ShapeType.Rectangle);
 
     assertFalse(r.getVisibility());
   }
 
   @Test
   public void testSquareConstructor() {
-    IShape s = new Square(5, new Posn(3, 3), Color.black, 15, 20, "square");
+    IShape s = new Square(5, new Posn(3, 3), Color.black, 15, 20, ShapeType.Square);
 
     assertFalse(s.getVisibility());
   }
 
   @Test
   public void testMove() {
-    IShape c = new Circle(10, new Posn(3, 4), Color.red, 10, 90, "circle");
+    IShape c = new Circle(10, new Posn(3, 4), Color.red, 10, 90, AbstractShape.ShapeType.Circle);
     Posn p = new Posn(5, 6);
 
     assertEquals(3, c.getPosn().getX());
@@ -62,28 +65,28 @@ public class TestShapes {
   @Test
   public void testGetPosn() {
     Posn p = new Posn(4, 3);
-    IShape c = new Circle(10, p, Color.red, 10, 90, "circle");
+    IShape c = new Circle(10, p, Color.red, 10, 90, AbstractShape.ShapeType.Circle);
 
     assertEquals(p, c.getPosn());
   }
 
   @Test
   public void testGetColor() {
-    IShape c = new Circle(10, new Posn(3, 3), Color.red, 10, 90, "circle");
+    IShape c = new Circle(10, new Posn(3, 3), Color.red, 10, 90, AbstractShape.ShapeType.Circle);
 
     assertEquals(Color.red, c.getColor());
   }
 
   @Test
   public void testGetVisibility() {
-    IShape c = new Circle(10, new Posn(3, 3), Color.red, 10, 90, "circle");
+    IShape c = new Circle(10, new Posn(3, 3), Color.red, 10, 90, AbstractShape.ShapeType.Circle);
 
     assertFalse(c.getVisibility());
   }
 
   @Test
   public void testSetVisibility() {
-    IShape c = new Circle(10, new Posn(3, 3), Color.red, 10, 90, "circle");
+    IShape c = new Circle(10, new Posn(3, 3), Color.red, 10, 90, AbstractShape.ShapeType.Circle);
 
     assertFalse(c.getVisibility());
     c.setVisibility();
