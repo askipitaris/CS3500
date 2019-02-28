@@ -57,7 +57,7 @@ public interface AnimatorModel {
    * @param newColor is the new color of the shape.
    */
   void addAction(String shape, int startTime, int endTime, Posn toPosn, Posn fromPosn,
-      double growBy, Color newColor);
+      double growBy, boolean width, boolean height, Color newColor);
 
   /**
    * Runs all the actions in the array of actions. Essentially runs the full animation.

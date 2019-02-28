@@ -16,6 +16,8 @@ public class Action {
   private double growBy;
   private Color newColor;
   private String shape;
+  private boolean width;
+  private boolean height;
 
   /**
    * Constructs an action that the model will carry out.
@@ -28,7 +30,7 @@ public class Action {
    * @param newColor is the color that the shape will be at the end of the action.
    */
   public Action(String shape, int startTime, int endTime, Posn toPosn, Posn fromPosn, double growBy,
-      Color newColor) {
+      boolean width, boolean height, Color newColor) {
     if (growBy > 0 && startTime >= 0 && endTime >= 0) {
       this.shape = shape;
       this.startTime = startTime;
@@ -37,6 +39,8 @@ public class Action {
       this.fromPosn = fromPosn;
       this.growBy = growBy;
       this.newColor = newColor;
+      this.width = width;
+      this.height = height;
     } else {
       throw new IllegalArgumentException("Invalid arguments.");
     }
@@ -137,4 +141,19 @@ public class Action {
   public int hashCode() {
     return Objects.hash(shape, startTime, endTime, toPosn, fromPosn, growBy, newColor);
   }
+
+  /**
+   * Gets whether the width grows.
+   */
+  public boolean getWidth() {
+    return this.width;
+  }
+
+  /**
+   * Gets whether the height grows.
+   */
+  public boolean getHeight() {
+    return this.height;
+  }
+
 }

@@ -96,12 +96,15 @@ public abstract class AbstractShape implements IShape {
   }
 
   @Override
-  public void updateHeightAndWidth(double g) {
+  public void updateHeightAndWidth(double g, boolean width, boolean height) {
     double nH = this.height * g;
     double nW = this.width * g;
-
-    this.height = (int) nH;
-    this.width = (int) nW;
+    if (width) {
+      this.width = (int) nW;
+    }
+    if (height) {
+      this.height = (int) nH;
+    }
   }
 
   @Override
