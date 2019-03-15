@@ -53,7 +53,7 @@ abstract class AbstractAnimatorModel implements AnimatorModel {
       this.updateColor(a.getNewColor(), shapes.get(a.getShape()));
     }
 
-    this.grow(shapes.get(a.getShape()), a.getGrowBy());
+    this.grow(shapes.get(a.getShape()), a.getGrowBy(), a.getWidth(), a.getHeight());
 
     this.move(shapes.get(a.getShape()), a.getToPosn(), a.getStartTime(), a.getEndTime(),
         a.getToPosn());
@@ -63,8 +63,9 @@ abstract class AbstractAnimatorModel implements AnimatorModel {
     s.changeColor(c);
   }
 
-  private void grow(IShape s, double g) {
-    s.updateHeightAndWidth(g);
+  private void grow(IShape s, double g, boolean width, boolean height) {
+    s.updateHeightAndWidth(g, width, height);
+
   }
 
 
@@ -155,8 +156,9 @@ abstract class AbstractAnimatorModel implements AnimatorModel {
 
   @Override
   public void addAction(String shape, int startTime, int endTime, Posn toPosn, Posn fromPosn,
-      double growBy, Color newColor) {
-    actions.add(new Action(shape, startTime, endTime, toPosn, fromPosn, growBy, newColor));
+      double growBy, boolean width, boolean height, Color newColor) {
+    actions.add(
+        new Action(shape, startTime, endTime, toPosn, fromPosn, growBy, width, height, newColor));
   }
 
   @Override

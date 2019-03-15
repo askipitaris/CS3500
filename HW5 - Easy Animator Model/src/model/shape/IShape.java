@@ -70,7 +70,7 @@ public interface IShape {
    *
    * @param g is the multiple the height and width will grow by.
    */
-  void updateHeightAndWidth(double g);
+  void updateHeightAndWidth(double g, boolean width, boolean height);
 
   /**
    * Retrieves the tick when this shape will first appear.

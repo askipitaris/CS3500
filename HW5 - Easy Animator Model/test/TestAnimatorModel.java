@@ -34,17 +34,17 @@ public class TestAnimatorModel {
     AnimatorModel exAnimation = new AnimatorModelImpl();
 
     exAnimation.addAction("c", 11, 19, new Posn(300, 300), new Posn(300, 310),
-        1, Color.red);
+        1, true, true, Color.red);
     assertEquals(1, exAnimation.getActions().size());
 
     Action a = new Action("c", 11, 19, new Posn(300, 300), new Posn(300, 310),
-        1, Color.red);
+        1, true, true, Color.red);
 
     assertEquals(a, exAnimation.getActions().get(0));
     exAnimation.addAction("c", 10, 19, new Posn(300, 300), new Posn(300, 310),
-        1, Color.red);
+        1, true, true, Color.red);
     Action a2 = new Action("c", 10, 19, new Posn(300, 300), new Posn(300, 310),
-        1, Color.red);
+        1, true, true, Color.red);
     assertEquals(a2, exAnimation.getActions().get(1));
   }
 
@@ -56,10 +56,10 @@ public class TestAnimatorModel {
         Color.red, 10, 20);
 
     exAnimation.addAction("c", 11, 19, new Posn(300, 300), new Posn(300, 310),
-        1, Color.red);
+        1, true, true, Color.red);
 
     exAnimation.addAction("r", 2, 4, new Posn(200, 150), new Posn(200, 100),
-        1, Color.red);
+        1, true, true, Color.red);
 
     assertEquals("shape c Circle\n"
             + "motion c 11 300.0 310.0 10 10 255 0 0    19 300.0 300.0 10 10 255 0 0\n"
@@ -92,7 +92,7 @@ public class TestAnimatorModel {
     assertTrue(exAnimation.animationOver());
 
     exAnimation.addAction("c", 11, 19, new Posn(300, 300), new Posn(300, 310),
-        1, Color.red);
+        1, true, true, Color.red);
 
     assertFalse(exAnimation.animationOver());
   }
@@ -111,10 +111,10 @@ public class TestAnimatorModel {
   public void testGetActions() {
     AnimatorModel exAnimation = new AnimatorModelImpl();
     exAnimation.addAction("r", 2, 4, new Posn(200, 150), new Posn(200, 100),
-        1, Color.red);
+        1, true, true, Color.red);
 
     Action a = new Action("r", 2, 4, new Posn(200, 150), new Posn(200, 100),
-        1, Color.red);
+        1, true, true, Color.red);
 
     assertEquals(a, exAnimation.getActions().get(0));
   }
@@ -132,7 +132,8 @@ public class TestAnimatorModel {
     AnimatorModel exAnimation = new AnimatorModelImpl();
     exAnimation.addShape("c", AbstractShape.ShapeType.Circle, 10, 10, new Posn(250, 250),
         Color.red, 10, 20);
-    exAnimation.addAction("c", 11, 15, new Posn(300, 300), new Posn(250, 250), 0.8, Color.blue);
+    exAnimation.addAction("c", 11, 15, new Posn(300, 300), new Posn(250, 250), 0.8, true, true,
+        Color.blue);
 
     assertEquals(10, exAnimation.getShape("c").getHeight());
     assertEquals(10, exAnimation.getShape("c").getWidth());
@@ -150,13 +151,61 @@ public class TestAnimatorModel {
   }
 
   @Test
+  public void testRunAnimationWidthFalse() {
+    AnimatorModel exAnimation = new AnimatorModelImpl();
+    exAnimation.addShape("c", AbstractShape.ShapeType.Circle, 10, 10, new Posn(250, 250),
+        Color.red, 10, 20);
+    exAnimation.addAction("c", 11, 15, new Posn(300, 300), new Posn(250, 250), 0.8, false, true,
+        Color.blue);
+
+    assertEquals(10, exAnimation.getShape("c").getHeight());
+    assertEquals(10, exAnimation.getShape("c").getWidth());
+    assertEquals(250, exAnimation.getShape("c").getPosn().getX(), 0.0001);
+    assertEquals(250, exAnimation.getShape("c").getPosn().getY(), 0.0001);
+    assertEquals(-65536, exAnimation.getShape("c").getColor().getRGB());
+
+    exAnimation.runAnimation();
+
+    assertEquals(8, exAnimation.getShape("c").getHeight());
+    assertEquals(10, exAnimation.getShape("c").getWidth());
+    assertEquals(300, exAnimation.getShape("c").getPosn().getX(), 0.0001);
+    assertEquals(300, exAnimation.getShape("c").getPosn().getY(), 0.0001);
+    assertEquals(-16776961, exAnimation.getShape("c").getColor().getRGB());
+  }
+
+  @Test
+  public void testRunAnimationHeightFalse() {
+    AnimatorModel exAnimation = new AnimatorModelImpl();
+    exAnimation.addShape("c", AbstractShape.ShapeType.Circle, 10, 10, new Posn(250, 250),
+        Color.red, 10, 20);
+    exAnimation.addAction("c", 11, 15, new Posn(300, 300), new Posn(250, 250), 0.8, true, false,
+        Color.blue);
+
+    assertEquals(10, exAnimation.getShape("c").getHeight());
+    assertEquals(10, exAnimation.getShape("c").getWidth());
+    assertEquals(250, exAnimation.getShape("c").getPosn().getX(), 0.0001);
+    assertEquals(250, exAnimation.getShape("c").getPosn().getY(), 0.0001);
+    assertEquals(-65536, exAnimation.getShape("c").getColor().getRGB());
+
+    exAnimation.runAnimation();
+
+    assertEquals(10, exAnimation.getShape("c").getHeight());
+    assertEquals(8, exAnimation.getShape("c").getWidth());
+    assertEquals(300, exAnimation.getShape("c").getPosn().getX(), 0.0001);
+    assertEquals(300, exAnimation.getShape("c").getPosn().getY(), 0.0001);
+    assertEquals(-16776961, exAnimation.getShape("c").getColor().getRGB());
+  }
+
+  @Test
   public void testRunAnimationMult() {
     AnimatorModel exAnimation = new AnimatorModelImpl();
     exAnimation.addShape("c", AbstractShape.ShapeType.Circle, 10, 10, new Posn(250, 250),
         Color.red, 10, 20);
-    exAnimation.addAction("c", 11, 15, new Posn(300, 300), new Posn(250, 250), 0.8, Color.blue);
+    exAnimation.addAction("c", 11, 15, new Posn(300, 300), new Posn(250, 250), 0.8, true, true,
+        Color.blue);
 
-    exAnimation.addAction("c", 11, 15, new Posn(350, 300), new Posn(300, 300), 2.0, Color.blue);
+    exAnimation.addAction("c", 11, 15, new Posn(350, 300), new Posn(300, 300), 2.0, true, true,
+        Color.blue);
 
     assertEquals(10, exAnimation.getShape("c").getHeight());
     assertEquals(10, exAnimation.getShape("c").getWidth());
