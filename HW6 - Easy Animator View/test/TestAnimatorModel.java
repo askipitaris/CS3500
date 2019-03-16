@@ -9,6 +9,17 @@ import org.junit.Test;
  */
 public class TestAnimatorModel {
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testInconsistentMotionFails() {
+    AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(200, 70, 360, 360)
+        .declareShape("R", "rectangle")
+        .addKeyframe("R", 1, 200, 200, 50, 100, 255, 0, 0)
+        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
+            , 300, 300, 50, 100, 255, 0, 0).addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
+        , 300, 300, 50, 100, 255, 0, 0)
+        .build();
+  }
+
   @Test
   public void testGetState() {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(200, 70, 360, 360)

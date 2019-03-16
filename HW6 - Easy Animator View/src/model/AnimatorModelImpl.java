@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract class for AnimatorModel interface. Any types of Animations extend this class. Has
- * default methods for Animations. Implements {@link AnimatorModel}
+ * An implementation of the AnimatorModel interface. Creates a model that retrives and enforces the
+ * state of the game.
  */
 public final class AnimatorModelImpl implements AnimatorModel {
 
@@ -66,6 +66,14 @@ public final class AnimatorModelImpl implements AnimatorModel {
     return this.winHeight;
   }
 
+  public int getLeftX() {
+    return this.leftX;
+  }
+
+  public int getTopY() {
+    return this.topY;
+  }
+
   @Override
   public String getShape(String s) {
     return shapes.get(s);
@@ -86,6 +94,9 @@ public final class AnimatorModelImpl implements AnimatorModel {
     return this.shapes.size();
   }
 
+  /**
+   * Represents the builder. Builds a new Model based off of the parameters given to it.
+   */
   public static final class Builder implements AnimationBuilder<AnimatorModel> {
 
     Map<String, String> shapes = new HashMap<>();
@@ -119,9 +130,17 @@ public final class AnimatorModelImpl implements AnimatorModel {
     public AnimationBuilder<AnimatorModel> addMotion(String name, int t1, int x1, int y1, int w1,
         int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
         int b2) {
+
+      for (Keyframe k : keyFrames) {
+        if (k.getName().equals(name) && k.getT1() >= t1 && t2 <= k.getT2()) {
+          throw new IllegalArgumentException("Cannot have inconsistent motions");
+        }
+      }
+
       this.keyFrames.add(new Keyframe(name, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2,
           g2, b2));
       return this;
+
     }
 
     @Override

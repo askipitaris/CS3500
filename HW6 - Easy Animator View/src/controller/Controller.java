@@ -12,28 +12,37 @@ public class Controller {
   private AnimatorModel model;
   private IView view;
 
-
-  public Controller(AnimatorModel model, IView v, int tween) {
+  public Controller(IView v, int tween) {
     this.view = v;
-    this.model = model;
+    this.model = v.getAnimatorModel();
   }
 
-  public void go() {
+  public void runAll() {
     this.view.setCommandCallback(this::accept);
     this.view.makeVisible();
   }
 
-  private String processCommand(String command) throws IllegalStateException {
+  /**
+   * Outputs the commands that the user specifies
+   * @param command the command that the user specifies
+   * @return the commands that the user specifies
+   * @throws IllegalStateException if there is not a next
+   */
+  public String processCommand(String command) throws IllegalStateException {
     StringBuilder string = new StringBuilder();
     Scanner s = new Scanner(command);
     while (s.hasNext()) {
       String in = s.next();
     }
 
-    return null;
+    return string.toString();
   }
 
-  private void accept(String s) {
+  /**
+   *
+   * @param s
+   */
+  public void accept(String s) {
     String command = s;
     String status = "";
 

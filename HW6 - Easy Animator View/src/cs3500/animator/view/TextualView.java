@@ -10,10 +10,13 @@ import model.AnimatorModel;
  */
 public class TextualView extends AbstractViewClass implements IView {
 
-  private AnimatorModel m;
-
+  /**
+   * Constructs a TextualView object based on the model and the output source.
+   * @param m the model
+   * @param out the way in which the view will be outputted
+   */
   public TextualView(AnimatorModel m, String out) {
-    this.m = m;
+    super.m = m;
     if (!out.equals("System.out")) {
       this.createFile(out);
     } else {

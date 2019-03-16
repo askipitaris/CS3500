@@ -17,14 +17,18 @@ public interface AnimatorModel {
   String getState();
 
   /**
-   * Gets width of screen
+   * Gets width of screen.
    */
   int getWidth();
 
   /**
-   * Gets height of screen
+   * Gets height of screen.
    */
   int getHeight();
+
+  int getLeftX();
+
+  int getTopY();
 
   /**
    * Returns the shape with the given name.

@@ -7,16 +7,21 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import model.AnimatorModel;
 
 /**
  * Abstract class for views. Has common methods.
  */
 public class AbstractViewClass extends JFrame implements IView {
 
-  private Consumer<String> commandCallback;
+  Consumer<String> commandCallback;
   private JPanel mainPanel;
   private JScrollPane scrollPane;
+  protected AnimatorModel m;
 
+  /**
+   * Constructs an abstract view class, and sets the screen size.
+   */
   public AbstractViewClass() {
     super();
     this.setTitle("Shapes");
@@ -62,4 +67,10 @@ public class AbstractViewClass extends JFrame implements IView {
   public void refresh() {
     this.repaint();
   }
+
+  @Override
+  public AnimatorModel getAnimatorModel() {
+    return m;
+  }
+
 }

@@ -16,11 +16,11 @@ public class AnimationReader {
    * <p>
    * The input file format consists of two types of lines:
    * <ul>
-   * <li>Shape lines: the keyword "shape2" followed by two identifiers (i.e.
-   * alphabetic strings with no spaces), giving the unique name of the shape2, and the type of
-   * shape2 it is.</li>
+   * <li>Shape lines: the keyword "shape" followed by two identifiers (i.e.
+   * alphabetic strings with no spaces), giving the unique name of the shape, and the type of
+   * shape it is.</li>
    * <li>Motion lines: the keyword "motion" followed by an identifier giving the name
-   * of the shape2 to move, and 16 integers giving the initial and final conditions of the motion:
+   * of the shape to move, and 16 integers giving the initial and final conditions of the motion:
    * eight numbers giving the time, the x and y coordinates, the width and height, and the red,
    * green and blue color values at the start of the motion; followed by eight numbers for the end
    * of the motion.  See {@link AnimationBuilder#addMotion}</li>
@@ -43,7 +43,7 @@ public class AnimationReader {
         case "canvas":
           readCanvas(s, builder);
           break;
-        case "shape2":
+        case "shape":
           readShape(s, builder);
           break;
         case "motion":
@@ -98,7 +98,7 @@ public class AnimationReader {
       name = s.next();
     } else {
       throw new IllegalStateException(
-          "Motion: Expected a shape2 name, but no more input available");
+          "Motion: Expected a shape name, but no more input available");
     }
     for (int i = 0; i < 16; i++) {
       vals[i] = getInt(s, "Motion", fieldNames[i]);

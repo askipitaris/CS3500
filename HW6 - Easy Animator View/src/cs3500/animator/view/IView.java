@@ -1,13 +1,15 @@
 package cs3500.animator.view;
 
 import java.util.function.Consumer;
+import model.AnimatorModel;
 
 /**
  * Interface for views.
  */
 public interface IView {
 
-  // display cs3500.animator.view: displays anything in the window/browser (text, image, animation, etc)
+  // display cs3500.animator.view: displays anything in the window/browser
+  // (text, image, animation, etc)
 
   // convertTicks: convert the animation from unitless “ticks” to actual time durations
   // This can be controlled by specifying a tempo for the animation, in ticks per second.
@@ -31,7 +33,7 @@ public interface IView {
   void setCommandCallback(Consumer<String> callback);
 
   /**
-   * Gets the request of the user
+   * Gets the request of the user.
    */
   String getUserCommand();
 
@@ -45,4 +47,10 @@ public interface IView {
    * Signal the cs3500.animator.view to draw itself
    */
   void refresh();
+
+  /**
+   * Returns the model
+   * @return the model
+   */
+  AnimatorModel getAnimatorModel();
 }

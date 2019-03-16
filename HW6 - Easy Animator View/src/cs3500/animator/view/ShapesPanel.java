@@ -10,12 +10,19 @@ import javax.swing.JPanel;
  */
 public class ShapesPanel extends JPanel {
 
+  /**
+   * Constructs a shape panel object and sets the background to white.
+   */
   public ShapesPanel() {
     super();
     this.setBackground(Color.WHITE);
 
   }
 
+  /**
+   *
+   * @param g
+   */
   public void paintComponent(Graphics2D g) {
     super.paintComponent(g);
 

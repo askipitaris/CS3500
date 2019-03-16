@@ -6,8 +6,43 @@ package model;
 public class Keyframe {
 
   private String name;
-  private int t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2, g2, b2;
+  private int t1;
+  private int x1;
+  private int y1;
+  private int w1;
+  private int h1;
+  private int r1;
+  private int g1;
+  private int b1;
+  private int t2;
+  private int x2;
+  private int y2;
+  private int w2;
+  private int h2;
+  private int r2;
+  private int g2;
+  private int b2;
 
+  /**
+   * Constructs a Keyframe that has motion.
+   * @param name is the name of shape that will move
+   * @param t1 is the start time of this motion
+   * @param x1 is the start x value of this shape
+   * @param y1 is the start y value of this shape
+   * @param w1 is the start width of this shape
+   * @param h1 is the start height of this shape
+   * @param r1 is the start red value of this shape
+   * @param g1 is the start green value of this shape
+   * @param b1 is the start blue value of this shape
+   * @param t2 is the end time of this motion
+   * @param x2 is the end x value of this shape
+   * @param y2 is the end y value of this shape
+   * @param w2 is the end width of this shape
+   * @param h2 is the end height of this shape
+   * @param r2 is the end red value of this shape
+   * @param g2 is the end green value of this shape
+   * @param b2 is the end blue value of this shape
+   */
   Keyframe(String name, int t1, int x1, int y1, int w1, int h1, int r1, int g1, int b1,
       int t2,
       int x2, int y2, int w2, int h2, int r2, int g2, int b2) {
@@ -30,6 +65,19 @@ public class Keyframe {
     this.b2 = b2;
   }
 
+  /**
+   * This constructor is used when setting up the inital state of a shape. The start and end states
+   * of the shape will be the same.
+   * @param name is the name ofthe shape
+   * @param t1 is the time this shape will appear
+   * @param x1 is the starting x position of the shape
+   * @param y1 is the starting y position of the shape
+   * @param w1 is the starting width of the shape
+   * @param h1 is the starting height of the shape
+   * @param r1 is the starting red value of the shape
+   * @param g1 is the starting green value of the shape
+   * @param b1 is the starting blue value of the shape
+   */
   Keyframe(String name, int t1, int x1, int y1, int w1, int h1, int r1, int g1, int b1) {
     this.name = name;
     this.t1 = t1;

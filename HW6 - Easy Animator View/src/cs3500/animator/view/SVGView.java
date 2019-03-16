@@ -11,20 +11,23 @@ import model.Keyframe;
  */
 public class SVGView extends AbstractViewClass implements IView {
 
-  private AnimatorModel m;
-
   public SVGView(AnimatorModel m, String out) {
-    this.m = m;
+    super.m = m;
     this.createSVGFile(out);
   }
 
-  private String createSVG() {
+  /**
+   * Creates the outermost format of the SVG view.
+   *
+   * @return a string representing the SVG view
+   */
+  public String createSVG() {
     StringBuilder sb = new StringBuilder();
 
     sb.append("<svg width=\"");
-    sb.append(m.getWidth());
+    sb.append(m.getWidth() + m.getLeftX());
     sb.append("\" height=\"");
-    sb.append(m.getHeight());
+    sb.append(m.getHeight() + m.getTopY());
     sb.append("\" version=\"1.1\"\n");
     sb.append("xmlns=\"http://www.w3.org/2000/svg\">\n");
 
@@ -65,7 +68,7 @@ public class SVGView extends AbstractViewClass implements IView {
     rect.append(this.getWidth()); // width of shape
     rect.append("\" height=\"");
     rect.append(this.getHeight()); // height of shape
-    rect.append("\" fill=\"RGB(");
+    rect.append("\" fill=\"rgb(");
     rect.append(base.getR1()).append(", ");
     rect.append(base.getG1()).append(", ");
     rect.append(base.getB1());
@@ -75,16 +78,33 @@ public class SVGView extends AbstractViewClass implements IView {
     for (Keyframe k : m.getKeyframes()) {
       if (k.getName().equals(name)) {
         // Every attribute, there needs to be animate thing
-        rect.append("<animate attributeType=\"x\" begin=\"").append(k.getT1()).append("s\"")
-            .append(" dur=\"").append(k.getT2() - k.getT1()).append("\" fill=\"freeze\"")
+        rect.append("<animate attributeName=\"x\" ").append("attributeType=\"xml\" ")
+            .append("begin=\"").append(k.getT1() * 100).append("ms\"")
+            .append(" dur=\"").append((k.getT2() - k.getT1())  * 100).append("ms\" fill=\"freeze\"")
             .append(" from=\"").append(k.getX1()).append("\"").append(" to=\"").append(k.getX2())
-            .append("\"").append(" />");
+            .append("\"").append(" />\n");
 
-        rect.append("\n");
+        rect.append("<animate attributeName=\"y\" ").append("attributeType=\"xml\" ")
+            .append("begin=\"").append(k.getT1() * 100).append("ms\"")
+            .append(" dur=\"").append((k.getT2() - k.getT1()) * 100).append("ms\" fill=\"freeze\"")
+            .append(" from=\"").append(k.getY1()).append("\"").append(" to=\"").append(k.getY2())
+            .append("\"").append(" />\n");
+
+        rect.append("<animate attributeName=\"width\" ").append("attributeType=\"xml\" ")
+            .append("begin=\"").append(k.getT1() * 100).append("ms\"")
+            .append(" dur=\"").append((k.getT2() - k.getT1()) * 100).append("ms\" fill=\"freeze\"")
+            .append(" from=\"").append(k.getW1()).append("\"").append(" to=\"").append(k.getW2())
+            .append("\"").append(" />\n");
+
+        rect.append("<animate attributeName=\"height\" ").append("attributeType=\"xml\" ")
+            .append("begin=\"").append(k.getT1() * 100).append("ms\"")
+            .append(" dur=\"").append((k.getT2() - k.getT1()) * 100).append("ms\" fill=\"freeze\"")
+            .append(" from=\"").append(k.getH1()).append("\"").append(" to=\"").append(k.getH2())
+            .append("\"").append(" />\n");
       }
     }
 
-    rect.append("</rect>");
+    rect.append("</rect>\n");
 
     return rect;
   }
