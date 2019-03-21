@@ -20,8 +20,8 @@ public class ShapesPanel extends JPanel {
   }
 
   /**
-   *
-   * @param g
+   * Paints the shapes onto the thing that will be here at some point.
+   * @param g is the graphic that gets passed in
    */
   public void paintComponent(Graphics2D g) {
     super.paintComponent(g);

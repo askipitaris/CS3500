@@ -14,9 +14,9 @@ public class TestAnimatorModel {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(200, 70, 360, 360)
         .declareShape("R", "rectangle")
         .addKeyframe("R", 1, 200, 200, 50, 100, 255, 0, 0)
-        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
-            , 300, 300, 50, 100, 255, 0, 0).addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
-        , 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50,
+            300, 300, 50, 100, 255, 0, 0).addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50,
+            300, 300, 50, 100, 255, 0, 0)
         .build();
   }
 
@@ -25,8 +25,8 @@ public class TestAnimatorModel {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(200, 70, 360, 360)
         .declareShape("R", "rectangle")
         .addKeyframe("R", 1, 200, 200, 50, 100, 255, 0, 0)
-        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
-            , 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50,
+            300, 300, 50, 100, 255, 0, 0)
         .build();
 
     assertEquals("canvas 200 70 360 360\n"
@@ -40,8 +40,8 @@ public class TestAnimatorModel {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(200, 70, 360, 360)
         .declareShape("R", "rectangle")
         .addKeyframe("R", 1, 200, 200, 50, 100, 255, 0, 0)
-        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
-            , 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50,
+            300, 300, 50, 100, 255, 0, 0)
         .build();
 
     assertEquals(360, m.getWidth());
@@ -52,8 +52,8 @@ public class TestAnimatorModel {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(200, 70, 360, 360)
         .declareShape("R", "rectangle")
         .addKeyframe("R", 1, 200, 200, 50, 100, 255, 0, 0)
-        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
-            , 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50,
+            300, 300, 50, 100, 255, 0, 0)
         .build();
 
     assertEquals(360, m.getHeight());
@@ -64,8 +64,8 @@ public class TestAnimatorModel {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(200, 70, 360, 360)
         .declareShape("R", "rectangle")
         .addKeyframe("R", 1, 200, 200, 50, 100, 255, 0, 0)
-        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
-            , 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50,
+            300, 300, 50, 100, 255, 0, 0)
         .build();
 
     assertEquals("rectangle", m.getShape("R"));
@@ -76,8 +76,8 @@ public class TestAnimatorModel {
     AnimatorModel m = new AnimatorModelImpl.Builder().setBounds(200, 70, 360, 360)
         .declareShape("R", "rectangle")
         .addKeyframe("R", 1, 200, 200, 50, 100, 255, 0, 0)
-        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50
-            , 300, 300, 50, 100, 255, 0, 0)
+        .addMotion("R", 10, 200, 200, 50, 100, 255, 0, 0, 50,
+            300, 300, 50, 100, 255, 0, 0)
         .build();
 
     assertEquals(1, m.numOfShapes());

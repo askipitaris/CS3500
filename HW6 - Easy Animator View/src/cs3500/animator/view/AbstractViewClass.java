@@ -1,12 +1,8 @@
 package cs3500.animator.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.function.Consumer;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import model.AnimatorModel;
 
 /**
@@ -14,33 +10,9 @@ import model.AnimatorModel;
  */
 public class AbstractViewClass extends JFrame implements IView {
 
-  Consumer<String> commandCallback;
-  private JPanel mainPanel;
-  private JScrollPane scrollPane;
   protected AnimatorModel m;
+  int speed;
 
-  /**
-   * Constructs an abstract view class, and sets the screen size.
-   */
-  public AbstractViewClass() {
-    super();
-    this.setTitle("Shapes");
-    this.setSize(500, 500);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setLayout(new BorderLayout());
-    this.mainPanel = new ShapesPanel();
-    mainPanel.setPreferredSize(new Dimension(500, 500));
-    scrollPane = new JScrollPane(mainPanel);
-    this.add(scrollPane, BorderLayout.CENTER);
-    // ignored other stuff from Turtle that isn't relavent
-    this.pack();
-
-  }
-
-  @Override
-  public void display() {
-    setVisible(true);
-  }
 
   @Override
   public void makeVisible() {
@@ -49,13 +21,9 @@ public class AbstractViewClass extends JFrame implements IView {
 
   @Override
   public void setCommandCallback(Consumer<String> callback) {
-    commandCallback = callback;
+    // Must be overridden
   }
 
-  @Override
-  public String getUserCommand() {
-    return null;
-  }
 
   @Override
   public void showErrorMessage(String error) {

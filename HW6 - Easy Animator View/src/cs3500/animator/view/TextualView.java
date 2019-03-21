@@ -12,6 +12,7 @@ public class TextualView extends AbstractViewClass implements IView {
 
   /**
    * Constructs a TextualView object based on the model and the output source.
+   *
    * @param m the model
    * @param out the way in which the view will be outputted
    */
@@ -22,6 +23,9 @@ public class TextualView extends AbstractViewClass implements IView {
     } else {
       System.out.print(m.getState());
     }
+
+
+
   }
 
   private void createFile(String out) {
@@ -38,7 +42,4 @@ public class TextualView extends AbstractViewClass implements IView {
 
   }
 
-  public void display() {
-    setVisible(true);
-  }
 }

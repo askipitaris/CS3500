@@ -9,12 +9,11 @@ import model.AnimatorModel;
  */
 public class Controller {
 
-  private AnimatorModel model;
   private IView view;
 
-  public Controller(IView v, int tween) {
+  public Controller(IView v) {
     this.view = v;
-    this.model = v.getAnimatorModel();
+    AnimatorModel model = v.getAnimatorModel();
   }
 
   public void runAll() {
@@ -23,12 +22,13 @@ public class Controller {
   }
 
   /**
-   * Outputs the commands that the user specifies
+   * Outputs the commands that the user specifies.
+   *
    * @param command the command that the user specifies
    * @return the commands that the user specifies
    * @throws IllegalStateException if there is not a next
    */
-  public String processCommand(String command) throws IllegalStateException {
+  private String processCommand(String command) throws IllegalStateException {
     StringBuilder string = new StringBuilder();
     Scanner s = new Scanner(command);
     while (s.hasNext()) {
@@ -39,15 +39,15 @@ public class Controller {
   }
 
   /**
+   * Accepts a command to process.
    *
-   * @param s
+   * @param s is the command that is being accepted
    */
-  public void accept(String s) {
-    String command = s;
+  private void accept(String s) {
     String status = "";
 
     try {
-      status = processCommand(command);
+      status = processCommand(s);
     } catch (Exception e) {
       view.showErrorMessage(e.getMessage());
     }

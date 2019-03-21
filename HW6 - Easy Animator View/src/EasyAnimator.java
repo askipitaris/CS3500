@@ -1,12 +1,11 @@
 import controller.Controller;
 import cs3500.animator.util.AnimationReader;
+import cs3500.animator.view.EnhancedVisualView;
 import cs3500.animator.view.SVGView;
 import cs3500.animator.view.TextualView;
 import cs3500.animator.view.VisualView;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import javax.print.attribute.standard.NumberUp;
 import model.AnimatorModel;
 import model.AnimatorModelImpl.Builder;
 
@@ -17,9 +16,11 @@ import model.AnimatorModelImpl.Builder;
  * new window.
  */
 public final class EasyAnimator {
+
   /**
    * The main method for the program. Takes in all the input in the form of command line arguments
    * and runs the views.
+   *
    * @param args are the arguments passed into the program
    */
   public static void main(String[] args) {
@@ -28,10 +29,11 @@ public final class EasyAnimator {
     String view = "";
     int speed = 100;
     AnimatorModel m;
+
     Controller c = null;
 
     for (int i = 0; i < args.length; i++) {
-      switch (args[i]){
+      switch (args[i]) {
         case "-in":
           try {
             inputFile = new FileReader(args[i + 1]);
@@ -48,6 +50,8 @@ public final class EasyAnimator {
         case "-speed":
           speed = Integer.parseInt(args[i + 1]);
           break;
+        default:
+          break;
       }
     }
 
@@ -59,13 +63,18 @@ public final class EasyAnimator {
 
     switch (view) {
       case "text":
-        c = new Controller(new TextualView(m, outputPath), speed);
+        c = new Controller(new TextualView(m, outputPath));
         break;
       case "svg":
-        c = new Controller(new SVGView(m, outputPath), speed);
+        c = new Controller(new SVGView(m, outputPath, speed));
         break;
       case "visual":
-        c = new Controller(new VisualView(m), speed);
+        c = new Controller(new VisualView(m, speed));
+        break;
+      case "interactive":
+        c = new Controller(new EnhancedVisualView());
+        break;
+      default:
         break;
     }
 

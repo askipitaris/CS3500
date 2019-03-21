@@ -17,8 +17,8 @@ public class AnimationReader {
    * The input file format consists of two types of lines:
    * <ul>
    * <li>Shape lines: the keyword "shape" followed by two identifiers (i.e.
-   * alphabetic strings with no spaces), giving the unique name of the shape, and the type of
-   * shape it is.</li>
+   * alphabetic strings with no spaces), giving the unique name of the shape, and the type of shape
+   * it is.</li>
    * <li>Motion lines: the keyword "motion" followed by an identifier giving the name
    * of the shape to move, and 16 integers giving the initial and final conditions of the motion:
    * eight numbers giving the time, the x and y coordinates, the width and height, and the red,
@@ -78,6 +78,7 @@ public class AnimationReader {
     } else {
       throw new IllegalStateException("Shape: Expected a type, but no more input available");
     }
+
     builder.declareShape(name, type);
   }
 
@@ -120,5 +121,4 @@ public class AnimationReader {
               label, fieldName));
     }
   }
-
 }
