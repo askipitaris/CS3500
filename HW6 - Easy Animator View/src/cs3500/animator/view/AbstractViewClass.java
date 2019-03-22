@@ -11,6 +11,7 @@ import model.AnimatorModel;
 public class AbstractViewClass extends JFrame implements IView {
 
   protected AnimatorModel m;
+  Consumer<String> commandCallback;
   int speed;
 
 
@@ -21,7 +22,7 @@ public class AbstractViewClass extends JFrame implements IView {
 
   @Override
   public void setCommandCallback(Consumer<String> callback) {
-    // Must be overridden
+    commandCallback = callback;
   }
 
 

@@ -23,10 +23,10 @@ public interface AnimatorModel {
 
   /**
    * Gets the state of a shape at a given tick.
+   *
    * @param t the time to get the state of the animation
    */
-
-  ArrayList<Keyframe> interpolate(int t);
+  ArrayList<Keyframe> interpolate(double t);
 
   /**
    * Gets height of screen.
@@ -35,18 +35,21 @@ public interface AnimatorModel {
 
   /**
    * Gets the largest tick in the animation.
+   *
    * @return the int representing the largest tick
    */
   double getLargestTick();
 
   /**
    * Gets the left most x value.
+   *
    * @return left most y value
    */
   int getLeftX();
 
   /**
    * Gets the top most y value.
+   *
    * @return top most y value
    */
   int getTopY();

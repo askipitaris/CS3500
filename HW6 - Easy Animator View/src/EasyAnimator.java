@@ -27,7 +27,7 @@ public final class EasyAnimator {
     Readable inputFile = null;
     String outputPath = "System.out";
     String view = "";
-    int speed = 100;
+    int speed = 1000;
     AnimatorModel m;
 
     Controller c = null;
@@ -72,7 +72,7 @@ public final class EasyAnimator {
         c = new Controller(new VisualView(m, speed));
         break;
       case "interactive":
-        c = new Controller(new EnhancedVisualView());
+        c = new Controller(new EnhancedVisualView(m, speed));
         break;
       default:
         break;

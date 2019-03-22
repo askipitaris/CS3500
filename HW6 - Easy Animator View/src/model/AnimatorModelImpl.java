@@ -38,25 +38,23 @@ public final class AnimatorModelImpl implements AnimatorModel {
     sb.append("canvas ").append(this.leftX).append(" ").append(this.topY).append(" ")
         .append(this.winWidth).append(" ").append(this.winHeight).append("\n");
 
-    for (String s : shapes2) {
+    for (String s : shapes.keySet()) {
       sb.append("shape ").append(s).append(" ").append(shapes.get(s)).append("\n");
 
-    }
-
-    for (Keyframe k : keyFrames) {
-      for (String s : shapes.keySet()) {
+      for (Keyframe k : keyFrames) {
         if (k.getName().equals(s)) {
           sb.append("motion ").append(s).append(" ").append(k.getT1()).append(" ").append(k.getX1())
               .append(" ").append(k.getY1()).append(" ").append(k.getW1()).append(" ")
               .append(k.getH1()).append(" ").append(k.getR1()).append(" ").append(k.getG1())
-              .append(" ").append(k.getB1()).append(" ");
+              .append(" ").append(k.getB1());
 
-          sb.append(k.getT2()).append(" ").append(k.getX2())
+          sb.append("  ").append(s).append(" ").append(k.getT2()).append(" ").append(k.getX2())
               .append(" ").append(k.getY2()).append(" ").append(k.getW2()).append(" ")
               .append(k.getH2()).append(" ").append(k.getR2()).append(" ").append(k.getG2())
               .append(" ").append(k.getB2()).append("\n");
         }
       }
+
     }
 
     return sb.toString();
@@ -68,7 +66,7 @@ public final class AnimatorModelImpl implements AnimatorModel {
    * @param tick is the tick that this will occur at
    * @return the new interpolated keyframe
    */
-  public ArrayList<Keyframe> interpolate(int tick) {
+  public ArrayList<Keyframe> interpolate(double tick) {
     double newX;
     double newY;
     double newWidth;

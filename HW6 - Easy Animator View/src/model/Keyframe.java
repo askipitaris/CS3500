@@ -253,6 +253,4 @@ public class Keyframe {
   public double getB2() {
     return b2;
   }
-
-
 }
